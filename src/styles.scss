@@ -1,1 +1,50 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { 
+  height: 100%; 
+}
+
+body { 
+  margin: 0; 
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, sans-serif; 
+}
+
+:root {
+  --primary-color: #3754DB;
+  --text-black: #16171D;
+  --text-grey: #666;
+  --text-color-sm: #6E7391;
+}
+
+// ========== Common styles ==========
+.section-heading {
+  @apply text-[32px] text-[var(--text-black)] font-bold;
+}
+
+.section-title {
+  @apply text-[20px] text-[var(--text-black)] font-semibold;
+}
+
+.section-text {
+  @apply text-[16px] text-[var(--text-grey)] font-normal;
+}
+
+.section-text-sm {
+  @apply text-[14px] text-[var(--text-color-sm)] font-normal;
+}
+
+.btn {
+  @apply flex items-center justify-center h-[39px] px-5 rounded-md;
+}
+
+.btn-primary {
+  @apply px-5 bg-[var(--primary-color)] text-white;
+}
+
+.btn-outline {
+  @apply border border-[var(--primary-color)] text-[var(--primary-color)] bg-transparent;
+}

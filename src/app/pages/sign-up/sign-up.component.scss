@@ -1,0 +1,23 @@
+.signup {
+  @apply min-h-full flex p-6;
+
+  &-left {
+    @apply lg:flex lg:w-1/2 relative overflow-hidden;
+  }
+
+  &-img {
+      @apply absolute w-full h-full object-cover rounded-xl;
+    }
+
+  &-left-content {
+    @apply flex flex-col justify-between p-12 text-white z-10 w-full;
+  }
+
+  &-right-content {
+    @apply w-full lg:w-1/2 flex justify-center p-8;
+  }
+
+  .signup-login-btn {
+    @apply px-14 h-[48px];
+  }
+}
