@@ -18,6 +18,8 @@ body {
   --text-black: #16171D;
   --text-grey: #666;
   --text-color-sm: #6E7391;
+  --label-color: #2C2E3A;
+  --border-color: #A8ABBD;
 }
 
 // ========== Common styles ==========
@@ -37,6 +39,8 @@ body {
   @apply text-[14px] text-[var(--text-color-sm)] font-normal;
 }
 
+// =========== Button ===========
+
 .btn {
   @apply flex items-center justify-center h-[39px] px-5 rounded-md;
 }
@@ -46,5 +50,17 @@ body {
 }
 
 .btn-outline {
-  @apply border border-[var(--primary-color)] text-[var(--primary-color)] bg-transparent;
+  @apply border-[2px] border-[var(--primary-color)] text-[var(--primary-color)] font-semibold 
+  bg-transparent transition-all duration-150 ease-in;
+
+  &:hover {
+    @apply hover:bg-[var(--primary-color)] hover:text-white;
+  }
+}
+
+// =========== Input ===========
+.z-input {
+  @apply w-full h-[50px] px-4 border border-[var(--border-color)] rounded-md focus:ring-1
+  focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] outline-none 
+  transition-colors duration-300 ease-out;
 }

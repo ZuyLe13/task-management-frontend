@@ -20,4 +20,8 @@
   .signup-login-btn {
     @apply px-14 h-[48px];
   }
+
+  .input-label {
+    @apply block text-base font-medium text-[var(--label-color)] mb-2;
+  }
 }

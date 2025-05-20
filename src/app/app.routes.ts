@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { ErrorPageComponent } from './components/error-page/error-page.component';
+import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { SiteManagementsComponent } from './pages/site-managements/site-managements.component';
