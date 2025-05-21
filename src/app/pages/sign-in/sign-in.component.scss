@@ -1,0 +1,27 @@
+.signin {
+  @apply min-h-full flex p-4;
+
+  &-left {
+    @apply w-full lg:w-1/2 flex justify-center p-8;
+  }
+
+  &-right {
+    @apply lg:flex lg:w-1/2 relative overflow-hidden;
+
+    &-wrapper {
+      @apply flex flex-col justify-between p-12 text-white z-10 w-full;
+    }
+  }
+
+  .signup-btn {
+    @apply px-10 h-[48px];
+  }
+  
+  &-btn {
+    @apply w-full h-[50px];
+  }
+
+  &-bg {
+    @apply absolute w-full h-full object-cover rounded-xl;
+  }
+}

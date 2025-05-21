@@ -42,20 +42,17 @@ body {
 // =========== Button ===========
 
 .btn {
-  @apply flex items-center justify-center h-[39px] px-5 rounded-md;
+  @apply flex items-center justify-center h-[39px] px-5 rounded-md transition-all 
+  duration-150 ease-in cursor-pointer font-semibold tracking-wide;
 }
 
 .btn-primary {
-  @apply px-5 bg-[var(--primary-color)] text-white;
+  @apply px-5 bg-[var(--primary-color)] text-white hover:bg-[#344fc5];
 }
 
 .btn-outline {
-  @apply border-[2px] border-[var(--primary-color)] text-[var(--primary-color)] font-semibold 
-  bg-transparent transition-all duration-150 ease-in;
-
-  &:hover {
-    @apply hover:bg-[var(--primary-color)] hover:text-white;
-  }
+  @apply border-[2px] border-[var(--primary-color)] text-[var(--primary-color)] 
+  font-semibold bg-transparent hover:bg-[var(--primary-color)] hover:text-white;
 }
 
 // =========== Input ===========
@@ -64,3 +61,7 @@ body {
   focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] outline-none 
   transition-colors duration-300 ease-out;
 }
+
+.input-label {
+    @apply block text-base font-normal text-[var(--label-color)] mb-2;
+  }

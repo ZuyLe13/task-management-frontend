@@ -16,75 +16,40 @@
   <div class="signup-right-content">
     <div class="w-full max-w-md">
       <div class="flex justify-end mb-36">
-        <button class="btn btn-outline signup-login-btn">
-          Log In
+        <button class="btn btn-outline signin-btn" (click)="onSignIn()">
+          Sign In
         </button>
       </div>
-
       <div>
         <h2 class="section-heading">Create an Account</h2>
         <p class="text-[#666] mb-8">It's Simple and Easy!</p>
-
         <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="space-y-6">
-          <!-- Full Name -->
           <div class="form-group">
-            <label for="fullName" class="input-label">Full Name</label>
-            <input
-              formControlName="fullName"
-              placeholder="Full Name"
-              class="z-input"
-              [class.border-red-500]="signUpForm.get('fullName')?.invalid && signUpForm.get('fullName')?.touched">
-            <p class="text-xs text-gray-500 mt-1">Information about the input</p>
+            <label class="input-label">Full Name</label>
+            <input class="z-input" formControlName="fullName" placeholder="Full Name">
+            <p class="text-xs text-[#6E7391] mt-1">Information about the input</p>
           </div>
-
-          <!-- Email -->
-          <div>
-            <label for="email" class="input-label">
-              Email Address
-            </label>
-            <input
-              type="email"
-              formControlName="email"
-              placeholder="emmyadsure.web@gmail.com"
-              class="z-input"
-              [class.border-red-500]="signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched">
+          <div class="form-group">
+            <label class="input-label">Email Address</label>
+            <input class="z-input" type="email" formControlName="email"placeholder="emmyadsure.web@gmail.com">
             <p class="text-xs text-[#6E7391] mt-1">Example: mail&#64;gmail.com</p>
           </div>
-
-          <!-- Password -->
-          <div>
-            <label for="password" class="input-label">Enter A Password</label>
+          <div class="form-group">
+            <label class="input-label">Enter Password</label>
             <div class="relative">
-              <input
-                id="password"
-                [type]="isShowPassword? 'text' : 'password'"
-                formControlName="password"
-                placeholder="Password"
-                class="z-input"
-                [class.border-red-500]="signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched">
+              <input class="z-input" [type]="isShowPassword ? 'text' : 'password'" formControlName="password"
+                placeholder="Password">
               <button
                 type="button"
                 (click)="showPassword()"
-                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
-                <svg *ngIf="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                </svg>
-                <svg *ngIf="showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
-                </svg>
+                class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                <img *ngIf="!showPassword" class="w-5 h-5" src="/assets/icons/show-password.svg" alt="">
+                <img *ngIf="showPassword" class="w-5 h-5" src="/assets/icons/hide-password.svg" alt="">
               </button>
             </div>
-            <p class="text-xs text-gray-500 mt-1">Use 8 characters with an Uppercase, symbol and number</p>
+            <p class="text-xs text-[#6E7391] mt-1">Use 8 characters with an Uppercase, symbol and number</p>
           </div>
-
-          <!-- Submit Button -->
-          <button
-            type="submit"
-            [disabled]="!signUpForm.valid"
-            class="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
-            Create Account
-          </button>
+          <button type="submit" class="btn btn-primary signup-btn">Create Account</button>
         </form>
       </div>
     </div>

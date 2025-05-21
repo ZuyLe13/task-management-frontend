@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
+  standalone: true,
   selector: 'app-sign-up',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './sign-up.component.html',
@@ -12,7 +14,7 @@ export class SignUpComponent {
   signUpForm: FormGroup;
   isShowPassword = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.signUpForm = fb.group({
       fullName: ['', [Validators.required]],
       email: ['', [Validators.required]],
@@ -30,7 +32,7 @@ export class SignUpComponent {
     }
   }
 
-  onLogin() {
-    console.log('Navigate to login');
+  onSignIn() {
+    this.router.navigate(['/sign-in']);
   }
 }

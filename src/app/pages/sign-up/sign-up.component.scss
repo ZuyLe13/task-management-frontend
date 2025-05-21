@@ -17,11 +17,15 @@
     @apply w-full lg:w-1/2 flex justify-center p-8;
   }
 
-  .signup-login-btn {
-    @apply px-14 h-[48px];
+  .signin-btn {
+    @apply px-10 h-[48px];
   }
 
-  .input-label {
-    @apply block text-base font-medium text-[var(--label-color)] mb-2;
+  &-btn {
+    @apply w-full h-[50px];
+  }
+
+  &-bg {
+    @apply absolute w-full h-full object-cover rounded-xl;
   }
 }
