@@ -31,7 +31,8 @@ export class SignInComponent {
 
     this.authService.signIn(this.signInForm.value).subscribe({
       next: (res) => {
-        console.log('Sign in successful:', res);
+        localStorage.setItem('accessToken', res.accessToken);
+        this.router.navigate(['/']);
       },
       error: (err) => {
         console.error('Sign in failed:', err);

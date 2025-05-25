@@ -18,6 +18,14 @@ export class AuthService {
   }
 
   signIn(payload: AuthPayload) {
-    return this.http.post(`${environment.apiUrl}/auth/sign-in`, payload);
+    return this.http.post<{ accessToken: string }>(`${environment.apiUrl}/auth/sign-in`, payload, {
+      withCredentials: true
+    });
+  }
+
+  refreshToken() {
+    return this.http.post(`${environment.apiUrl}/auth/refresh-token`, {}, {
+      withCredentials: true
+    });
   }
 }
