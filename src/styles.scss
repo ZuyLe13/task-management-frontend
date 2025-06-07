@@ -14,7 +14,8 @@ body {
 }
 
 :root {
-  --primary-color: #3754DB;
+  --primary-blue: #3754DB;
+  --primary-yellow: #FBBE37;
   --text-black: #16171D;
   --text-grey: #666;
   --text-color-sm: #6E7391;
@@ -47,21 +48,25 @@ body {
 }
 
 .btn-primary {
-  @apply px-5 bg-[var(--primary-color)] text-white hover:bg-[#344fc5];
+  @apply px-5 bg-[var(--primary-blue)] text-white hover:bg-[#344fc5];
 }
 
 .btn-outline {
-  @apply border-[2px] border-[var(--primary-color)] text-[var(--primary-color)] 
-  font-semibold bg-transparent hover:bg-[var(--primary-color)] hover:text-white;
+  @apply border-[2px] border-[var(--primary-blue)] text-[var(--primary-blue)] 
+  font-semibold bg-transparent hover:bg-[var(--primary-blue)] hover:text-white;
 }
 
 // =========== Input ===========
 .z-input {
   @apply w-full h-[50px] px-4 border border-[var(--border-color)] rounded-md focus:ring-1
-  focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] outline-none 
+  focus:ring-[var(--primary-blue)] focus:border-[var(--primary-blue)] outline-none 
   transition-colors duration-300 ease-out;
 }
 
+.z-text-area {
+  @apply py-2 h-[100px];
+}
+
 .input-label {
-    @apply block text-base font-normal text-[var(--label-color)] mb-2;
-  }
+  @apply block text-base font-normal text-[var(--label-color)] mb-2;
+}

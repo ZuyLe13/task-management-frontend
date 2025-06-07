@@ -1,31 +1,27 @@
-.signup {
+.create-workspace {
   @apply min-h-full flex p-6;
 
-  &-left {
+  .left-content {
     @apply lg:flex lg:w-1/2 relative overflow-hidden;
   }
 
-  &-img {
+  .left-content-img {
       @apply absolute w-full h-full object-cover rounded-xl;
   }
 
-  &-left-content {
+  .left-content-wrapper {
     @apply flex flex-col justify-between p-12 text-white z-10 w-full;
   }
 
-  &-right-content {
+  .right-content {
     @apply w-full lg:w-1/2 flex justify-center p-8;
+
+    &-wrapper {
+      @apply w-full max-w-md mt-[180px];
+    }
   }
 
-  .signin-btn {
-    @apply px-10 h-[48px];
-  }
-
-  &-btn {
+  .create-workspace-btn {
     @apply w-full h-[50px];
-  }
-
-  &-bg {
-    @apply absolute w-full h-full object-cover rounded-xl;
   }
 }

@@ -1,0 +1,42 @@
+<div class="create-workspace">
+  <div class="left-content">
+    <img src="/assets/img/bg-auth-left.png" alt="Productivity Background" class="left-content-img">
+    <div class="left-content-wrapper">
+      <div class="flex items-center">
+        <img src="/assets/img/logo.png" alt="">
+        <span>ZenTask</span>
+      </div>
+      <h1 class="mb-16 text-[56px] font-semibold">
+        Take your<br>productivity to the<br>next level.
+      </h1>
+      <p class="text-sm opacity-80">From Dile With Love !!!</p>
+    </div>
+  </div>
+
+  <div class="right-content">
+    <div class="right-content-wrapper">
+      <h2 class="section-heading">
+        Create Your
+        <span class="text-[var(--primary-blue)]">Workspace</span>
+        <span class="text-[var(--primary-yellow)]">.</span>
+      </h2>
+      <p class="text-[#666] mb-10">Some text to fill in this space</p>
+      <form [formGroup]="createWorkspaceForm" (ngSubmit)="onCreateWorkspace()" class="space-y-6">
+        <div class="form-group">
+          <label for="title" class="input-label">Title your workspace</label>
+          <input id="title" class="z-input" formControlName="title" placeholder="Title Workspace">
+        </div>
+        <div class="form-group">
+          <label for="desc" class="input-label">Description your workspace</label>
+          <textarea 
+            id="desc"
+            class="z-input z-text-area" 
+            formControlName="desc" 
+            placeholder="Type your description here...">
+          </textarea>
+        </div>
+        <button type="submit" class="btn btn-primary create-workspace-btn">Create Workspace</button>
+      </form>
+    </div>
+  </div>
+</div>

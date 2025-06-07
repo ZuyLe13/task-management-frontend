@@ -38,4 +38,17 @@ export class AuthService {
       withCredentials: true
     });
   }
+
+  getToken(): string | null {
+    return localStorage.getItem('accessToken');
+  }
+
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    return !!token;
+  }
+
+  setToken(token: string): void {
+    localStorage.setItem('accessToken', token);
+  }
 }

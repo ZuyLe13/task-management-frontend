@@ -5,6 +5,7 @@ import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { SiteManagementsComponent } from './pages/site-managements/site-managements.component';
 import { DashboardComponent } from './pages/site-managements/dashboard/dashboard.component';
 import { AuthGuard } from './shared/_guard/auth.guard';
+import { CreateWorkspaceComponent } from './pages/create-workspace/create-workspace.component';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,10 @@ export const routes: Routes = [
     path: 'sign-up',
     component: SignUpComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'create-workspace',
+    component: CreateWorkspaceComponent
   },
   {
     path: '',
