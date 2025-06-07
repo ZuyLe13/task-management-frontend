@@ -12,6 +12,7 @@ import { WorkspaceService } from '../../shared/_services/workspace.service';
 })
 export class CreateWorkspaceComponent {
   createWorkspaceForm: FormGroup;
+  selectedFile!: File;
 
   constructor(
     private fb: FormBuilder,
@@ -20,8 +21,16 @@ export class CreateWorkspaceComponent {
   ) {
     this.createWorkspaceForm = fb.group({
       title: ['', [Validators.required]],
-      desc: ['']
+      desc: [''],
+      imageUrl: [null]
     });
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
   }
 
   onCreateWorkspace() {
@@ -30,20 +39,25 @@ export class CreateWorkspaceComponent {
       return;
     }
 
-    const { title, desc } = this.createWorkspaceForm.value;
-    console.log('📦 Sending:', { title, desc });
+    if (!this.selectedFile) {
+      console.log('Please select an image file');
+      return;
+    }
 
-    this.workspaceService.createWorkspace({
-      title: title,
-      desc: desc
-    }).subscribe({
+    const { title, desc } = this.createWorkspaceForm.value;
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('desc', desc);
+    formData.append('image', this.selectedFile);
+
+    this.workspaceService.createWorkspace(formData).subscribe({
       next: (res) => {
-        console.log('✅ Workspace created:', res);
-        // this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         console.log('❌ Error:', err);
       }
-    })
+    });
   }
 }

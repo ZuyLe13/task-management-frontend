@@ -24,7 +24,12 @@
       <form [formGroup]="createWorkspaceForm" (ngSubmit)="onCreateWorkspace()" class="space-y-6">
         <div class="form-group">
           <label for="title" class="input-label">Title your workspace</label>
-          <input id="title" class="z-input" formControlName="title" placeholder="Title Workspace">
+          <input 
+            id="title" 
+            class="z-input" 
+            formControlName="title" 
+            placeholder="Title Workspace"
+          />
         </div>
         <div class="form-group">
           <label for="desc" class="input-label">Description your workspace</label>
@@ -34,6 +39,15 @@
             formControlName="desc" 
             placeholder="Type your description here...">
           </textarea>
+        </div>
+        <div class="form-group">
+          <label for="image" class="input-label">Workspace Image</label>
+          <input 
+            type="file"
+            id="image"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+          />
         </div>
         <button type="submit" class="btn btn-primary create-workspace-btn">Create Workspace</button>
       </form>

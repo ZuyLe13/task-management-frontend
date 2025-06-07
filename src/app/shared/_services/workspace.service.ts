@@ -18,7 +18,6 @@ export class WorkspaceService {
   getHeaders(): HttpHeaders {
     const token = this.authService.getToken();
     return new HttpHeaders({
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     })
   }

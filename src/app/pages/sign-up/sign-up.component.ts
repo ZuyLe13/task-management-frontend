@@ -36,8 +36,7 @@ export class SignUpComponent {
     
     this.authService.signUp(this.signUpForm.value).subscribe({
       next: (res) => {
-        console.log('Sign up successful:', res);
-        // this.router.navigate(['/sign-in']);
+        this.router.navigate(['/sign-in']);
       },
       error: (err) => {
         console.error('Sign up failed:', err);
