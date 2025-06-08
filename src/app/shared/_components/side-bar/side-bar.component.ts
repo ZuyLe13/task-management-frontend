@@ -1,13 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-interface MenuItem {
-  icon: string;
-  label: string;
-  children?: MenuItem[];
-  isOpen?: boolean;
-}
+// interface MenuItem {
+//   icon: string;
+//   label: string;
+//   children?: MenuItem[];
+//   isOpen?: boolean;
+// }
 
+interface MenuItem {
+  id: string;
+  label: string;
+  icon: string;
+  active?: boolean;
+}
 @Component({
   selector: 'app-side-bar',
   imports: [CommonModule],
@@ -15,41 +21,23 @@ interface MenuItem {
   styleUrl: './side-bar.component.scss'
 })
 export class SideBarComponent {
-  @Input() isCollapsed = false;
-  @Output() sidebarToggle = new EventEmitter<void>();
-
   menuItems: MenuItem[] = [
-    {
-      icon: 'fas fa-home',
-      label: 'Dashboard',
-      isOpen: false,
-      children: [
-        { icon: 'fas fa-chart-pie', label: 'Analytics' },
-        { icon: 'fas fa-tasks', label: 'Projects' },
-      ]
-    },
-    {
-      icon: 'fas fa-cog',
-      label: 'Settings',
-      isOpen: false,
-      children: [
-        { icon: 'fas fa-user', label: 'Profile' },
-        { icon: 'fas fa-lock', label: 'Security' },
-      ]
-    },
-    {
-      icon: 'fas fa-envelope',
-      label: 'Messages'
-    }
+    { id: 'overview', label: 'Overview', icon: 'grid', active: true },
+    { id: 'tasks', label: 'Tasks', icon: 'clipboard' },
+    { id: 'settings', label: 'Settings', icon: 'cog' }
   ];
+  isCollapsed = false;
 
-  toggleSidebar() {
-    this.sidebarToggle.emit();
+  onMenuClick(item: MenuItem) {
+    this.menuItems.forEach(menuItem => menuItem.active = false);
+    item.active = true;
   }
 
-  toggleMenuItem(item: MenuItem) {
-    if (!this.isCollapsed && item.children) {
-      item.isOpen = !item.isOpen;
-    }
+  onAddClick() {
+    console.log('Add button clicked');
+  }
+
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
   }
 }

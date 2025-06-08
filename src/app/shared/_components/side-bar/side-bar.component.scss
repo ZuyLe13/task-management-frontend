@@ -1,94 +1,13 @@
 .sidebar {
-  @apply bg-[#2c3e50] text-[#ecf0f1] w-[250px] fixed top-0 left-0 z-10 overflow-hidden;
-  height: 100vh;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
+  @apply flex h-screen;
 
-.sidebar-header {
-  @apply relative flex items-center justify-center p-6;
-}
-
-.sidebar-logo {
-  @apply text-white text-2xl font-bold text-center;
-  text-decoration: none;
-}
-
-.sidebar-menu {
-  @apply py-4;
-
-  ul {
-    @apply p-0 m-0;
-    list-style-type: none;
-  }
-}
-
-.sidebar-menu-item {
-  @apply relative;
-}
-
-.sidebar-item {
-  @apply flex items-center text-[#ecf0f1] py-3 px-1 cursor-pointer;
-  text-decoration: none;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+  .btn-toggle-wrapper {
+    @apply flex justify-end p-4;
   }
 
-  &.menu-item-active {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-
-  i {
-    @apply mr-3;
-
-    &.sidebar-item-arrow {
-      @apply ml-auto text-[0.8rem];
-      transition: transform 0.3s ease;
-
-      &.rotated {
-        transform: rotate(180deg);
-      }
-    }
-  }
-
-  &-text {
-    opacity: 1;
-    transition: opacity 0.3s ease-in-out;
-  }
-
-  &.has-children {
-    @apply relative;
-  }
-}
-
-.sidebar-submenu {
-  @apply bg-[#0000001a];
-
-  .sidebar-item {
-    @apply pl-12 text-[0.9rem];
-  }
-}
-
-.sidebar-collapsed {
-  @apply w-[50px];
-
-  .sidebar-menu-item {
-    @apply static;
-  }
-
-  .sidebar-item {
-    i {
-      @apply mr-0;
-    }
-    &-text,
-    &-arrow {
-      @apply opacity-0 w-0 overflow-hidden;
-    }
-  }
-
-  .sidebar-submenu {
-    @apply hidden;
+  .btn-toggle {
+    @apply w-8 h-8 bg-white/15 border border-white/20 rounded-lg flex 
+    items-center justify-center text-white hover:bg-white/25 transition-all 
+    duration-300 backdrop-blur-sm;
   }
 }
