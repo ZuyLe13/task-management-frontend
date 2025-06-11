@@ -1,13 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-// interface MenuItem {
-//   icon: string;
-//   label: string;
-//   children?: MenuItem[];
-//   isOpen?: boolean;
-// }
-
 interface MenuItem {
   id: string;
   label: string;
@@ -22,9 +15,23 @@ interface MenuItem {
 })
 export class SideBarComponent {
   menuItems: MenuItem[] = [
-    { id: 'overview', label: 'Overview', icon: 'grid', active: true },
-    { id: 'tasks', label: 'Tasks', icon: 'clipboard' },
-    { id: 'settings', label: 'Settings', icon: 'cog' }
+    { 
+      id: 'overview', 
+      label: 'Overview', 
+      icon: '/assets/icons/dashboard.svg',
+      active: true 
+    },
+    { 
+      id: 'tasks', 
+      label: 'Tasks', 
+      icon: '/assets/icons/task.svg' 
+    },
+    { 
+      id: 'settings', 
+      label: 'Settings', 
+      icon: '/assets/icons/setting.svg' 
+
+    }
   ];
   isCollapsed = false;
 

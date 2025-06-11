@@ -1,83 +1,70 @@
 <div class="sidebar">
-  <!-- Sidebar -->
-  <div [class]="'bg-gradient-to-br from-blue-600 to-purple-700 text-white shadow-2xl transition-all duration-300 ease-in-out ' + 
-               (isCollapsed ? 'w-20' : 'w-72')">
-    
-    <!-- Toggle Button -->
-    <div class="btn-toggle-wrapper">
-      <button 
-        (click)="toggleSidebar()"
-        class="btn-toggle">
-        <svg [class]="'w-4 h-4 transition-transform duration-300 ' + (isCollapsed ? 'rotate-180' : '')" 
-             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-        </svg>
-      </button>
-    </div>
-
+  <div class="workspace-container">
     <!-- Header Section -->
-    <div [class]="'px-6 pb-6 border-b border-white/10 ' + (isCollapsed ? 'px-4' : '')">
+    <div class="sidebar-header">
       <!-- User Profile -->
-      <div [class]="'flex items-center mb-6 ' + (isCollapsed ? 'justify-center' : '')">
-        <div class="w-12 h-12 bg-gradient-to-br from-orange-400 to-pink-500 rounded-xl flex items-center justify-center text-white font-bold text-lg border-2 border-white/20"
-             [class.mr-4]="!isCollapsed">
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-          </svg>
-        </div>
-        <div *ngIf="!isCollapsed" class="transition-opacity duration-300">
-          <h3 class="text-lg font-semibold text-white">My Space</h3>
-          <p class="text-sm text-white/70">Workspace Title</p>
+      <div class="workspace">
+        <div class="workspace-icon-wrapper">
+          <div class="workspace-icon ">
+            <svg class="size-6" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
         </div>
       </div>
       
       <!-- Add Button -->
-      <div [class]="isCollapsed ? 'flex justify-center' : ''">
+      <div class="flex items-center justify-center">
         <button 
           (click)="onAddClick()"
-          class="w-10 h-10 bg-white/15 border border-white/20 rounded-xl flex items-center justify-center text-white hover:bg-white/25 transition-all duration-300 hover:-translate-y-0.5 backdrop-blur-sm">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          class="workspace-add-btn">
+          <svg class="size-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
           </svg>
         </button>
       </div>
     </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div [class]="'sidebar-container ' + 
+               (isCollapsed ? 'w-20' : 'w-60')">
+    
+    <!-- Toggle Button -->
+    <div [class]="'btn-toggle-wrapper ' + (isCollapsed ? 'px-6' : 'px-4')">
+      <button 
+        (click)="toggleSidebar()"
+        class="btn-toggle">
+        <svg [class]="'size-4 transition-transform duration-300 ' + (isCollapsed ? 'rotate-180' : '')" 
+             fill="white" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+    </div>
 
     <!-- Menu Items -->
-    <nav class="py-6">
+    <nav class="pt-4">
       <div [class]="'space-y-2 ' + (isCollapsed ? 'px-2' : 'px-4')">
         <div 
           *ngFor="let item of menuItems" 
           (click)="onMenuClick(item)"
-          [class]="'flex items-center rounded-xl cursor-pointer transition-all duration-300 group relative ' + 
-                   (isCollapsed ? 'px-3 py-3 justify-center' : 'px-4 py-3') + ' ' +
-                   (item.active ? 'bg-white/15 text-white shadow-lg' : 'text-white/80 hover:bg-white/10 hover:text-white hover:translate-x-1')">
+          [class]="'item-wrapper ' + 
+                   (isCollapsed ? 'px-1 py-3 justify-center' : 'px-4 py-3') + ' ' +
+                   (item.active ? 'sidebar-active' : 'sidebar-hover')">
           
           <!-- Icons -->
           <div [class]="isCollapsed ? '' : 'mr-3'">
-            <!-- Overview Icon -->
-            <svg *ngIf="item.icon === 'grid'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-            </svg>
-            
-            <!-- Tasks Icon -->
-            <svg *ngIf="item.icon === 'clipboard'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-            </svg>
-            
-            <!-- Settings Icon -->
-            <svg *ngIf="item.icon === 'cog'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-            </svg>
+            <img [src]="item.icon" class="size-5" alt="">
           </div>
           
           <!-- Menu Label -->
-          <span *ngIf="!isCollapsed" class="font-medium transition-opacity duration-300">{{ item.label }}</span>
+          <span *ngIf="!isCollapsed" class="font-medium transition-opacity duration-300">
+            {{ item.label }}
+          </span>
           
           <!-- Tooltip for collapsed state -->
           <div *ngIf="isCollapsed" 
-               class="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-50">
+               class="tooltip">
             {{ item.label }}
           </div>
         </div>
