@@ -6,7 +6,7 @@
   }
 
   &-header {
-    @apply px-3 mt-6;
+    @apply px-3 mt-4;
   }
 
   .workspace-container {
@@ -33,12 +33,12 @@
   }
 
   .btn-toggle-wrapper {
-    @apply flex justify-end mt-8 pb-4;
+    @apply flex justify-end mt-4 pb-4;
   }
 
   .btn-toggle {
-    @apply w-8 h-8 border-2 border-[var(--primary-blue)] rounded-lg flex items-center 
-    justify-center text-[var(--primary-blue)] hover:bg-[var(--primary-blue)] hover:text-white transition-all 
+    @apply w-8 h-8 border border-[var(--primary-blue)] rounded-lg flex items-center 
+    justify-center text-[var(--primary-blue)] hover:bg-[#3755db1f] hover:text-white transition-all 
     duration-300 backdrop-blur-sm;
   }
 

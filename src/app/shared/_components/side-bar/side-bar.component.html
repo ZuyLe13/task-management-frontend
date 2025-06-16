@@ -1,8 +1,7 @@
 <div class="sidebar">
+  <!-- Workspace -->
   <div class="workspace-container">
-    <!-- Header Section -->
     <div class="sidebar-header">
-      <!-- User Profile -->
       <div class="workspace">
         <div class="workspace-icon-wrapper">
           <div class="workspace-icon ">
@@ -13,7 +12,6 @@
         </div>
       </div>
       
-      <!-- Add Button -->
       <div class="flex items-center justify-center">
         <button 
           (click)="onAddClick()"
@@ -27,44 +25,35 @@
   </div>
 
   <!-- Sidebar -->
-  <div [class]="'sidebar-container ' + 
-               (isCollapsed ? 'w-20' : 'w-60')">
-    
-    <!-- Toggle Button -->
-    <div [class]="'btn-toggle-wrapper ' + (isCollapsed ? 'px-6' : 'px-4')">
+  <div class="sidebar-container" [ngClass]="isCollapsed ? 'w-[70px]' : 'w-60'">
+    <div class="btn-toggle-wrapper" [ngClass]="(isCollapsed ? 'px-5' : 'px-4')">
       <button 
         (click)="toggleSidebar()"
         class="btn-toggle">
-        <svg [class]="'size-4 transition-transform duration-300 ' + (isCollapsed ? 'rotate-180' : '')" 
-             fill="white" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-        </svg>
+        <img class="size-3 transition-transform duration-300"
+          [ngClass]="isCollapsed ? 'rotate-180' : ''"
+          src="/assets/icons/arrow-right.svg" alt="">
       </button>
     </div>
 
     <!-- Menu Items -->
-    <nav class="pt-4">
-      <div [class]="'space-y-2 ' + (isCollapsed ? 'px-2' : 'px-4')">
+    <nav class="pt-2">
+      <div class="space-y-2" [ngClass]="isCollapsed ? 'px-2 w-16 mx-auto' : 'px-4'">
         <div 
           *ngFor="let item of menuItems" 
           (click)="onMenuClick(item)"
-          [class]="'item-wrapper ' + 
-                   (isCollapsed ? 'px-1 py-3 justify-center' : 'px-4 py-3') + ' ' +
-                   (item.active ? 'sidebar-active' : 'sidebar-hover')">
-          
-          <!-- Icons -->
-          <div [class]="isCollapsed ? '' : 'mr-3'">
+          class="item-wrapper"
+          [ngClass]="
+            (isCollapsed ? 'px-1 py-3 justify-center' : 'px-4 py-3') + ' ' +
+            (item.active ? 'sidebar-active' : 'sidebar-hover')"
+        >
+          <div [ngClass]="isCollapsed ? '' : 'mr-3'">
             <img [src]="item.icon" class="size-5" alt="">
           </div>
-          
-          <!-- Menu Label -->
           <span *ngIf="!isCollapsed" class="font-medium transition-opacity duration-300">
             {{ item.label }}
           </span>
-          
-          <!-- Tooltip for collapsed state -->
-          <div *ngIf="isCollapsed" 
-               class="tooltip">
+          <div *ngIf="isCollapsed" class="tooltip">
             {{ item.label }}
           </div>
         </div>

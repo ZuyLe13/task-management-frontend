@@ -1,0 +1,78 @@
+.header-container {
+  @apply w-full flex items-center justify-between px-5 py-2;
+}
+
+.header-logo {
+  @apply flex items-center space-x-2;
+}
+
+.logo-img {
+  @apply size-7;
+}
+
+.site-name {
+  @apply text-xl font-semibold;
+}
+
+.header-breadcrumb {
+  @apply hidden md:flex items-center text-sm;
+}
+
+.breadcrumb-link,
+.breadcrumb-current {
+  @apply px-3;
+}
+
+.header-actions {
+  @apply flex items-center space-x-5;
+}
+
+.search-wrapper {
+  @apply relative flex items-center cursor-pointer;
+}
+
+.search-icon {
+  @apply size-[22px];
+}
+
+.search-input {
+  @apply absolute right-0 h-[40px] transition-all duration-300 ease-in-out 
+  w-0 opacity-0 pointer-events-none;
+}
+
+.search-input.open {
+  @apply w-60 opacity-100 pointer-events-auto;
+}
+
+.notification-btn {
+  @apply relative;
+}
+
+.notification-icon {
+  @apply size-6;
+}
+
+.notification-badge {
+  @apply absolute -top-[6px] -right-1 px-[6px] py-[2px] text-xs font-bold
+  leading-none text-white bg-red-500 rounded-full;
+}
+
+.profile-wrapper {
+  @apply relative px-2;
+}
+
+.profile-btn {
+  @apply flex items-center space-x-2 border border-[var(--primary-yellow)] rounded-full;
+}
+
+.profile-img {
+  @apply size-9 rounded-full object-cover;
+}
+
+.dropdown-container {
+  @apply absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2 z-50;
+}
+
+.dropdown-item {
+  @apply block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100;
+}

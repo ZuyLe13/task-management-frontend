@@ -6,6 +6,7 @@ import { SiteManagementsComponent } from './pages/site-managements/site-manageme
 import { DashboardComponent } from './pages/site-managements/dashboard/dashboard.component';
 import { AuthGuard } from './shared/_guard/auth.guard';
 import { CreateWorkspaceComponent } from './pages/create-workspace/create-workspace.component';
+import { ProtectedGuard } from './shared/_guard/protected.guard';
 
 export const routes: Routes = [
   {
@@ -20,16 +21,18 @@ export const routes: Routes = [
   },
   {
     path: 'create-workspace',
-    component: CreateWorkspaceComponent
+    component: CreateWorkspaceComponent,
+    canActivate: [ProtectedGuard]
   },
   {
     path: '',
     component: SiteManagementsComponent,
+    canActivate: [ProtectedGuard],
     children: [
       {
         path: '',
         redirectTo: 'dashboard',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'dashboard',

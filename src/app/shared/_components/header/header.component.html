@@ -1,0 +1,49 @@
+<header class="header-container">
+  <div class="flex gap-5">
+    <div class="header-logo">
+      <a routerLink="/dashboard"><img src="/assets/img/logo.png" alt="Logo" class="logo-img" /></a>
+    </div>
+  
+    <!-- Breadcrumb -->
+    <nav class="header-breadcrumb">
+      <img src="/assets/icons/arrow-left.svg" alt="">
+      <a routerLink="/" class="breadcrumb-link">Home</a>
+      <img src="/assets/icons/arrow-left.svg" alt="">
+      <a routerLink="/" class="breadcrumb-current">Current Task</a>
+    </nav>
+  </div>
+
+  <div class="header-actions">
+    <div class="search-wrapper" (click)="toggleSearch()" [class.active]="isSearchOpen">
+      <img src="/assets/icons/search.svg" alt="Search" class="search-icon" />
+      <input
+        type="text"
+        placeholder="Search..."
+        class="z-input search-input"
+        (click)="$event.stopPropagation()"
+        (blur)="closeSearch()"
+        [class.open]="isSearchOpen"
+      />
+    </div>
+
+    <button class="notification-btn">
+      <img src="/assets/icons/notification.svg" class="notification-icon" alt="">
+      <span class="notification-badge">2</span>
+    </button>
+    
+    <div class="relative profile-wrapper" (clickOutside)="closeDropdown()">
+      <button class="profile-btn" (click)="toggleDropdown()">
+        <img src="assets/avatar.jpg" alt="Profile" class="profile-img"/>
+      </button>
+
+      <div *ngIf="isOpen" class="dropdown-container">
+        <button class="dropdown-item" (click)="viewProfile()">
+          View Profile
+        </button>
+        <button class="dropdown-item" (click)="logout()">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
