@@ -39,24 +39,20 @@
     <!-- Menu Items -->
     <nav class="pt-2">
       <div class="space-y-2" [ngClass]="isCollapsed ? 'px-2 w-16 mx-auto' : 'px-4'">
-        <div 
-          *ngFor="let item of menuItems" 
-          (click)="onMenuClick(item)"
+        <a 
+          *ngFor="let item of menuItems"
+          [routerLink]="item.path"
           class="item-wrapper"
           [ngClass]="
             (isCollapsed ? 'px-1 py-3 justify-center' : 'px-4 py-3') + ' ' +
             (item.active ? 'sidebar-active' : 'sidebar-hover')"
         >
           <div [ngClass]="isCollapsed ? '' : 'mr-3'">
-            <img [src]="item.icon" class="size-5" alt="">
+            <img [src]="item.icon" alt="">
           </div>
-          <span *ngIf="!isCollapsed" class="font-medium transition-opacity duration-300">
-            {{ item.label }}
-          </span>
-          <div *ngIf="isCollapsed" class="tooltip">
-            {{ item.label }}
-          </div>
-        </div>
+          <span *ngIf="!isCollapsed" class="">{{ item.label }}</span>
+          <div *ngIf="isCollapsed" class="tooltip">{{ item.label }}</div>
+        </a>
       </div>
     </nav>
   </div>

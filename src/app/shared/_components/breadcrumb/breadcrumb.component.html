@@ -1,0 +1,9 @@
+<nav *ngIf="breadcrumbs$ | async as breadcrumbs" class="text-sm text-[var(--text-grey)] px-3">
+  <ng-container *ngFor="let bc of breadcrumbs; let last = last">
+    <a *ngIf="!last" [routerLink]="bc.url" class="hover:underline text-blue-600">
+      {{ bc.label }}
+    </a>
+    <a [routerLink]="bc.url" *ngIf="last" class="font-semibold">{{ bc.label }}</a>
+    <span *ngIf="!last"> / </span>
+  </ng-container>
+</nav>

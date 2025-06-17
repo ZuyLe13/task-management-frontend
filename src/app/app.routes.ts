@@ -7,6 +7,7 @@ import { DashboardComponent } from './pages/site-managements/dashboard/dashboard
 import { AuthGuard } from './shared/_guard/auth.guard';
 import { CreateWorkspaceComponent } from './pages/create-workspace/create-workspace.component';
 import { ProtectedGuard } from './shared/_guard/protected.guard';
+import { TaskListComponent } from './pages/site-managements/task-list/task-list.component';
 
 export const routes: Routes = [
   {
@@ -37,6 +38,10 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent
+      },
+      {
+        path: 'task-list',
+        component: TaskListComponent
       }
     ]
   },
