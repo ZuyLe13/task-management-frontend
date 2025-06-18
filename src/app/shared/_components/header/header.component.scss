@@ -70,7 +70,7 @@
 }
 
 .dropdown-container {
-  @apply absolute right-0 mt-2 w-40 bg-white border border-[var(--border-modal)] rounded-md;
+  @apply absolute right-0 mt-2 w-40 bg-white border border-[var(--border-modal)] rounded-md z-50;
 }
 
 .dropdown-item {

@@ -1,1 +1,48 @@
-<p>my-profile works!</p>
+<div class="my-profile">
+  <div class="relative">
+    <img src="/assets/img/profile-bg.png" class="rounded" alt="">
+    <img src="https://i.pravatar.cc/100" alt="Avatar" class="avatar" />
+    <div class="my-profile-heading">
+      <h2 class="section-heading ml-60">
+        <z-i18n [key]="'My Profile'"></z-i18n>
+      </h2>
+      <div class="my-profile-actions">
+        <button class="btn btn-cancel">
+          <z-i18n [key]="'Cancel'"></z-i18n>
+        </button>
+        <button class="btn btn-primary">
+          <z-i18n [key]="'Save'"></z-i18n>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-20 max-w-[70%] ml-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
+      <div class="form-group">
+        <label class="required"><z-i18n [key]="'Full Name'"></z-i18n></label>
+        <z-input placeholder="Killan" />
+      </div>
+      <div class="form-group">
+        <label class="required"><z-i18n [key]="'Email'"></z-i18n></label>
+        <z-input type="email" placeholder="James" />
+      </div>
+      <div class="form-group">
+        <label><z-i18n [key]="'First Name'"></z-i18n></label>
+        <z-input placeholder="James" />
+      </div>
+      <div class="form-group">
+        <label><z-i18n [key]="'Last Name'"></z-i18n></label>
+        <z-input placeholder="James" />
+      </div>
+      <div class="form-group">
+        <label><z-i18n [key]="'Phone'"></z-i18n></label>
+         <z-input placeholder="Phone"/>
+      </div>
+      <div class="form-group">
+        <label class="required"><z-i18n [key]="'Role'"></z-i18n></label>
+         <z-input placeholder="Role"/>
+      </div>
+    </div>
+  </div>
+</div>

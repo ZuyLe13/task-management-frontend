@@ -10,7 +10,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Inter, sans-serif; 
+  font-family: "DM Sans", sans-serif;
 }
 
 :root {
@@ -18,15 +18,17 @@ body {
   --primary-yellow: #FBBE37;
   --primary-bg: #F3F4F8;
   --primary-hover: #5050f91e;
+  --btn-primary-hover: #4545d4;
+  --btn-cancel-hover: #dddddd80;
   --text-black: #232360;
   --text-grey: #6A7181;
-  --border-color: #A8ABBD;
+  --border-color: #D9DADE;
   --border-modal: #e5e5ed;
 }
 
 // ========== Common styles ==========
 .section-heading {
-  @apply text-[32px] text-[var(--text-black)] font-bold;
+  @apply text-[30px] text-[var(--text-black)] font-bold;
 }
 
 .section-title {
@@ -44,22 +46,26 @@ body {
 // =========== Button ===========
 
 .btn {
-  @apply flex items-center justify-center h-[39px] px-5 rounded-md transition-all 
+  @apply flex items-center justify-center h-[40px] px-4  rounded-md transition-all 
   duration-150 ease-in cursor-pointer font-semibold tracking-wide;
 }
 
 .btn-primary {
-  @apply px-5 bg-[var(--primary-blue)] text-white hover:bg-[#344fc5];
+  @apply px-5 bg-[var(--primary-blue)] text-white hover:bg-[var(--btn-primary-hover)];
 }
 
-.btn-outline {
-  @apply border-[2px] border-[var(--primary-blue)] text-[var(--primary-blue)] 
-  font-semibold bg-transparent hover:bg-[var(--primary-blue)] hover:text-white;
+.btn-outlined {
+  @apply border-[2px] border-[var(--primary-blue)] text-[var(--primary-blue)]
+  bg-transparent hover:bg-[var(--primary-blue)] hover:text-white;
+}
+
+.btn-cancel {
+  @apply border border-[var(--border-color)] hover:bg-[var(--btn-cancel-hover)];
 }
 
 // =========== Input ===========
 .z-input {
-  @apply w-full h-[50px] px-4 border border-[var(--border-color)] rounded-md focus:ring-1
+  @apply w-full h-[45px] px-4 border border-[var(--border-color)] rounded-md focus:ring-1
   focus:ring-[var(--primary-blue)] focus:border-[var(--primary-blue)] outline-none 
   transition-colors duration-300 ease-out;
 }
@@ -70,4 +76,15 @@ body {
 
 .input-label {
   @apply block text-base font-normal text-[var(--text-black)] mb-2;
+}
+
+.required {
+  &::after {
+    @apply content-['*'] text-red-600;
+  }
+}
+
+// =========== Form Group ===========
+.form-group {
+  @apply flex flex-col gap-[6px] text-[var(--text-black)] font-medium;
 }

@@ -39,10 +39,10 @@ export class CreateWorkspaceComponent {
       return;
     }
 
-    if (!this.selectedFile) {
-      console.log('Please select an image file');
-      return;
-    }
+    // if (!this.selectedFile) {
+    //   console.log('Please select an image file');
+    //   return;
+    // }
 
     const { title, desc } = this.createWorkspaceForm.value;
 

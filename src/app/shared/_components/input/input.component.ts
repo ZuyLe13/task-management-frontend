@@ -18,9 +18,9 @@ import { FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule, UntypedFormControl
 })
 export class InputComponent {
   @Input() formControl?: FormControl;
-  @Input() type: 'text' | 'number' = 'text';
+  @Input() type: string = 'text';
   @Input() placeholder = '';
-  @Input() className = '';
+  @Input() class = '';
   @Input() disabled = false;
   @Input() value?: string | number;
   

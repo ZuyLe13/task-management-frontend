@@ -16,7 +16,7 @@
   <div class="signup-right-content">
     <div class="w-full max-w-md">
       <div class="flex justify-end mb-36">
-        <button class="btn btn-outline signin-btn" (click)="onSignIn()">
+        <button class="btn btn-outlined signin-btn" (click)="onSignIn()">
           Sign In
         </button>
       </div>
@@ -25,17 +25,17 @@
         <p class="text-[#666] mb-8">It's Simple and Easy!</p>
         <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="space-y-6">
           <div class="form-group">
-            <label class="input-label">Full Name</label>
+            <label>Full Name</label>
             <input class="z-input" formControlName="fullName" placeholder="Full Name">
             <p class="text-xs text-[#6E7391] mt-1">Information about the input</p>
           </div>
           <div class="form-group">
-            <label class="input-label">Email Address</label>
+            <label>Email Address</label>
             <input class="z-input" type="email" formControlName="email"placeholder="emmyadsure.web@gmail.com">
             <p class="text-xs text-[#6E7391] mt-1">Example: mail&#64;gmail.com</p>
           </div>
           <div class="form-group">
-            <label class="input-label">Enter Password</label>
+            <label>Enter Password</label>
             <div class="relative">
               <input class="z-input" [type]="isShowPassword ? 'text' : 'password'" formControlName="password"
                 placeholder="Password">

@@ -2,7 +2,7 @@
   <div class="signin-left">
     <div class="w-full max-w-md">
       <div class="flex justify-end mb-56">
-        <button class="btn btn-outline signup-btn" (click)="onSignUp()">
+        <button class="btn btn-outlined signup-btn" (click)="onSignUp()">
           Sign Up
         </button>
       </div>
@@ -12,11 +12,11 @@
         <p class="text-[#666] mb-8">Welcome back! Please login to your account.</p>
         <form [formGroup]="signInForm" (ngSubmit)="onSignIn()" class="space-y-6">
           <div class="form-group">
-            <label for="email" class="input-label">Email Address</label>
+            <label>Email Address</label>
             <input class="z-input" type="email" formControlName="email" placeholder="Email">
           </div>
           <div class="form-group">
-            <label for="password" class="input-label">Password</label>
+            <label>Password</label>
             <input class="z-input" type="password" formControlName="password" placeholder="Password">
           </div>
           <button type="submit" class="btn btn-primary signin-btn">Sign In</button>

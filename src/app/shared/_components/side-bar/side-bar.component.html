@@ -4,8 +4,8 @@
     <div class="btn-toggle-wrapper" [ngClass]="(isCollapsed ? 'px-5' : 'px-4')">
       <button 
         (click)="toggleSidebar()"
-        class="btn-toggle">
-        <img class="size-3 transition-transform duration-300"
+        class="btn btn-cancel btn-toggle">
+        <img class="size-4 transition-transform duration-300"
           [ngClass]="isCollapsed ? 'rotate-180' : ''"
           src="/assets/icons/arrow-right.svg" alt="">
       </button>

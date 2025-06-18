@@ -14,9 +14,7 @@
   }
 
   .btn-toggle {
-    @apply w-8 h-8 border border-[var(--primary-blue)] rounded-lg flex items-center 
-    justify-center text-[var(--primary-blue)] hover:bg-[var(--primary-hover)] hover:text-white transition-all 
-    duration-300 backdrop-blur-sm;
+    @apply px-3;
   }
 
   .item-wrapper {

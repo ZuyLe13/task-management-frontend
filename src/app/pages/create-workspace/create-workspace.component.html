@@ -23,28 +23,25 @@
       <p class="text-[#666] mb-10">Some text to fill in this space</p>
       <form [formGroup]="createWorkspaceForm" (ngSubmit)="onCreateWorkspace()" class="space-y-6">
         <div class="form-group">
-          <label for="title" class="input-label">Title your workspace</label>
+          <label>Title your workspace</label>
           <input 
-            id="title" 
             class="z-input" 
             formControlName="title" 
             placeholder="Title Workspace"
           />
         </div>
         <div class="form-group">
-          <label for="desc" class="input-label">Description your workspace</label>
+          <label>Description your workspace</label>
           <textarea 
-            id="desc"
             class="z-input z-text-area" 
             formControlName="desc" 
             placeholder="Type your description here...">
           </textarea>
         </div>
         <div class="form-group">
-          <label for="image" class="input-label">Workspace Image</label>
+          <label>Workspace Image</label>
           <input 
             type="file"
-            id="image"
             (change)="onFileSelected($event)"
             accept="image/*"
           />
