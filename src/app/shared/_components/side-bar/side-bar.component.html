@@ -1,31 +1,6 @@
 <div class="sidebar">
-  <!-- Workspace -->
-  <div class="workspace-container">
-    <div class="sidebar-header">
-      <div class="workspace">
-        <div class="workspace-icon-wrapper">
-          <div class="workspace-icon ">
-            <svg class="size-6" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-            </svg>
-          </div>
-        </div>
-      </div>
-      
-      <div class="flex items-center justify-center">
-        <button 
-          (click)="onAddClick()"
-          class="workspace-add-btn">
-          <svg class="size-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- Sidebar -->
-  <div class="sidebar-container" [ngClass]="isCollapsed ? 'w-[70px]' : 'w-60'">
+  <div class="sidebar-container" [ngClass]="isCollapsed ? 'w-20' : 'w-[260px]'">
     <div class="btn-toggle-wrapper" [ngClass]="(isCollapsed ? 'px-5' : 'px-4')">
       <button 
         (click)="toggleSidebar()"
@@ -39,18 +14,21 @@
     <!-- Menu Items -->
     <nav class="pt-2">
       <div class="space-y-2" [ngClass]="isCollapsed ? 'px-2 w-16 mx-auto' : 'px-4'">
-        <a 
+        <a
           *ngFor="let item of menuItems"
           [routerLink]="item.path"
           class="item-wrapper"
-          [ngClass]="
-            (isCollapsed ? 'px-1 py-3 justify-center' : 'px-4 py-3') + ' ' +
-            (item.active ? 'sidebar-active' : 'sidebar-hover')"
+          [ngClass]="[
+            isCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded',
+            item.active ? 'sidebar-active' : 'sidebar-hover'
+          ]"
         >
-          <div [ngClass]="isCollapsed ? '' : 'mr-3'">
-            <img [src]="item.icon" alt="">
-          </div>
-          <span *ngIf="!isCollapsed" class="">{{ item.label }}</span>
+          <span class="material-symbols-rounded" 
+                [ngClass]="{ 'mr-3': !isCollapsed }">
+            {{ item.icon }}
+          </span>
+          
+          <z-i18n *ngIf="!isCollapsed" [key]="item.label"></z-i18n>
           <div *ngIf="isCollapsed" class="tooltip">{{ item.label }}</div>
         </a>
       </div>

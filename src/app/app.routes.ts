@@ -8,6 +8,10 @@ import { AuthGuard } from './shared/_guard/auth.guard';
 import { CreateWorkspaceComponent } from './pages/create-workspace/create-workspace.component';
 import { ProtectedGuard } from './shared/_guard/protected.guard';
 import { TaskListComponent } from './pages/site-managements/task-list/task-list.component';
+import { MyProfileComponent } from './pages/site-managements/my-profile/my-profile.component';
+import { TimelineComponent } from './pages/site-managements/timeline/timeline.component';
+import { MessagesComponent } from './pages/site-managements/messages/messages.component';
+import { UploadFilesComponent } from './pages/site-managements/upload-files/upload-files.component';
 
 export const routes: Routes = [
   {
@@ -42,6 +46,22 @@ export const routes: Routes = [
       {
         path: 'task-list',
         component: TaskListComponent
+      },
+      {
+        path: 'profile',
+        component: MyProfileComponent
+      },
+      {
+        path: 'timeline',
+        component: TimelineComponent
+      },
+      {
+        path: 'messages',
+        component: MessagesComponent
+      },
+      {
+        path: 'documents',
+        component: UploadFilesComponent
       }
     ]
   },

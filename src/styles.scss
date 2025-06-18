@@ -7,20 +7,21 @@ html, body {
 }
 
 body { 
-  margin: 0; 
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Inter, sans-serif; 
 }
 
 :root {
-  --primary-blue: #3754DB;
+  --primary-blue: #5051f9;
   --primary-yellow: #FBBE37;
-  --text-black: #16171D;
-  --text-grey: #666;
-  --text-color-sm: #6E7391;
-  --label-color: #2C2E3A;
+  --primary-bg: #F3F4F8;
+  --primary-hover: #5050f91e;
+  --text-black: #232360;
+  --text-grey: #6A7181;
   --border-color: #A8ABBD;
+  --border-modal: #e5e5ed;
 }
 
 // ========== Common styles ==========
@@ -37,7 +38,7 @@ body {
 }
 
 .section-text-sm {
-  @apply text-[14px] text-[var(--text-color-sm)] font-normal;
+  @apply text-[14px] text-[var(--text-grey)] font-normal;
 }
 
 // =========== Button ===========
@@ -68,5 +69,5 @@ body {
 }
 
 .input-label {
-  @apply block text-base font-normal text-[var(--label-color)] mb-2;
+  @apply block text-base font-normal text-[var(--text-black)] mb-2;
 }

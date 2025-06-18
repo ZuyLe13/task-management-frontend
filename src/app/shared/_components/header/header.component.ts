@@ -3,6 +3,7 @@ import { Component, HostListener } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../_services/auth.service';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,10 @@ export class HeaderComponent {
   isSearchOpen = false;
   isOpen = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private translateService: TranslateService
+  ) {}
 
   toggleSearch() {
     this.isSearchOpen = !this.isSearchOpen;
@@ -47,5 +51,9 @@ export class HeaderComponent {
     if (!target.closest('.profile-wrapper')) {
       this.closeDropdown();
     }
+  }
+
+  switchLang(lang: string) {
+    this.translateService.use(lang);
   }
 }

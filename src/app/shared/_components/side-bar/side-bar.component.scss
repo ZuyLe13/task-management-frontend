@@ -1,5 +1,5 @@
 .sidebar {
-  @apply flex h-screen;
+  @apply flex h-screen bg-[#FBFAFF];
 
   &-container {
     @apply transition-all duration-300 ease-in-out;
@@ -9,49 +9,34 @@
     @apply px-3 mt-4;
   }
 
-  .workspace-container {
-    @apply bg-[var(--primary-blue)]
-  }
-
-  .workspace-icon-wrapper {
-    @apply size-[50px] flex items-center justify-center border-2 border-[var(--primary-yellow)] 
-    rounded-xl cursor-pointer;
-  }
-
-  .workspace {
-    @apply flex items-center mb-6;
-
-    &-icon {
-      @apply flex items-center justify-center size-10 bg-gradient-to-br from-green-400 
-      to-red-500 rounded-xl text-white;
-    }
-
-    &-add-btn {
-      @apply size-10 bg-white/20 rounded-lg flex items-center justify-center transition-all 
-      duration-300 hover:bg-white/30 hover:-translate-y-1 backdrop-blur-sm;
-    }
-  }
-
   .btn-toggle-wrapper {
     @apply flex justify-end mt-4 pb-4;
   }
 
   .btn-toggle {
     @apply w-8 h-8 border border-[var(--primary-blue)] rounded-lg flex items-center 
-    justify-center text-[var(--primary-blue)] hover:bg-[#3755db1f] hover:text-white transition-all 
+    justify-center text-[var(--primary-blue)] hover:bg-[var(--primary-hover)] hover:text-white transition-all 
     duration-300 backdrop-blur-sm;
   }
 
   .item-wrapper {
-    @apply flex items-center rounded-lg cursor-pointer transition-all duration-300 relative;
+    @apply flex items-center cursor-pointer transition-all duration-300 relative whitespace-nowrap;
+  }
+
+  &-collapsed {
+    @apply px-1 py-3 justify-center rounded-[14px];
+  }
+
+  &-expanded {
+    @apply px-4 py-3 rounded-lg;
   }
 
   &-active {
-    @apply text-[var(--primary-blue)] bg-[#3755db1f];
+    @apply text-white bg-[var(--primary-blue)];
   }
 
   &-hover {
-    @apply text-[var(--text-grey)] hover:text-[var(--primary-blue)] hover:bg-[#3755db1f] hover:translate-x-1;
+    @apply text-[var(--text-grey)] hover:bg-[var(--primary-hover)] hover:translate-x-1;
   }
 
   .tooltip {

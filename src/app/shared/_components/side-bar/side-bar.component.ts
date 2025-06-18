@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
+import { ZI18nComponent } from '../z-i18n/z-i18n.component';
 
 interface MenuItem {
   id: string;
@@ -12,7 +13,7 @@ interface MenuItem {
 }
 @Component({
   selector: 'app-side-bar',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ZI18nComponent],
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss'
 })
@@ -21,23 +22,40 @@ export class SideBarComponent {
     { 
       id: 'overview', 
       label: 'Dashboard', 
-      icon: '/assets/icons/dashboard.svg',
+      icon: 'grid_view',
       active: true,
       path: '/dashboard'
     },
     { 
+      id: 'timeline', 
+      label: 'Timeline', 
+      icon: 'view_timeline',
+      path: '/timeline'
+    },
+    { 
       id: 'tasks', 
       label: 'Tasks', 
-      icon: '/assets/icons/task.svg',
+      icon: 'docs',
       path: '/task-list'
     },
     { 
-      id: 'settings', 
-      label: 'Settings', 
-      icon: '/assets/icons/setting.svg',
-      path: '/settings'
-
-    }
+      id: 'messages', 
+      label: 'Messages', 
+      icon: 'send',
+      path: '/messages'
+    },
+    { 
+      id: 'documents', 
+      label: 'Documents', 
+      icon: 'drive_folder_upload',
+      path: '/documents'
+    },
+    { 
+      id: 'myProfile', 
+      label: 'My Profile', 
+      icon: 'settings',
+      path: '/profile'
+    },
   ];
   isCollapsed = false;
 

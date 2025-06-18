@@ -8,19 +8,19 @@ export const routerObject = {
     breadcrumb: 'Task List'
   },
   projects: {
-    path: '/projects',
-    breadcrumb: 'Projects'
-  },
-  projectDetail: {
-    path: '/projects/:id',
-    breadcrumb: 'Project Detail'
-  },
-  settings: {
-    path: '/settings',
-    breadcrumb: 'Settings'
+    path: '/timeline',
+    breadcrumb: 'Timeline'
   },
   profile: {
     path: '/profile',
-    breadcrumb: 'Profile'
+    breadcrumb: 'My Profile'
+  },
+  messages: {
+    path: '/messages',
+    breadcrumb: 'Messages'
+  },
+  documents: {
+    path: '/documents',
+    breadcrumb: 'Documents'
   }
 } as const;
