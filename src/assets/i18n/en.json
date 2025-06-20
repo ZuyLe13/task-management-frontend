@@ -5,5 +5,7 @@
   "Task List": "Task List",
   "Timeline": "Timeline",
   "Messages": "Messages",
-  "Documents": "Documents"
+  "Documents": "Documents",
+  "This field is required.": "This field is required.",
+  "Invalid email address.": "Invalid email address."
 }

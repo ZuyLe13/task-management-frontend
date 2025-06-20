@@ -1,0 +1,10 @@
+<div *ngIf="control?.invalid && (control?.dirty || control?.touched)" 
+     class="mt-1 text-sm text-red-500">
+  <div *ngIf="control?.errors?.['required']">
+    <z-i18n [key]="'This field is required.'"></z-i18n>
+  </div>
+  <div *ngIf="control?.errors?.['email']">
+    <z-i18n [key]="'Invalid email address.'"></z-i18n>
+  </div>
+  <div *ngIf="customMessage">{{ customMessage }}</div>
+</div>

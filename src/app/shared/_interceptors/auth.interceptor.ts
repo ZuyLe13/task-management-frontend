@@ -15,6 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('accessToken');
+    console.log('Interceptor Token:', token); // 👈 Thêm log kiểm tra
 
     let authReq = req;
     if (token) {
@@ -25,8 +26,11 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
 
+    console.log('Request Headers:', authReq.headers); // 👈 Thêm log kiểm tra
+
     return next.handle(authReq).pipe(
       catchError((error) => {
+        console.error('Interceptor Error:', error); // 👈 Thêm log kiểm tra
         if (error instanceof HttpErrorResponse && error.status === 401) {
           return this.handle401Error(authReq, next);
         }

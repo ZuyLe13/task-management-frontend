@@ -1,5 +1,9 @@
 <input
   [type]="type"
-  [class]="'z-input' + class"
+  class="z-input"
+  [ngClass]="class"
   [placeholder]="placeholder"
+  [value]="value"
+  (input)="onInput($event)"
+  (blur)="onBlur()"
 />
