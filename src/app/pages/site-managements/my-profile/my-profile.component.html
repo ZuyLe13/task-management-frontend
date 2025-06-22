@@ -2,7 +2,12 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="relative">
       <img src="/assets/img/profile-bg.png" class="rounded" alt="">
-      <img src="https://i.pravatar.cc/100" alt="Avatar" class="avatar" />
+      <ng-container *ngIf="user?.avatarUrl; else defaultAvatar">
+        <img [src]="user.avatarUrl" alt="Avatar" class="avatar" />
+      </ng-container>
+      <ng-template #defaultAvatar>
+        <img src="https://i.pravatar.cc/100" alt="Avatar" class="avatar" />
+      </ng-template>
       <div class="my-profile-heading">
         <h2 class="section-heading ml-60">
           <z-i18n [key]="'My Profile'"></z-i18n>
@@ -11,7 +16,8 @@
           <button class="btn btn-cancel">
             <z-i18n [key]="'Cancel'"></z-i18n>
           </button>
-          <button class="btn btn-primary">
+          <button class="btn btn-primary" 
+                  [disabled]="isSubmitting || form.invalid">
             <z-i18n [key]="'Save'"></z-i18n>
           </button>
         </div>
@@ -32,15 +38,15 @@
         </div>
         <div class="form-group">
           <label><z-i18n [key]="'First Name'"></z-i18n></label>
-          <z-input placeholder="James" />
+          <z-input formControlName="firstName" placeholder="James" />
         </div>
         <div class="form-group">
           <label><z-i18n [key]="'Last Name'"></z-i18n></label>
-          <z-input placeholder="James" />
+          <z-input formControlName="lastName" placeholder="James" />
         </div>
         <div class="form-group">
           <label><z-i18n [key]="'Phone'"></z-i18n></label>
-          <z-input type="number" placeholder="Phone"/>
+          <z-input type="number" formControlName="phone" placeholder="Phone"/>
         </div>
         <div class="form-group">
           <label class="required"><z-i18n [key]="'Role'"></z-i18n></label>

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { Observable, catchError, throwError } from 'rxjs';
 
 interface AuthPayload {
   email: string;

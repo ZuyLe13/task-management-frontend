@@ -1,10 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ZI18nComponent } from "../../../shared/_components/z-i18n/z-i18n.component";
 import { InputComponent } from "../../../shared/_components/input/input.component";
 import { ErrorComponent } from "../../../shared/_components/error/error.component";
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../../shared/_services/user.service';
 import { User } from '../../../shared/interfaces/user.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-my-profile',
@@ -13,7 +14,8 @@ import { User } from '../../../shared/interfaces/user.model';
     InputComponent,
     ErrorComponent,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
   templateUrl: './my-profile.component.html',
   styleUrl: './my-profile.component.scss'
@@ -21,11 +23,11 @@ import { User } from '../../../shared/interfaces/user.model';
 export class MyProfileComponent implements OnInit {
   form!: FormGroup;
   user!: User;
+  isSubmitting = false;
 
   constructor(
     private fb: FormBuilder, 
     private userService: UserService,
-    private cdr: ChangeDetectorRef
   ) {
     this.form = this.fb.group({
       fullName: ['', Validators.required],
@@ -38,30 +40,37 @@ export class MyProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getUserProfile().subscribe({
-      next: (data) => {
-        this.user = data;
+    this.loadUserProfile();
+  }
 
-        // Gán dữ liệu vào form
-        this.form.patchValue({
-          fullName: this.user.fullName || '',
-          email: this.user.email || '',
-          firstName: this.user.firstName || '',
-          lastName: this.user.lastName || '',
-          phone: this.user.phone || '',
-          role: this.user.role || ''
-        });
+  loadUserProfile(): void {
+    this.userService.getUserProfile().subscribe({
+      next: (user) => {
+        this.user = user;
+        this.form.patchValue(user);
       },
       error: (err) => console.error(err)
     });
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      console.log(this.form.value);
-      // xử lý submit
-    } else {
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
+      return;
     }
+    this.isSubmitting = true;
+    this.userService.updateProfile(this.form.getRawValue()).subscribe({
+      next: (updatedUser) => {
+        this.user = updatedUser;
+        this.form.patchValue(updatedUser);
+        alert('Profile updated successfully!');
+        this.isSubmitting = false;
+      },
+       error: (err) => {
+        console.error(err);
+        alert('Failed to update profile.');
+        this.isSubmitting = false;
+      }
+    })
   }
 }

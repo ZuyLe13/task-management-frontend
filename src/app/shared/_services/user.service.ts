@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { User } from '../interfaces/user.model';
 import { AuthService } from './auth.service';
@@ -23,6 +22,14 @@ export class UserService {
 
   getUserProfile() {
     return this.http.get<User>(`${environment.apiUrl}/profile`, {
+      withCredentials: true,
+      headers: this.getHeaders()
+    });
+  }
+
+  updateProfile(data: any) {
+    return this.http.put<User>(`${environment.apiUrl}/profile`, data, {
+      withCredentials: true,
       headers: this.getHeaders()
     });
   }
