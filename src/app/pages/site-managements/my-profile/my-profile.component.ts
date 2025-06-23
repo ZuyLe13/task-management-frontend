@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { UserService } from '../../../shared/_services/user.service';
 import { User } from '../../../shared/interfaces/user.model';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-my-profile',
@@ -23,11 +24,12 @@ import { CommonModule } from '@angular/common';
 export class MyProfileComponent implements OnInit {
   form!: FormGroup;
   user!: User;
+  originalUserData?: User;
   isSubmitting = false;
 
   constructor(
-    private fb: FormBuilder, 
-    private userService: UserService,
+    private fb: FormBuilder,
+    private userService: UserService
   ) {
     this.form = this.fb.group({
       fullName: ['', Validators.required],
@@ -39,7 +41,7 @@ export class MyProfileComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadUserProfile();
   }
 
@@ -47,30 +49,44 @@ export class MyProfileComponent implements OnInit {
     this.userService.getUserProfile().subscribe({
       next: (user) => {
         this.user = user;
+        this.originalUserData = { ...user };
         this.form.patchValue(user);
+        this.form.markAsPristine();
       },
       error: (err) => console.error(err)
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
+
+    if (!this.form.dirty) {
+      return;
+    }
+
     this.isSubmitting = true;
     this.userService.updateProfile(this.form.getRawValue()).subscribe({
       next: (updatedUser) => {
         this.user = updatedUser;
+        this.originalUserData = { ...updatedUser };
         this.form.patchValue(updatedUser);
-        alert('Profile updated successfully!');
+        this.form.markAsPristine();
         this.isSubmitting = false;
       },
-       error: (err) => {
+      error: (err) => {
         console.error(err);
-        alert('Failed to update profile.');
         this.isSubmitting = false;
       }
-    })
+    });
+  }
+
+  onCancel(): void {
+    if (this.originalUserData) {
+      this.form.reset(this.originalUserData);
+      this.form.markAsPristine();
+    }
   }
 }

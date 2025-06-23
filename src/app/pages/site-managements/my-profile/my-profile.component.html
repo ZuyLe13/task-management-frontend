@@ -1,5 +1,5 @@
 <div class="my-profile">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="form">
     <div class="relative">
       <img src="/assets/img/profile-bg.png" class="rounded" alt="">
       <ng-container *ngIf="user?.avatarUrl; else defaultAvatar">
@@ -13,11 +13,13 @@
           <z-i18n [key]="'My Profile'"></z-i18n>
         </h2>
         <div class="my-profile-actions">
-          <button class="btn btn-cancel">
+          <button class="btn btn-cancel" (click)="onCancel()">
             <z-i18n [key]="'Cancel'"></z-i18n>
           </button>
-          <button class="btn btn-primary" 
-                  [disabled]="isSubmitting || form.invalid">
+          <button class="btn btn-primary profile-save-btn"
+                  [disabled]="!form.dirty || isSubmitting"
+                  [ngClass]="{'disabled': !form.dirty || isSubmitting}"
+                  (click)="onSubmit()">
             <z-i18n [key]="'Save'"></z-i18n>
           </button>
         </div>
