@@ -7,11 +7,13 @@ import { DashboardComponent } from './pages/site-managements/dashboard/dashboard
 import { AuthGuard } from './shared/_guard/auth.guard';
 import { CreateWorkspaceComponent } from './pages/create-workspace/create-workspace.component';
 import { ProtectedGuard } from './shared/_guard/protected.guard';
-import { TaskListComponent } from './pages/site-managements/task-list/task-list.component';
+import { TaskListComponent } from './pages/site-managements/task-management/task-list/task-list.component';
 import { MyProfileComponent } from './pages/site-managements/my-profile/my-profile.component';
 import { TimelineComponent } from './pages/site-managements/timeline/timeline.component';
 import { MessagesComponent } from './pages/site-managements/messages/messages.component';
 import { UploadFilesComponent } from './pages/site-managements/upload-files/upload-files.component';
+import { routerObject } from './shared/constants/router.constants';
+import { TaskManagementComponent } from './pages/site-managements/task-management/task-management.component';
 
 export const routes: Routes = [
   {
@@ -36,31 +38,35 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: routerObject.dashboard.path,
         pathMatch: 'full',
       },
       {
-        path: 'dashboard',
+        path: routerObject.dashboard.path,
         component: DashboardComponent
       },
       {
-        path: 'task-list',
+        path: routerObject.taskManagement.path,
+        component: TaskManagementComponent
+      },
+      {
+        path: routerObject.taskList.path,
         component: TaskListComponent
       },
       {
-        path: 'profile',
+        path: routerObject.profile.path,
         component: MyProfileComponent
       },
       {
-        path: 'timeline',
+        path: routerObject.timeline.path,
         component: TimelineComponent
       },
       {
-        path: 'messages',
+        path: routerObject.messages.path,
         component: MessagesComponent
       },
       {
-        path: 'documents',
+        path: routerObject.documents.path,
         component: UploadFilesComponent
       }
     ]

@@ -16,7 +16,7 @@ body {
 :root {
   --primary-blue: #5051f9;
   --primary-yellow: #FBBE37;
-  --primary-bg: #F3F4F8;
+  --primary-bg: #F3F7FA;
   --primary-hover: #5050f91e;
   --btn-primary-hover: #4545d4;
   --btn-cancel-hover: #dddddd80;
@@ -68,6 +68,10 @@ body {
   @apply w-full h-[45px] px-4 border border-[var(--border-color)] rounded-md focus:ring-1
   focus:ring-[var(--primary-blue)] focus:border-[var(--primary-blue)] outline-none 
   transition-colors duration-300 ease-out bg-[var(--primary-bg)];
+
+  &::placeholder {
+    @apply text-[var(--text-black)];
+  }
 }
 
 .z-text-area {

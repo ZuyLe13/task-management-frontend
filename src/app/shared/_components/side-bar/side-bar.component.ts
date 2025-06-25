@@ -7,9 +7,11 @@ import { ZI18nComponent } from '../z-i18n/z-i18n.component';
 interface MenuItem {
   id: string;
   label: string;
-  icon: string;
+  icon?: string;
+  path?: string;
   active?: boolean;
-  path: string;
+  children?: MenuItem[];
+  expanded?: boolean;
 }
 @Component({
   selector: 'app-side-bar',
@@ -33,10 +35,23 @@ export class SideBarComponent {
       path: '/timeline'
     },
     { 
-      id: 'tasks', 
-      label: 'Tasks', 
+      id: 'taskManagement', 
+      label: 'Task Management', 
       icon: 'docs',
-      path: '/task-list'
+      path: '/task-mngt',
+      expanded: false,
+      children: [
+        {
+          id: 'task-list',
+          label: 'Task List',
+          path: '/task-mngt/task-list'
+        },
+        {
+          id: 'project-settings',
+          label: 'Project Settings',
+          path: '/task-mngt/project-settings'
+        }
+      ]
     },
     { 
       id: 'messages', 
@@ -71,14 +86,36 @@ export class SideBarComponent {
     this.updateActiveMenu(this.router.url);
   }
 
+  // updateActiveMenu(currentUrl: string) {
+  //   this.menuItems.forEach(item => {
+  //     item.active = currentUrl.startsWith(item.path);
+  //   });
+  // }
+
   updateActiveMenu(currentUrl: string) {
     this.menuItems.forEach(item => {
-      item.active = currentUrl.startsWith(item.path);
+      item.active = false;
+      item.expanded = false;
+
+      if (item.children) {
+        item.children.forEach(child => {
+          child.active = !!child.path && currentUrl.startsWith(child.path);
+          if (child.active) {
+            item.expanded = true; // mở submenu chứa route hiện tại
+          }
+        });
+      } else {
+        item.active = !!item.path && currentUrl.startsWith(item.path);
+      }
     });
   }
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
+  }
+
+  toggleSubmenu(item: MenuItem) {
+    item.expanded = !item.expanded;
   }
 
   onAddClick() {

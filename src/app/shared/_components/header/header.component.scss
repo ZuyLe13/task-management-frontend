@@ -1,5 +1,5 @@
 .header-container {
-  @apply w-full flex items-center justify-between px-5 py-2;
+  @apply w-full flex items-center justify-between px-5 py-3;
 }
 
 .header-logo {
@@ -28,7 +28,7 @@
 }
 
 .search-wrapper {
-  @apply relative flex items-center cursor-pointer;
+  @apply flex items-center cursor-pointer;
 }
 
 .search-icon {
@@ -36,12 +36,7 @@
 }
 
 .search-input {
-  @apply absolute right-0 h-[40px] transition-all duration-300 ease-in-out 
-  w-0 opacity-0 pointer-events-none;
-}
-
-.search-input.open {
-  @apply w-60 opacity-100 pointer-events-auto;
+  @apply w-80;
 }
 
 .notification-btn {
@@ -62,7 +57,8 @@
 }
 
 .profile-btn {
-  @apply flex items-center space-x-2 border border-[var(--primary-yellow)] rounded-full;
+  @apply flex items-center space-x-2 border border-[var(--primary-yellow)] 
+  rounded-full;
 }
 
 .profile-img {
@@ -70,9 +66,11 @@
 }
 
 .dropdown-container {
-  @apply absolute right-0 mt-2 w-40 bg-white border border-[var(--border-modal)] rounded-md z-50;
+  @apply absolute right-0 mt-2 w-40 bg-white border border-[var(--border-modal)] 
+  rounded-md z-50 overflow-hidden;
 }
 
 .dropdown-item {
-  @apply block w-full text-left px-4 py-2 text-[var(--text-black)] hover:bg-[var(--primary-hover)] transition-colors duration-200 ease-in;
+  @apply block w-full text-left px-4 py-2 text-[var(--text-black)] 
+  hover:bg-[var(--primary-hover)] transition-colors duration-200 ease-in;
 }

@@ -7,5 +7,14 @@
   "Messages": "Messages",
   "Documents": "Documents",
   "This field is required.": "This field is required.",
-  "Invalid email address.": "Invalid email address."
+  "Invalid email address.": "Invalid email address.",
+  "Cancel": "Cancel",
+  "Save": "Save",
+  "Full Name": "Full Name",
+  "Email": "Email",
+  "Phone": "Phone",
+  "Role": "Role",
+  "First Name": "First Name",
+  "Last Name": "Last Name",
+  "Search anything...": "Search anything..."
 }

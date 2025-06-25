@@ -17,18 +17,18 @@ export class BreadcrumbService {
 
   private buildBreadcrumb(url: string): any[] {
     if (url === '/' || url === '') {
-      return [{ label: routerObject.dashboard.breadcrumb, url: routerObject.dashboard.path }];
+      return [{ label: routerObject.dashboard.breadcrumb, url: '/' + routerObject.dashboard.path }];
     }
 
     const segments = url.split('/').filter(Boolean);
     const breadcrumbs: any[] = [];
-    let accumulatedUrl = '';
+    let accumulatedPath = '';
 
     for (const segment of segments) {
-      accumulatedUrl += `/${segment}`;
-      const matched = this.findMatchingRoute(accumulatedUrl);
+      accumulatedPath += (accumulatedPath ? '/' : '') + segment;
+      const matched = this.findMatchingRoute(accumulatedPath);
       if (matched) {
-        breadcrumbs.push({ label: matched.breadcrumb, url: accumulatedUrl });
+        breadcrumbs.push({ label: matched.breadcrumb, url: '/' + accumulatedPath });
       }
     }
     return breadcrumbs;

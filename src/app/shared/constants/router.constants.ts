@@ -1,26 +1,45 @@
 export const routerObject = {
+  // Dashboard
   dashboard: {
-    path: '/dashboard',
+    path: 'dashboard',
     breadcrumb: 'Dashboard'
   },
+
+  // Task Management
+  taskManagement: {
+    path: 'task-mngt',
+    breadcrumb: 'Task Management'
+  },
   taskList: {
-    path: '/task-list',
+    path: 'task-mngt/task-list',
     breadcrumb: 'Task List'
   },
-  projects: {
-    path: '/timeline',
+  projectSettings: {
+    path: 'task-mngt/project-settings',
+    breadcrumb: 'Project Settings'
+  },
+
+  // Timeline
+  timeline: {
+    path: 'timeline',
     breadcrumb: 'Timeline'
   },
+
+  // My Profile
   profile: {
-    path: '/profile',
+    path: 'profile',
     breadcrumb: 'My Profile'
   },
+
+  // Messages
   messages: {
-    path: '/messages',
+    path: 'messages',
     breadcrumb: 'Messages'
   },
+
+  // Documents
   documents: {
-    path: '/documents',
+    path: 'documents',
     breadcrumb: 'Documents'
   }
 } as const;

@@ -13,7 +13,8 @@
           <z-i18n [key]="'My Profile'"></z-i18n>
         </h2>
         <div class="my-profile-actions">
-          <button class="btn btn-cancel" (click)="onCancel()">
+          <button class="btn btn-cancel" 
+                  (click)="onCancel()">
             <z-i18n [key]="'Cancel'"></z-i18n>
           </button>
           <button class="btn btn-primary profile-save-btn"
@@ -52,7 +53,7 @@
         </div>
         <div class="form-group">
           <label class="required"><z-i18n [key]="'Role'"></z-i18n></label>
-          <z-input formControlName="role" placeholder="Role"/>
+          <z-input [disabled]="user?.role === 'member'" formControlName="role" placeholder="Role"/>
           <z-error controlName="role"></z-error>
         </div>
       </div>

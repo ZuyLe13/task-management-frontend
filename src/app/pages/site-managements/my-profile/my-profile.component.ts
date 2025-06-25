@@ -51,6 +51,11 @@ export class MyProfileComponent implements OnInit {
         this.user = user;
         this.originalUserData = { ...user };
         this.form.patchValue(user);
+        if (user.role !== 'admin') {
+          this.form.get('role')?.disable();
+        } else {
+          this.form.get('role')?.enable();
+        }
         this.form.markAsPristine();
       },
       error: (err) => console.error(err)

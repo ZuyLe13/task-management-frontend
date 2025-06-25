@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../_services/auth.service';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { TranslateService } from '@ngx-translate/core';
+import { routerObject } from '../../constants/router.constants';
+import { InputComponent } from "../input/input.component";
 
 @Component({
   selector: 'app-header',
-  imports: [RouterModule, CommonModule, BreadcrumbComponent],
+  imports: [RouterModule, CommonModule, BreadcrumbComponent, InputComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -17,16 +19,9 @@ export class HeaderComponent {
 
   constructor(
     private authService: AuthService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) {}
-
-  toggleSearch() {
-    this.isSearchOpen = !this.isSearchOpen;
-  }
-
-  closeSearch() {
-    this.isSearchOpen = false;
-  }
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;
@@ -37,11 +32,10 @@ export class HeaderComponent {
   }
 
   viewProfile() {
-    console.log('Go to Profile Page');
+    this.router.navigate([routerObject.profile.path]);
   }
 
   logout() {
-    console.log('Logout');
     this.authService.signOut();
   }
 

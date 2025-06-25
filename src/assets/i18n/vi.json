@@ -1,11 +1,20 @@
 {
   "Dashboard": "Bảng Điều Khiển",
   "My Profile": "Hồ Sơ Của Tôi",
-  "Tasks": "Danh Sách Công Việc",
-  "Task List": "Danh Sách Công Việc",
+  "Tasks": "Công Việc",
+  "Task List": "Công Việc",
   "Timeline": "Dòng Thời gian",
   "Messages": "Nhắn Tin",
   "Documents": "Tài Liệu",
   "This field is required.": "Trường này bắt buộc.",
-  "Invalid email address.": "Địa chỉ email không hợp lệ."
+  "Invalid email address.": "Địa chỉ email không hợp lệ.",
+  "Cancel": "Huỷ",
+  "Save": "Lưu",
+  "Full Name": "Họ và Tên",
+  "Email": "Email",
+  "Phone": "Điện Thoại",
+  "Role": "Vai Trò",
+  "First Name": "Tên",
+  "Last Name": "Họ",
+  "Search anything...": "Tìm kiếm bất cứ điều gì..."
 }

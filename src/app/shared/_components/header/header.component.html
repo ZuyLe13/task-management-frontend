@@ -11,19 +11,12 @@
     </nav>
   </div>
 
-  <div class="header-actions">
-    <div class="search-wrapper" (click)="toggleSearch()" [class.active]="isSearchOpen">
-      <img src="/assets/icons/search.svg" alt="Search" class="search-icon" />
-      <input
-        type="text"
-        placeholder="Search..."
-        class="z-input search-input"
-        (click)="$event.stopPropagation()"
-        (blur)="closeSearch()"
-        [class.open]="isSearchOpen"
-      />
-    </div>
+  <div class="search-wrapper">
+    <z-input class="search-input" placeholder="Search anything..."/>
+    <!-- <img src="/assets/icons/search.svg" alt="Search" class="search-icon" /> -->
+  </div>
 
+  <div class="header-actions">
     <button (click)="switchLang('en')">EN</button>
     <button (click)="switchLang('vi')">VI</button>
 

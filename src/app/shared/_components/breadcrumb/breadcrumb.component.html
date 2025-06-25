@@ -1,11 +1,11 @@
-<nav *ngIf="breadcrumbs$ | async as breadcrumbs" class="text-sm text-[var(--text-grey)] px-3">
+<nav *ngIf="breadcrumbs$ | async as breadcrumbs" class="breadcrumb-container">
   <ng-container *ngFor="let bc of breadcrumbs; let last = last">
-    <a *ngIf="!last" [routerLink]="bc.url" class="hover:underline text-blue-600">
+    <a *ngIf="!last" [routerLink]="bc.url" class="font-semibold">
       <z-i18n [key]="bc.label"></z-i18n>
     </a>
     <a [routerLink]="bc.url" *ngIf="last" class="font-semibold">
       <z-i18n [key]="bc.label"></z-i18n>
     </a>
-    <span *ngIf="!last"> / </span>
+    <img *ngIf="!last" src="/assets/icons/arrow-left.svg" class="px-2" alt="">
   </ng-container>
 </nav>

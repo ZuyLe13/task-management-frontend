@@ -17,8 +17,13 @@
     @apply px-3;
   }
 
+  .toggle-icon {
+    @apply size-3 transition-transform duration-300;
+  }
+
   .item-wrapper {
-    @apply flex items-center cursor-pointer transition-all duration-300 relative whitespace-nowrap;
+    @apply flex items-center cursor-pointer transition-all duration-300 
+    relative whitespace-nowrap;
   }
 
   &-collapsed {
@@ -29,15 +34,17 @@
     @apply px-4 py-3 rounded-lg;
   }
 
-  &-active {
-    @apply text-white bg-[var(--primary-blue)];
+  &-active, &-parent-active {
+    @apply text-white bg-[var(--primary-blue)] font-bold tracking-wider;
   }
 
   &-hover {
-    @apply text-[var(--text-grey)] hover:bg-[var(--primary-hover)] hover:translate-x-1;
+    @apply text-[var(--text-grey)] hover:bg-[var(--primary-hover)];
   }
 
   .tooltip {
-    @apply absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-50;
+    @apply absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-sm 
+    rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 
+    pointer-events-none whitespace-nowrap z-50;
   }
 }

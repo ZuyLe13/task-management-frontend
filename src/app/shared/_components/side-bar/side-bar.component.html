@@ -5,7 +5,7 @@
       <button 
         (click)="toggleSidebar()"
         class="btn btn-cancel btn-toggle">
-        <img class="size-4 transition-transform duration-300"
+        <img class="toggle-icon"
           [ngClass]="isCollapsed ? 'rotate-180' : ''"
           src="/assets/icons/arrow-right.svg" alt="">
       </button>
@@ -14,23 +14,62 @@
     <!-- Menu Items -->
     <nav class="pt-2">
       <div class="space-y-2" [ngClass]="isCollapsed ? 'px-2 w-16 mx-auto' : 'px-4'">
-        <a
-          *ngFor="let item of menuItems"
-          [routerLink]="item.path"
-          class="item-wrapper"
-          [ngClass]="[
-            isCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded',
-            item.active ? 'sidebar-active' : 'sidebar-hover'
-          ]"
-        >
-          <span class="material-symbols-rounded" 
-                [ngClass]="{ 'mr-3': !isCollapsed }">
-            {{ item.icon }}
-          </span>
-          
-          <z-i18n *ngIf="!isCollapsed" [key]="item.label"></z-i18n>
-          <div *ngIf="isCollapsed" class="tooltip">{{ item.label }}</div>
-        </a>
+        <ng-container *ngFor="let item of menuItems">
+          <a
+            *ngIf="!item.children"
+            [routerLink]="item.path"
+            class="item-wrapper"
+            [ngClass]="[
+              isCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded',
+              item.active ? 'sidebar-parent-active' : 'sidebar-hover'
+            ]">
+            <span class="material-symbols-rounded" 
+                  [ngClass]="{ 'mr-3': !isCollapsed }">
+              {{ item.icon }}
+            </span>
+            <z-i18n *ngIf="!isCollapsed" [key]="item.label"></z-i18n>
+            <div *ngIf="isCollapsed" class="tooltip">{{ item.label }}</div>
+          </a>
+
+          <!-- Menu item with children -->
+          <div *ngIf="item.children" class="item-wrapper flex flex-col">
+            <!-- Clickable parent -->
+            <div
+              class="flex items-center gap-6"
+              (click)="toggleSubmenu(item)"
+              [ngClass]="[
+                isCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded',
+                item.active ? 'sidebar-active' : 'sidebar-hover'
+              ]">
+              <div class="flex items-center">
+                <span class="material-symbols-rounded" [ngClass]="{ 'mr-3': !isCollapsed }">
+                  {{ item.icon }}
+                </span>
+                <z-i18n *ngIf="!isCollapsed" [key]="item.label"></z-i18n>
+                <div *ngIf="isCollapsed" class="tooltip">{{ item.label }}</div>
+              </div>
+              <img *ngIf="!isCollapsed" 
+                   [ngClass]="item.expanded ? 'transform -rotate-90' : '-rotate-180'"
+                   class="size-3 transition-transform duration-300" 
+                   src="/assets/icons/arrow-right.svg" />
+            </div>
+
+            <!-- Submenu items -->
+            <div 
+              *ngIf="item.expanded && !isCollapsed"
+              class="mt-2 space-y-1 text-sm transition-all duration-300"
+            >
+              <a
+                *ngFor="let child of item.children"
+                [routerLink]="child.path"
+                [ngClass]="child.active ? 'sidebar-active' : 'sidebar-hover'"
+                class="block py-1 px-2 rounded-md">
+                {{ child.label }}
+              </a>
+            </div>
+          </div>
+
+        </ng-container>
       </div>
     </nav>
   </div>
