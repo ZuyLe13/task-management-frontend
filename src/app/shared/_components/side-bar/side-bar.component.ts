@@ -116,9 +116,11 @@ export class SideBarComponent {
 
   toggleSubmenu(item: MenuItem) {
     item.expanded = !item.expanded;
+    if (item.expanded && (item.children?.length ?? 0) > 0) {
+    const defaultChildPath = item.children![0].path;
+    if (defaultChildPath) {
+      this.router.navigateByUrl(defaultChildPath);
+    }
   }
-
-  onAddClick() {
-    console.log('Add button clicked');
   }
 }

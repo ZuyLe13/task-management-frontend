@@ -27,12 +27,22 @@ export class BreadcrumbService {
     for (const segment of segments) {
       accumulatedPath += (accumulatedPath ? '/' : '') + segment;
       const matched = this.findMatchingRoute(accumulatedPath);
+
       if (matched) {
-        breadcrumbs.push({ label: matched.breadcrumb, url: '/' + accumulatedPath });
+        let actualUrl = '/' + accumulatedPath;
+
+        // Nếu route có defaultChild → dùng nó thay vì path gốc
+        if ('defaultChild' in matched && matched.defaultChild) {
+          actualUrl = '/' + matched.path + '/' + matched.defaultChild;
+        }
+
+        breadcrumbs.push({ label: matched.breadcrumb, url: actualUrl });
       }
     }
+
     return breadcrumbs;
   }
+
 
   private findMatchingRoute(path: string) {
     for (const key in routerObject) {

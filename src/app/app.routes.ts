@@ -14,6 +14,7 @@ import { MessagesComponent } from './pages/site-managements/messages/messages.co
 import { UploadFilesComponent } from './pages/site-managements/upload-files/upload-files.component';
 import { routerObject } from './shared/constants/router.constants';
 import { TaskManagementComponent } from './pages/site-managements/task-management/task-management.component';
+import { ProjectSettingsComponent } from './pages/site-managements/task-management/project-settings/project-settings.component';
 
 export const routes: Routes = [
   {
@@ -46,8 +47,23 @@ export const routes: Routes = [
         component: DashboardComponent
       },
       {
-        path: routerObject.taskManagement.path,
-        component: TaskManagementComponent
+        path: '',
+        component: TaskManagementComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: routerObject.taskList.path,
+            pathMatch: 'full',
+          },
+          {
+            path: routerObject.taskList.path,
+            component: TaskListComponent
+          },
+          {
+            path: routerObject.projectSettings.path,
+            component: ProjectSettingsComponent
+          }
+        ]
       },
       {
         path: routerObject.taskList.path,

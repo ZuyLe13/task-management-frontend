@@ -8,7 +8,8 @@ export const routerObject = {
   // Task Management
   taskManagement: {
     path: 'task-mngt',
-    breadcrumb: 'Task Management'
+    breadcrumb: 'Task Management',
+    defaultChild: 'task-list'
   },
   taskList: {
     path: 'task-mngt/task-list',

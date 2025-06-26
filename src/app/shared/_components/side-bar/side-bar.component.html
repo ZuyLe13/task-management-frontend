@@ -35,7 +35,7 @@
           <div *ngIf="item.children" class="item-wrapper flex flex-col">
             <!-- Clickable parent -->
             <div
-              class="flex items-center gap-6"
+              class="multi-item-wrapper"
               (click)="toggleSubmenu(item)"
               [ngClass]="[
                 isCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded',
@@ -48,22 +48,19 @@
                 <z-i18n *ngIf="!isCollapsed" [key]="item.label"></z-i18n>
                 <div *ngIf="isCollapsed" class="tooltip">{{ item.label }}</div>
               </div>
-              <img *ngIf="!isCollapsed" 
-                   [ngClass]="item.expanded ? 'transform -rotate-90' : '-rotate-180'"
-                   class="size-3 transition-transform duration-300" 
-                   src="/assets/icons/arrow-right.svg" />
+              <span *ngIf="!isCollapsed" 
+                [ngClass]="item.expanded ? 'rotate-90' : ''"
+                class="material-symbols-rounded transition-transform duration-300">
+                chevron_forward
+              </span>
             </div>
 
             <!-- Submenu items -->
-            <div 
-              *ngIf="item.expanded && !isCollapsed"
-              class="mt-2 space-y-1 text-sm transition-all duration-300"
-            >
-              <a
-                *ngFor="let child of item.children"
+            <div  *ngIf="item.expanded && !isCollapsed" class="sub-item-wrapper">
+              <a *ngFor="let child of item.children"
                 [routerLink]="child.path"
                 [ngClass]="child.active ? 'sidebar-active' : 'sidebar-hover'"
-                class="block py-1 px-2 rounded-md">
+                class="sub-item">
                 {{ child.label }}
               </a>
             </div>

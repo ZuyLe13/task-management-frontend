@@ -22,8 +22,22 @@
   }
 
   .item-wrapper {
-    @apply flex items-center cursor-pointer transition-all duration-300 
-    relative whitespace-nowrap;
+    @apply flex items-center text-sm cursor-pointer transition-all duration-300 
+    relative whitespace-nowrap font-bold;
+  }
+
+  .multi-item-wrapper {
+    @apply flex items-center w-full justify-between transition-all 
+    duration-300;
+  }
+
+  .sub-item-wrapper {
+    @apply w-[calc(100%-2.5rem)] mt-2 ml-10 space-y-2 transition-all 
+    duration-300;
+  }
+
+  .sub-item {
+    @apply block px-4 py-3 rounded-lg transition-all duration-300;
   }
 
   &-collapsed {
@@ -31,7 +45,7 @@
   }
 
   &-expanded {
-    @apply px-4 py-3 rounded-lg;
+    @apply pl-4 py-3 rounded-lg;
   }
 
   &-active, &-parent-active {
