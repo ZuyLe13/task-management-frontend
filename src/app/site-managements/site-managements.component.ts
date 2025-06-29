@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from '../../shared/_components/header/header.component';
 import { RouterOutlet } from '@angular/router';
-import { SideBarComponent } from '../../shared/_components/side-bar/side-bar.component';
-import { BreadcrumbComponent } from '../../shared/_components/breadcrumb/breadcrumb.component';
+import { HeaderComponent } from '../shared/_components/header/header.component';
+import { SideBarComponent } from '../shared/_components/side-bar/side-bar.component';
 
 @Component({
   selector: 'app-site-managements',

@@ -44,11 +44,13 @@ export class SideBarComponent {
         {
           id: 'task-list',
           label: 'Task List',
+          icon: 'view_kanban',
           path: '/task-mngt/task-list'
         },
         {
           id: 'project-settings',
           label: 'Project Settings',
+          icon: 'settings',
           path: '/task-mngt/project-settings'
         }
       ]
@@ -68,7 +70,7 @@ export class SideBarComponent {
     { 
       id: 'myProfile', 
       label: 'My Profile', 
-      icon: 'settings',
+      icon: 'account_circle',
       path: '/profile'
     },
   ];
@@ -85,12 +87,6 @@ export class SideBarComponent {
 
     this.updateActiveMenu(this.router.url);
   }
-
-  // updateActiveMenu(currentUrl: string) {
-  //   this.menuItems.forEach(item => {
-  //     item.active = currentUrl.startsWith(item.path);
-  //   });
-  // }
 
   updateActiveMenu(currentUrl: string) {
     this.menuItems.forEach(item => {

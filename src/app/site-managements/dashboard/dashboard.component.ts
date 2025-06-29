@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { SideBarComponent } from '../../../shared/_components/side-bar/side-bar.component';
 import { CommonModule } from '@angular/common';
-import { BreadcrumbComponent } from '../../../shared/_components/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-dashboard',

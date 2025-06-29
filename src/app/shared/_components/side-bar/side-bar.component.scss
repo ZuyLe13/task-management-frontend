@@ -32,16 +32,16 @@
   }
 
   .sub-item-wrapper {
-    @apply w-[calc(100%-2.5rem)] mt-2 ml-10 space-y-2 transition-all 
+    @apply mt-2 space-y-2 transition-all 
     duration-300;
   }
 
   .sub-item {
-    @apply block px-4 py-3 rounded-lg transition-all duration-300;
+    @apply flex items-center px-4 py-3 rounded-lg transition-all duration-300;
   }
 
   &-collapsed {
-    @apply px-1 py-3 justify-center rounded-[14px];
+    @apply px-1 py-3 justify-center rounded-[14px] #{!important};
   }
 
   &-expanded {
@@ -54,11 +54,5 @@
 
   &-hover {
     @apply text-[var(--text-grey)] hover:bg-[var(--primary-hover)];
-  }
-
-  .tooltip {
-    @apply absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-sm 
-    rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 
-    pointer-events-none whitespace-nowrap z-50;
   }
 }

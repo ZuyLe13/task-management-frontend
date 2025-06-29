@@ -28,7 +28,6 @@
               {{ item.icon }}
             </span>
             <z-i18n *ngIf="!isCollapsed" [key]="item.label"></z-i18n>
-            <div *ngIf="isCollapsed" class="tooltip">{{ item.label }}</div>
           </a>
 
           <!-- Menu item with children -->
@@ -46,7 +45,6 @@
                   {{ item.icon }}
                 </span>
                 <z-i18n *ngIf="!isCollapsed" [key]="item.label"></z-i18n>
-                <div *ngIf="isCollapsed" class="tooltip">{{ item.label }}</div>
               </div>
               <span *ngIf="!isCollapsed" 
                 [ngClass]="item.expanded ? 'rotate-90' : ''"
@@ -56,12 +54,21 @@
             </div>
 
             <!-- Submenu items -->
-            <div  *ngIf="item.expanded && !isCollapsed" class="sub-item-wrapper">
+            <div *ngIf="item.expanded" 
+                  class="sub-item-wrapper"
+                  [ngClass]="isCollapsed ? 'w-full ml-0' : 'w-[calc(100%-1.5rem)] ml-6'">
               <a *ngFor="let child of item.children"
                 [routerLink]="child.path"
-                [ngClass]="child.active ? 'sidebar-active' : 'sidebar-hover'"
+                [ngClass]="[
+                  isCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded',
+                  child.active ? 'sidebar-active' : 'sidebar-hover'
+                ]"
                 class="sub-item">
-                {{ child.label }}
+                <span class="material-symbols-rounded" 
+                  [ngClass]="{ 'mr-3': !isCollapsed }">
+                  {{ child.icon }}
+                </span>
+                <z-i18n *ngIf="!isCollapsed" [key]="child.label"></z-i18n>
               </a>
             </div>
           </div>

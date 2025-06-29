@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ZI18nComponent } from "../../../shared/_components/z-i18n/z-i18n.component";
-import { InputComponent } from "../../../shared/_components/input/input.component";
-import { ErrorComponent } from "../../../shared/_components/error/error.component";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from '../../../shared/_services/user.service';
-import { User } from '../../../shared/interfaces/user.model';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { ErrorComponent } from '../../shared/_components/error/error.component';
+import { InputComponent } from '../../shared/_components/input/input.component';
+import { ZI18nComponent } from '../../shared/_components/z-i18n/z-i18n.component';
+import { UserService } from '../../shared/_services/user.service';
+import { User } from '../../shared/interfaces/user.model';
 
 @Component({
   selector: 'app-my-profile',

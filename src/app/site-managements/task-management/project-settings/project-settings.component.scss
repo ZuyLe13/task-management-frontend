@@ -1,0 +1,41 @@
+@use '@angular/material' as mat;
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:host {
+  @include mat.tabs-overrides((
+    active-ripple-color: transparent,
+    disabled-ripple-color: transparent,
+    inactive-ripple-color: transparent,
+    active-indicator-color: #5051f9,
+    active-label-text-color: #232360,
+    inactive-hover-label-text-color: #232360,
+    inactive-label-text-color: #6A7181,
+    divider-color: white
+  ));
+}
+::ng-deep {
+  .mat-mdc-tab-header {
+    @apply bg-white rounded;
+  }
+  .mat-mdc-tab-body-wrapper {
+    .mat-mdc-tab-body {
+      @apply h-full p-4 mt-5 bg-white;
+    }
+  }
+  .mat-mdc-tab-labels {
+    .mdc-tab {
+      @apply min-w-[120px] font-bold;
+      font-family: "DM Sans", sans-serif !important;
+
+      &.mdc-tab-indicator--active {
+        .mdc-tab-indicator {
+          @apply bg-[var(--primary-hover)] rounded;
+        }
+      }
+    }
+  }
+}
+
+.project-settings {
+  @apply px-6 mt-2 h-full;
+}
