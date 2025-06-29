@@ -24,7 +24,8 @@
               item.active ? 'sidebar-parent-active' : 'sidebar-hover'
             ]">
             <span class="material-symbols-rounded" 
-                  [ngClass]="{ 'mr-3': !isCollapsed }">
+                  [ngClass]="{ 'mr-3': !isCollapsed }"
+                  [matTooltip]="item.label">
               {{ item.icon }}
             </span>
             <z-i18n *ngIf="!isCollapsed" [key]="item.label"></z-i18n>
@@ -41,7 +42,9 @@
                 item.active ? 'sidebar-active' : 'sidebar-hover'
               ]">
               <div class="flex items-center">
-                <span class="material-symbols-rounded" [ngClass]="{ 'mr-3': !isCollapsed }">
+                <span class="material-symbols-rounded" 
+                      [ngClass]="{ 'mr-3': !isCollapsed }"
+                      [matTooltip]="item.label">
                   {{ item.icon }}
                 </span>
                 <z-i18n *ngIf="!isCollapsed" [key]="item.label"></z-i18n>
@@ -65,7 +68,8 @@
                 ]"
                 class="sub-item">
                 <span class="material-symbols-rounded" 
-                  [ngClass]="{ 'mr-3': !isCollapsed }">
+                      [ngClass]="{ 'mr-3': !isCollapsed }"
+                      [matTooltip]="child.label">
                   {{ child.icon }}
                 </span>
                 <z-i18n *ngIf="!isCollapsed" [key]="child.label"></z-i18n>

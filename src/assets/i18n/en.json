@@ -16,5 +16,9 @@
   "Role": "Role",
   "First Name": "First Name",
   "Last Name": "Last Name",
-  "Search anything...": "Search anything..."
+  "Search anything...": "Search anything...",
+  "Task Management": "Task Management",
+  "Project Settings": "Project Settings",
+  "Project Setting": "Project Setting",
+  "Task Status": "Task Status"
 }

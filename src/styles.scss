@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -91,4 +93,12 @@ body {
 // =========== Form Group ===========
 .form-group {
   @apply flex flex-col gap-[6px] text-[var(--text-black)] font-medium;
+}
+
+// =========== Material Angular ==========
+
+:root {
+  @include mat.tooltip-overrides((
+    container-color: #232360,
+  ));
 }

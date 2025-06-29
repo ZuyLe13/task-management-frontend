@@ -12,7 +12,7 @@ import { ZI18nComponent } from '../z-i18n/z-i18n.component';
   styleUrl: './breadcrumb.component.scss'
 })
 export class BreadcrumbComponent {
-   breadcrumbs$: Observable<any>;
+  breadcrumbs$: Observable<any>;
 
   constructor(private breadcrumbService: BreadcrumbService) {
     this.breadcrumbs$ = this.breadcrumbService.breadcrumbs$;

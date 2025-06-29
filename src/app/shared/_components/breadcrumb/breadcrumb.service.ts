@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, Params } from '@angular/router';
 import { filter, map, Observable, startWith } from 'rxjs';
 import { routerObject } from '../../constants/router.constants';
+import { projectSettingsTabMap } from '../../constants/tabs.constants';
+
+export interface BreadcrumbItem {
+  label: string;
+  path: string;
+  queryParams?: Params;
+}
 
 @Injectable({ providedIn: 'root' })
 export class BreadcrumbService {
@@ -16,28 +23,38 @@ export class BreadcrumbService {
   }
 
   private buildBreadcrumb(url: string): any[] {
-    if (url === '/' || url === '') {
-      return [{ label: routerObject.dashboard.breadcrumb, url: '/' + routerObject.dashboard.path }];
-    }
+    const [cleanPath, queryString] = url.split('?');
+    const queryParams = new URLSearchParams(queryString);
+    const tabParam = queryParams.get('tab');
 
-    const segments = url.split('/').filter(Boolean);
-    const breadcrumbs: any[] = [];
+    const segments = cleanPath.split('/').filter(Boolean);
+    const breadcrumbs: BreadcrumbItem[] = [];
     let accumulatedPath = '';
 
     for (const segment of segments) {
       accumulatedPath += (accumulatedPath ? '/' : '') + segment;
       const matched = this.findMatchingRoute(accumulatedPath);
-
       if (matched) {
-        let actualUrl = '/' + accumulatedPath;
-
-        // Nếu route có defaultChild → dùng nó thay vì path gốc
+        let actualPath = '/' + accumulatedPath;
         if ('defaultChild' in matched && matched.defaultChild) {
-          actualUrl = '/' + matched.path + '/' + matched.defaultChild;
+          actualPath = '/' + matched.path + '/' + matched.defaultChild;
         }
 
-        breadcrumbs.push({ label: matched.breadcrumb, url: actualUrl });
+        breadcrumbs.push({ 
+          label: matched.breadcrumb,
+          path: actualPath,
+          queryParams: undefined
+        });
       }
+    }
+
+    // ✅ Breadcrumb cuối có query
+    if (tabParam && projectSettingsTabMap[tabParam]) {
+      breadcrumbs.push({
+        label: projectSettingsTabMap[tabParam],
+        path: cleanPath.startsWith('/') ? cleanPath : '/' + cleanPath,
+        queryParams: { tab: tabParam }
+      });
     }
 
     return breadcrumbs;
@@ -48,9 +65,16 @@ export class BreadcrumbService {
     for (const key in routerObject) {
       if (Object.prototype.hasOwnProperty.call(routerObject, key)) {
         const route = routerObject[key as keyof typeof routerObject];
-        const regexPath = route.path.replace(/:\w+/g, '[^/]+');
+        const routePath = route.path;
+        const regexPath = routePath.replace(/:\w+/g, '[^/]+');
         const regex = new RegExp(`^${regexPath}$`);
-        if (regex.test(path)) return route;
+        if (regex.test(path)) {
+          return {
+            ...route,
+            // Optional: Trả thêm param nếu cần (để custom breadcrumb sau này)
+            matchedPath: path,
+          };
+        }
       }
     }
     return null;

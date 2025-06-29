@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
 import { ZI18nComponent } from '../z-i18n/z-i18n.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 interface MenuItem {
   id: string;
@@ -15,7 +16,12 @@ interface MenuItem {
 }
 @Component({
   selector: 'app-side-bar',
-  imports: [CommonModule, RouterModule, ZI18nComponent],
+  imports: [
+    CommonModule, 
+    RouterModule,
+    ZI18nComponent,
+    MatTooltipModule
+  ],
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.scss'
 })
@@ -113,10 +119,10 @@ export class SideBarComponent {
   toggleSubmenu(item: MenuItem) {
     item.expanded = !item.expanded;
     if (item.expanded && (item.children?.length ?? 0) > 0) {
-    const defaultChildPath = item.children![0].path;
-    if (defaultChildPath) {
-      this.router.navigateByUrl(defaultChildPath);
+      const defaultChildPath = item.children![0].path;
+      if (defaultChildPath) {
+        this.router.navigateByUrl(defaultChildPath);
+      }
     }
-  }
   }
 }
