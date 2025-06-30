@@ -1,0 +1,34 @@
+<div class="mat-elevation-z2" [ngClass]="tableClassName">
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
+    <!-- Dynamic Column Definitions -->
+    <ng-container *ngFor="let column of columns" [matColumnDef]="column.field">
+      <th mat-header-cell 
+          *matHeaderCellDef 
+          [mat-sort-header]="column.sortable ? column.field : ''"
+          [ngClass]="column.headerClass"
+          [style.width]="column.width"
+          [style.max-width]="column.maxWidth"
+          [style.min-width]="column.minWidth">
+        {{ column.header }}
+      </th>
+      <td mat-cell *matCellDef="let row"
+          [ngClass]="column.cellClass"
+          [style.width]="column.width"
+          [style.max-width]="column.maxWidth"
+          [style.min-width]="column.minWidth">
+        <ng-container *ngIf="column.cellTemplate; else defaultCell">
+          <ng-container *ngTemplateOutlet="column.cellTemplate; context: {$implicit: row}"></ng-container>
+        </ng-container>
+        <ng-template #defaultCell>
+          {{ row[column.field] }}
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons (page)="onPageChange($event)">
+  </mat-paginator>
+</div>

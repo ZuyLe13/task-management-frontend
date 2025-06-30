@@ -1,0 +1,15 @@
+.table-header {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.cell-style {
+  font-size: 14px;
+}
+
+::ng-deep .mat-column-name {
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

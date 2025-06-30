@@ -1,1 +1,14 @@
-<p>task-status works!</p>
+<z-table
+  [columns]="columns"
+  [rows]="rows"
+  [tableClassName]="'custom-table-class'"
+  (sortChange)="sortChange($event)"
+  (pageChange)="pageChange($event)"
+  (paginatorChange)="paginatorChange($event)"
+  (clickRow)="clickRow($event)">
+>
+</z-table>
+
+<ng-template #customCell let-row>
+  <span [style.color]="'red'">{{ row.name }}</span>
+</ng-template>
