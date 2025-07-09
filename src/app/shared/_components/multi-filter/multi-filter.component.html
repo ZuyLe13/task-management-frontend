@@ -1,0 +1,139 @@
+<div class="multi-filter-container">
+  <!-- Main Filter Input -->
+  <div class="relative">
+    <button class="toggle-dropdown-btn" 
+    (click)="toggleMainDropdown()">
+      <div class="multi-filter-wrapper">
+        <span class="filter-by">Filter By</span>
+        <div class="filter-content-container">
+          <!-- Applied Filters Tags -->
+          <div class="truncate text-xl" *ngIf="appliedFilters.length > 0">
+            <div class="filter-content-wrapper" 
+                 *ngFor="let filter of appliedFilters; trackBy: trackByFilter">
+              <span class="filter-item-content">
+                {{ filter.displayText }}
+              </span>
+              <button (click)="removeFilter(filter, $event)" class="clear-filter-btn">
+                <span class="material-symbols-rounded text-[14px]">close</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-center">
+          <!-- Clear All Button -->
+          <button
+            *ngIf="appliedFilters.length > 0"
+            (click)="clearAllFilters()"
+            class="clear-all-btn"
+          >
+            <span class="material-symbols-rounded text-[16px] p-1 font-semibold">close</span>
+          </button>
+          <span class="material-symbols-rounded transition-colors duration-200"
+            [ngClass]="[isMainDropdownOpen ? 'text-[var(--text-black)]' : 'text-[var(--text-grey)]']">
+            arrow_drop_down
+          </span>
+        </div>
+      </div>
+    </button>
+
+    <!-- Main Dropdown - Filter Fields -->
+    <div
+      *ngIf="isMainDropdownOpen"
+      class="dropdown-container"
+    >
+      <div *ngFor="let field of filterFields; trackBy: trackByField">
+        <!-- Nhấn vào label để mở chọn -->
+        <div class="filter-field-item font-medium text-sm cursor-pointer" (click)="selectField(field)">
+          {{ field.label }}
+        </div>
+
+        <!-- Các giá trị đã chọn, có thể nhấn để xóa -->
+        <div
+          class="flex flex-wrap gap-1 p-2"
+          *ngIf="getSelectedLabelsWithValues(field.key).length > 0"
+        >
+          <div
+            class="flex items-center text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full hover:bg-blue-200 transition-colors cursor-pointer"
+            *ngFor="let option of getSelectedLabelsWithValues(field.key)"
+            (click)="removeFieldValue(field.key, option.value, $event)"
+          >
+            {{ option.label }}
+            <span class="material-symbols-rounded text-[14px] ml-1 leading-none">close</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Value Selection Dropdown -->
+  <div
+    *ngIf="selectedField && isValueDropdownOpen"
+    class="filter-options-container"
+  >
+    <div class="p-2">
+      <div class="flex items-center justify-between px-2 py-1 border-b border-gray-200 mb-2">
+        <div class="text-sm font-medium text-gray-700">
+          Chọn giá trị cho: {{ selectedField.label }}
+        </div>
+        <button
+          (click)="closeValueDropdown()"
+          class="text-gray-400 hover:text-gray-600 transition-colors"
+        >
+          <span class="material-symbols-rounded text-[16px]">close</span>
+        </button>
+      </div>
+
+      <!-- Text Input for text/date types -->
+      <div *ngIf="selectedField.type === 'text' || selectedField.type === 'date'">
+        <input
+          [(ngModel)]="textInputValue"
+          [type]="selectedField.type === 'date' ? 'date' : 'text'"
+          (keyup.enter)="applyTextFilter()"
+          [placeholder]="'Nhập ' + selectedField.label.toLowerCase()"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        >
+        <button
+          (click)="applyTextFilter()"
+          class="w-full mt-2 px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+        >
+          Áp dụng
+        </button>
+      </div>
+
+      <!-- Options for select/multiselect types -->
+      <div *ngIf="selectedField.type === 'select' || selectedField.type === 'multiselect'">
+        <div
+          *ngFor="let option of selectedField.options; trackBy: trackByOption"
+          (click)="toggleOption(option)"
+          class="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer rounded-md transition-colors"
+        >
+          <input
+            type="checkbox"
+            [checked]="isOptionSelected(option)"
+            class="mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+            (click)="$event.stopPropagation()"
+          >
+          <div class="flex items-center gap-2">
+            <span
+              *ngIf="option.color"
+              class="w-3 h-3 rounded-full"
+              [style.backgroundColor]="option.color"
+            ></span>
+            <span class="text-gray-900">{{ option.label }}</span>
+          </div>
+        </div>
+        
+        <div class="mt-2 pt-2 border-t border-gray-200">
+          <button
+            (click)="applySelectedOptions()"
+            class="w-full px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          >
+            Áp dụng ({{ selectedOptions.length }})
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

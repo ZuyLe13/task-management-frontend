@@ -1,0 +1,72 @@
+@use '@angular/material' as mat;
+
+:host {
+  @include mat.table-overrides((
+    header-headline-font: 'DM Sans, sans-serif',
+    header-headline-weight: 600,
+    row-item-label-text-font: 'DM Sans, sans-serif'
+  ));
+}
+
+.mat-sort-header-recently-cleared-descending {
+  @apply text-[var(--text-grey)] !important;
+}
+
+::ng-deep {
+  .mat-mdc-table {
+    @apply bg-transparent #{!important};
+
+    .mat-mdc-header-cell, .mat-mdc-cell {
+      border-color: var(--border-modal) !important;
+    }
+  }
+
+  .mat-mdc-paginator {
+    @apply bg-transparent #{!important};
+  }
+
+  .mat-mdc-paginator {
+    .mat-mdc-paginator-page-size-label {
+      @apply hidden #{!important};
+    }
+  }
+
+  .mat-sort-header-container .mat-sort-header-arrow {
+    @apply relative transition-none;
+  }
+
+  .mat-sort-header-container:not(.mat-sort-header-sorted) 
+  .mat-sort-header-arrow {
+    @apply m-0 opacity-[0.54] translate-y-0 !important;
+  }
+
+  .mat-sort-header-container.mat-sort-header-sorted
+  .mat-sort-header-arrow {
+    @apply max-w-[16px] max-h-[16px] ml-1 invisible;
+  }
+
+  .mat-sort-header-container:not(.mat-sort-header-sorted)
+  .mat-sort-header-arrow {
+    @apply size-4 bg-[length:17px_17px] bg-no-repeat bg-center;
+    background-image: url("data:image/svg+xml,%3Csvg%20%20xmlns=%22http://www.w3.org/2000/svg%22%20%20width=%2224%22%20%20height=%2224%22%20%20viewBox=%220%200%2024%2024%22%20%20fill=%22none%22%20%20stroke=%22currentColor%22%20%20stroke-width=%222%22%20%20stroke-linecap=%22round%22%20%20stroke-linejoin=%22round%22%20%20class=%22icon%20icon-tabler%20icons-tabler-outline%20icon-tabler-selector%22%3E%3Cpath%20stroke=%22none%22%20d=%22M0%200h24v24H0z%22%20fill=%22none%22/%3E%3Cpath%20d=%22M8%209l4%20-4l4%204%22%20/%3E%3Cpath%20d=%22M16%2015l-4%204l-4%20-4%22%20/%3E%3C/svg%3E");
+  }
+
+  .mat-sort-header-sorted.mat-sort-header-ascending
+  .mat-sort-header-arrow::after,
+  .mat-sort-header-sorted.mat-sort-header-descending
+  .mat-sort-header-arrow::after {
+    @apply content-[""] absolute top-[-1px] right-[-1px] size-4 bg-[length:14px_14px] bg-no-repeat visible;
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2224%22%20height=%2224%22%20viewBox=%220%200%2024%2024%22%20fill=%22none%22%20stroke=%22currentColor%22%20stroke-width=%222%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22%3E%3Cpath%20stroke=%22none%22%20d=%22M0%200h24v24H0z%22%20fill=%22none%22/%3E%3Cpath%20d=%22M6%2015l6%20-6l6%206%22/%3E%3C/svg%3E");
+  }
+
+  .mat-sort-header-sorted.mat-sort-header-descending
+  .mat-sort-header-arrow::after {
+    @apply left-[1px] top-[-2px];
+  }
+
+  .mat-sort-header-container:not(.mat-sort-header-sorted)
+  .mat-sort-header-arrow
+    svg {
+    @apply hidden;
+  }
+}

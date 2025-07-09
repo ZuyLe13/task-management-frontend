@@ -2,14 +2,24 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { TableComponent } from '../../../../shared/_components/table/table.component';
 import { Column } from '../../../../shared/interfaces/table.model';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { AppliedFilter, FilterField, MultiFilterComponent } from '../../../../shared/_components/multi-filter/multi-filter.component';
+
+interface TaskStatus {
+  id: number;
+  name: string;
+  status: string;
+  priority: string;
+  assignee: string;
+  createdDate: string;
+  color: string;
+}
+
 @Component({
   selector: 'app-task-status',
   imports: [
     CommonModule,
-    TableComponent
+    TableComponent,
+    MultiFilterComponent
   ],
   templateUrl: './task-status.component.html',
   styleUrl: './task-status.component.scss'
@@ -19,6 +29,102 @@ export class TaskStatusComponent implements OnInit {
 
   columns: Column[] = [];
   rows: any[] = [];
+  // filterFields: FilterField[] = [];
+  filteredTasks: TaskStatus[] = [];
+  appliedFilters: AppliedFilter[] = [];
+
+  allTasks: TaskStatus[] = [
+    {
+      id: 1,
+      name: 'Implement user authentication',
+      status: 'In Progress',
+      priority: 'High',
+      assignee: 'John Doe',
+      createdDate: '2024-01-15',
+      color: '#3B82F6'
+    },
+    {
+      id: 2,
+      name: 'Design landing page',
+      status: 'Completed',
+      priority: 'Medium',
+      assignee: 'Jane Smith',
+      createdDate: '2024-01-10',
+      color: '#10B981'
+    },
+    {
+      id: 3,
+      name: 'Fix payment gateway bug',
+      status: 'Todo',
+      priority: 'High',
+      assignee: 'Bob Johnson',
+      createdDate: '2024-01-20',
+      color: '#EF4444'
+    },
+    {
+      id: 4,
+      name: 'Update documentation',
+      status: 'In Progress',
+      priority: 'Low',
+      assignee: 'Alice Brown',
+      createdDate: '2024-01-18',
+      color: '#F59E0B'
+    },
+    {
+      id: 5,
+      name: 'Optimize database queries',
+      status: 'Todo',
+      priority: 'Medium',
+      assignee: 'Charlie Wilson',
+      createdDate: '2024-01-22',
+      color: '#8B5CF6'
+    }
+  ];
+
+  filterFields: FilterField[] = [
+    {
+      key: 'status',
+      label: 'Trạng thái',
+      type: 'multiselect',
+      options: [
+        { value: 'Todo', label: 'Chờ thực hiện', color: '#6B7280' },
+        { value: 'In Progress', label: 'Đang thực hiện', color: '#3B82F6' },
+        { value: 'Completed', label: 'Hoàn thành', color: '#10B981' }
+      ]
+    },
+    {
+      key: 'priority',
+      label: 'Độ ưu tiên',
+      type: 'multiselect',
+      options: [
+        { value: 'Low', label: 'Thấp', color: '#10B981' },
+        { value: 'Medium', label: 'Trung bình', color: '#F59E0B' },
+        { value: 'High', label: 'Cao', color: '#EF4444' }
+      ]
+    },
+    {
+      key: 'assignee',
+      label: 'Người thực hiện',
+      type: 'multiselect',
+      options: [
+        { value: 'John Doe', label: 'John Doe' },
+        { value: 'Jane Smith', label: 'Jane Smith' },
+        { value: 'Bob Johnson', label: 'Bob Johnson' },
+        { value: 'Alice Brown', label: 'Alice Brown' },
+        { value: 'Charlie Wilson', label: 'Charlie Wilson' }
+      ]
+    },
+    {
+      key: 'name',
+      label: 'Tên công việc',
+      type: 'text'
+    },
+    {
+      key: 'createdDate',
+      label: 'Ngày tạo',
+      type: 'date'
+    }
+  ];
 
   ngOnInit(): void {
     this.initTable();
@@ -28,6 +134,8 @@ export class TaskStatusComponent implements OnInit {
       { id: 2, name: 'Task 2', age: 30 },
       { id: 3, name: 'Task 3', age: 35 }
     ];
+    // this.initFilters();
+    // this.filteredTasks = [...this.allTasks];
   }
 
   initTable() {
@@ -45,6 +153,46 @@ export class TaskStatusComponent implements OnInit {
         sortable: true
       }
     ];
+  }
+
+  initFilters() {}
+
+  onFiltersChange(filters: AppliedFilter[]) {
+    this.appliedFilters = filters;
+    this.applyFilters();
+  }
+
+  applyFilters() {
+    this.filteredTasks = this.allTasks.filter((task: any) => {
+      return this.appliedFilters.every(filter => {
+        const fieldKey = filter.field.key;
+        const taskValue = (task as any)[fieldKey];
+
+        switch (filter.field.type) {
+          case 'select':
+          case 'multiselect':
+            return filter.values.includes(taskValue);
+          
+          case 'text':
+            return taskValue.toLowerCase().includes(filter.values[0].toLowerCase());
+          
+          case 'date':
+            return taskValue === filter.values[0];
+          
+          default:
+            return true;
+        }
+      });
+    });
+  }
+
+  trackByTask(index: number, task: TaskStatus): number {
+    return task.id;
+  }
+
+  onFiltersChanged(filters: { [key: string]: any[] }) {
+    console.log('Active filters:', filters);
+    // -> Gọi hàm lọc lại danh sách task ở đây
   }
 
   sortChange(event: any) {

@@ -1,14 +1,25 @@
-<z-table
-  [columns]="columns"
-  [rows]="rows"
-  [tableClassName]="'custom-table-class'"
-  (sortChange)="sortChange($event)"
-  (pageChange)="pageChange($event)"
-  (paginatorChange)="paginatorChange($event)"
-  (clickRow)="clickRow($event)">
->
-</z-table>
-
-<ng-template #customCell let-row>
-  <span [style.color]="'red'">{{ row.name }}</span>
-</ng-template>
+<div>
+  <div class="flex">
+    <app-multi-filter
+      [filterFields]="filterFields"
+      (filtersChange)="onFiltersChange($event)"
+    ></app-multi-filter>
+  </div>
+  
+  <div class="mt-2">
+    <z-table
+      [columns]="columns"
+      [rows]="rows"
+      [tableClassName]="'custom-table-class'"
+      (sortChange)="sortChange($event)"
+      (pageChange)="pageChange($event)"
+      (paginatorChange)="paginatorChange($event)"
+      (clickRow)="clickRow($event)">
+    >
+    </z-table>
+  </div>
+  
+  <ng-template #customCell let-row>
+    <span [style.color]="'red'">{{ row.name }}</span>
+  </ng-template>
+</div>
