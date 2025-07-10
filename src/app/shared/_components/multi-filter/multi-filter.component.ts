@@ -1,18 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2 } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ZI18nComponent } from '../z-i18n/z-i18n.component';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { SelectComponent } from '../select/select.component';
 
 export interface FilterField {
   key: string;
   label: string;
-  type?: any;
   options?: FilterOption[];
 }
 
 export interface FilterOption {
   value: any;
   label: string;
-  color?: string; // Cho trường hợp status có màu
 }
 
 export interface AppliedFilter {
@@ -23,7 +25,16 @@ export interface AppliedFilter {
 
 @Component({
   selector: 'app-multi-filter',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ZI18nComponent,
+    MatFormFieldModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    SelectComponent
+  ],
   templateUrl: './multi-filter.component.html',
   styleUrl: './multi-filter.component.scss'
 })
@@ -33,18 +44,21 @@ export class MultiFilterComponent {
 
   isMainDropdownOpen = false;
   isValueDropdownOpen = false;
-  selectedField: FilterField | null = null;
-  selectedOptions: FilterOption[] = [];
-  textInputValue = '';
-  appliedFilters: AppliedFilter[] = [];
 
-  ngOnInit() {
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', (event) => {
-      if (!event.target || !(event.target as Element).closest('app-multi-filter')) {
-        this.closeAllDropdowns();
-      }
-    });
+  selectedField: FilterField | null = null;
+  selectedValues: any[] = [];
+  appliedFilters: AppliedFilter[] = [];
+  
+  @HostListener('document:click', ['$event'])
+  handleClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+
+    const clickedInside = target.closest('.multi-filter-container');
+    const clickedOverlay = target.closest('.cdk-overlay-container') || target.closest('.cdk-overlay-pane');
+
+    if (!clickedInside && !clickedOverlay) {
+      this.closeAllDropdowns();
+    }
   }
 
   toggleMainDropdown() {
@@ -56,69 +70,32 @@ export class MultiFilterComponent {
     this.selectedField = field;
     this.isMainDropdownOpen = false;
     this.isValueDropdownOpen = true;
-    this.selectedOptions = [];
-    this.textInputValue = '';
+
+    const existing = this.appliedFilters.find(f => f.field.key === field.key);
+    this.selectedValues = existing?.values || [];
   }
 
-  closeValueDropdown() {
-    this.isValueDropdownOpen = false;
-    this.selectedField = null;
-  }
+  onSelectChange() {
+    if (!this.selectedField) return;
 
-  closeAllDropdowns() {
-    this.isMainDropdownOpen = false;
-    this.isValueDropdownOpen = false;
-    this.selectedField = null;
-  }
+    const values = this.selectedValues;
+    const labels = this.selectedField.options
+      ?.filter(o => values.includes(o.value))
+      .map(o => o.label) ?? [];
 
-  toggleOption(option: FilterOption) {
-    const index = this.selectedOptions.findIndex(o => o.value === option.value);
-    if (index > -1) {
-      this.selectedOptions.splice(index, 1);
-    } else {
-      if (this.selectedField?.type === 'select') {
-        this.selectedOptions = [option];
-      } else {
-        this.selectedOptions.push(option);
-      }
-    }
-  }
+    this.addFilter({
+      field: this.selectedField,
+      values,
+      displayText: `${this.selectedField.label}: ${labels.join(', ')}`
+    });
 
-  isOptionSelected(option: FilterOption): boolean {
-    return this.selectedOptions.some(o => o.value === option.value);
-  }
-
-  applySelectedOptions() {
-    if (this.selectedField && this.selectedOptions.length > 0) {
-      const displayText = this.selectedField.label + ': ' + 
-        this.selectedOptions.map(o => o.label).join(', ');
-      
-      this.addFilter({
-        field: this.selectedField,
-        values: this.selectedOptions.map(o => o.value),
-        displayText
-      });
-    }
-    this.closeValueDropdown();
-  }
-
-  applyTextFilter() {
-    if (this.selectedField && this.textInputValue.trim()) {
-      const displayText = this.selectedField.label + ': ' + this.textInputValue;
-      
-      this.addFilter({
-        field: this.selectedField,
-        values: [this.textInputValue.trim()],
-        displayText
-      });
-    }
-    this.closeValueDropdown();
+    console.log("test")
+    // this.closeValueDropdown();
   }
 
   addFilter(filter: AppliedFilter) {
-    // Remove existing filter for the same field
+    // Replace existing filter for the same key
     this.appliedFilters = this.appliedFilters.filter(f => f.field.key !== filter.field.key);
-    // Add new filter
     this.appliedFilters.push(filter);
     this.filtersChange.emit(this.appliedFilters);
   }
@@ -134,27 +111,15 @@ export class MultiFilterComponent {
     this.filtersChange.emit(this.appliedFilters);
   }
 
-  getFieldTypeLabel(type: string): string {
-    switch (type) {
-      case 'select': return 'Chọn một';
-      case 'multiselect': return 'Chọn nhiều';
-      case 'text': return 'Văn bản';
-      case 'date': return 'Ngày tháng';
-      default: return '';
-    }
+  closeValueDropdown() {
+    this.isValueDropdownOpen = false;
+    this.selectedField = null;
   }
 
-  getSelectedLabels(fieldKey: string): string[] {
-    const found = this.appliedFilters.find(f => f.field.key === fieldKey);
-    if (!found) return [];
-
-    // Tìm label tương ứng từ options để hiển thị
-    const field = this.filterFields.find(f => f.key === fieldKey);
-    if (!field || !field.options) return found.values;
-
-    return found.values
-      .map(val => field.options!.find(o => o.value === val)?.label)
-      .filter((label): label is string => !!label);
+  closeAllDropdowns() {
+    this.isMainDropdownOpen = false;
+    this.isValueDropdownOpen = false;
+    this.selectedField = null;
   }
 
   getSelectedLabelsWithValues(fieldKey: string): { label: string; value: any }[] {
@@ -171,37 +136,21 @@ export class MultiFilterComponent {
   }
 
   removeFieldValue(fieldKey: string, valueToRemove: any, event: Event) {
-    event.stopPropagation(); // Ngăn click lan sang mở dropdown
-
+    event.stopPropagation();
     const filter = this.appliedFilters.find(f => f.field.key === fieldKey);
     if (!filter) return;
-
     const newValues = filter.values.filter(v => v !== valueToRemove);
-
     if (newValues.length === 0) {
-      // Nếu hết giá trị → xóa toàn bộ filter
       this.appliedFilters = this.appliedFilters.filter(f => f.field.key !== fieldKey);
     } else {
+      const field = this.filterFields.find(f => f.key === fieldKey);
+      const labels = field?.options
+        ?.filter(o => newValues.includes(o.value))
+        .map(o => o.label) ?? [];
       filter.values = newValues;
-      filter.displayText = `${filter.field.label}: ${this.getSelectedLabelsWithValues(fieldKey)
-        .filter(v => v.value !== valueToRemove)
-        .map(v => v.label)
-        .join(', ')}`;
+      filter.displayText = `${field?.label}: ${labels.join(', ')}`;
     }
 
     this.filtersChange.emit(this.appliedFilters);
-  }
-
-
-  trackByFilter(index: number, filter: AppliedFilter): string {
-    return filter.field.key;
-  }
-
-  trackByField(index: number, field: FilterField): string {
-    return field.key;
-  }
-
-  trackByOption(index: number, option: FilterOption): any {
-    return option.value;
   }
 }

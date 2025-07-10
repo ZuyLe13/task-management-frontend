@@ -85,27 +85,24 @@ export class TaskStatusComponent implements OnInit {
     {
       key: 'status',
       label: 'Trạng thái',
-      type: 'multiselect',
       options: [
-        { value: 'Todo', label: 'Chờ thực hiện', color: '#6B7280' },
-        { value: 'In Progress', label: 'Đang thực hiện', color: '#3B82F6' },
-        { value: 'Completed', label: 'Hoàn thành', color: '#10B981' }
+        { value: 'Todo', label: 'Chờ thực hiện' },
+        { value: 'In Progress', label: 'Đang thực hiện' },
+        { value: 'Completed', label: 'Hoàn thành' }
       ]
     },
     {
       key: 'priority',
       label: 'Độ ưu tiên',
-      type: 'multiselect',
       options: [
-        { value: 'Low', label: 'Thấp', color: '#10B981' },
-        { value: 'Medium', label: 'Trung bình', color: '#F59E0B' },
-        { value: 'High', label: 'Cao', color: '#EF4444' }
+        { value: 'Low', label: 'Thấp' },
+        { value: 'Medium', label: 'Trung bình' },
+        { value: 'High', label: 'Cao' }
       ]
     },
     {
       key: 'assignee',
       label: 'Người thực hiện',
-      type: 'multiselect',
       options: [
         { value: 'John Doe', label: 'John Doe' },
         { value: 'Jane Smith', label: 'Jane Smith' },
@@ -117,12 +114,10 @@ export class TaskStatusComponent implements OnInit {
     {
       key: 'name',
       label: 'Tên công việc',
-      type: 'text'
     },
     {
       key: 'createdDate',
       label: 'Ngày tạo',
-      type: 'date'
     }
   ];
 
@@ -168,20 +163,20 @@ export class TaskStatusComponent implements OnInit {
         const fieldKey = filter.field.key;
         const taskValue = (task as any)[fieldKey];
 
-        switch (filter.field.type) {
-          case 'select':
-          case 'multiselect':
-            return filter.values.includes(taskValue);
+        // switch (filter.field.type) {
+        //   case 'select':
+        //   case 'multiselect':
+        //     return filter.values.includes(taskValue);
           
-          case 'text':
-            return taskValue.toLowerCase().includes(filter.values[0].toLowerCase());
+        //   case 'text':
+        //     return taskValue.toLowerCase().includes(filter.values[0].toLowerCase());
           
-          case 'date':
-            return taskValue === filter.values[0];
+        //   case 'date':
+        //     return taskValue === filter.values[0];
           
-          default:
-            return true;
-        }
+        //   default:
+        //     return true;
+        // }
       });
     });
   }
