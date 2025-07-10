@@ -1,5 +1,5 @@
 .multi-filter-container {
-  @apply relative w-[380px];
+  @apply relative w-[380px] visible z-10;
 
   .toggle-dropdown-btn {
     @apply w-full h-[40px] border border-[var(--border-color)] rounded-[4px] 

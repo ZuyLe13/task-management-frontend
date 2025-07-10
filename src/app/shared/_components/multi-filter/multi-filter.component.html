@@ -67,7 +67,7 @@
   class="filter-options-container" 
   (click)="$event.stopPropagation()">
     <div class="p-4 space-y-3">
-      <div class="flex items-center justify-between border-b pb-2">
+      <div class="flex items-center justify-between pb-2">
         <div class="text-sm font-medium text-gray-700">
           Chọn giá trị cho: {{ selectedField.label }}
         </div>
@@ -76,13 +76,14 @@
         </button>
       </div>
       <z-select
-        *ngIf="selectedField"
+      *ngIf="selectedField"
         [options]="selectedField.options || []"
         [(value)]="selectedValues"
-        [placeholder]="'Chọn ' + selectedField.label.toLowerCase()"
-        [multiple]="true"
+        [labelKey]="'label'"
+        [valueKey]="'value'"
+        [placeholder]="'Chọn trạng thái'"
         (valueChange)="onSelectChange()"
-      />
+      ></z-select>
     </div>
   </div>
 </div>

@@ -88,9 +88,6 @@ export class MultiFilterComponent {
       values,
       displayText: `${this.selectedField.label}: ${labels.join(', ')}`
     });
-
-    console.log("test")
-    // this.closeValueDropdown();
   }
 
   addFilter(filter: AppliedFilter) {
