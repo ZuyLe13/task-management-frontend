@@ -1,4 +1,4 @@
-<div class="relative w-full mt-1">
+<div class="relative mt-1">
   <input
     class="z-input"
     [placeholder]="placeholder"
@@ -8,13 +8,13 @@
     (input)="onInputChange($event)"
   />
 
-  <div *ngIf="dropdownOpen" class="border border-gray-300 rounded mt-1">
+  <div *ngIf="dropdownOpen" class="absolute w-full bg-white border border-gray-300 rounded mt-1">
     <div *ngFor="let option of filteredOptions"
       class="px-4 py-2 hover:bg-gray-100 cursor-pointer transition-colors duration-300"
       (click)="selectOption(option)">
       {{ option[labelKey] }}
     </div>
-    <div *ngIf="filteredOptions.length === 0" class="px-3 py-2 text-gray-500 text-sm">
+    <div *ngIf="filteredOptions.length === 0" class="px-4 py-2 text-gray-500 text-sm">
       Không có kết quả
     </div>
   </div>

@@ -108,11 +108,6 @@ export class MultiFilterComponent {
     this.filtersChange.emit(this.appliedFilters);
   }
 
-  closeValueDropdown() {
-    this.isValueDropdownOpen = false;
-    this.selectedField = null;
-  }
-
   closeAllDropdowns() {
     this.isMainDropdownOpen = false;
     this.isValueDropdownOpen = false;

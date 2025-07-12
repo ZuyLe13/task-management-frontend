@@ -53,6 +53,6 @@
 
   .filter-options-container {
     @apply absolute z-50 w-full mt-1 bg-white border border-[var(--border-color)] 
-    rounded-[4px] shadow-lg max-h-60 overflow-y-auto;
+    rounded-[4px] shadow-lg max-h-60;
   }
 }

@@ -13,6 +13,10 @@ body {
   font-family: "DM Sans", sans-serif;
 }
 
+span {
+  @apply block;
+}
+
 :root {
   --primary-blue: #5051f9;
   --primary-yellow: #FBBE37;

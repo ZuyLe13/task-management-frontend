@@ -54,9 +54,9 @@
             (click)="removeFieldValue(field.key, option.value, $event)"
           >
             {{ option.label }}
-            <span class="material-symbols-rounded text-[14px] ml-1 leading-none"
-              >close</span
-            >
+            <span class="material-symbols-rounded text-[14px] ml-1 leading-none">
+              close
+            </span>
           </div>
         </div>
       </div>
@@ -66,24 +66,34 @@
   <div *ngIf="selectedField && isValueDropdownOpen" 
   class="filter-options-container" 
   (click)="$event.stopPropagation()">
-    <div class="p-4 space-y-3">
-      <div class="flex items-center justify-between pb-2">
-        <div class="text-sm font-medium text-gray-700">
-          Chọn giá trị cho: {{ selectedField.label }}
-        </div>
-        <button (click)="closeValueDropdown()" class="text-gray-400 hover:text-gray-600 transition-colors">
-          <span class="material-symbols-rounded text-[16px]">close</span>
-        </button>
+    <div class="py-4 space-y-3">
+      <div class="relative px-4 pb-2 mb-4 border-b border-[var(--border-color)]">
+          <span class="material-symbols-rounded absolute bottom-[2px] mb-1 p-1 text-[16px] text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+                (click)="toggleMainDropdown()">
+            arrow_back_ios
+          </span>
+          <div class="flex-1 text-center text-sm font-semibold text-[var(--text-black)]">
+            {{ selectedField.label }}
+          </div>
       </div>
-      <z-select
-      *ngIf="selectedField"
-        [options]="selectedField.options || []"
-        [(value)]="selectedValues"
-        [labelKey]="'label'"
-        [valueKey]="'value'"
-        [placeholder]="'Chọn trạng thái'"
-        (valueChange)="onSelectChange()"
-      ></z-select>
+      <div class="px-4">
+        <z-select
+          *ngIf="selectedField"
+          [options]="selectedField.options || []"
+          [(value)]="selectedValues"
+          [labelKey]="'label'"
+          [valueKey]="'value'"
+          [placeholder]="'Chọn trạng thái'"
+          (valueChange)="onSelectChange()"
+        ></z-select>
+        <div class="mt-2 text-gray-400">
+          <z-i18n [key]="'Search and select to filter by.'"></z-i18n>
+          <span *ngIf="selectedValues.length > 0" class="mt-2 font-semibold text-[var(--text-black)]"><z-i18n [key]="'SELECTED'"></z-i18n></span>
+        </div>
+        <div *ngFor="let option of getSelectedLabelsWithValues(selectedField.key)">
+          {{ option.label }}
+        </div>
+      </div>
     </div>
   </div>
 </div>
