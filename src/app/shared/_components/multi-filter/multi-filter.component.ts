@@ -83,15 +83,25 @@ export class MultiFilterComponent {
       ?.filter(o => values.includes(o.value))
       .map(o => o.label) ?? [];
 
-    this.addFilter({
-      field: this.selectedField,
-      values,
-      displayText: `${this.selectedField.label}: ${labels.join(', ')}`
-    });
+    // this.addFilter({
+    //   field: this.selectedField,
+    //   values,
+    //   displayText: `${this.selectedField.label}: ${labels.join(', ')}`
+    // });
+    if (values.length === 0) {
+      // If no values selected, remove the filter entirely
+      this.appliedFilters = this.appliedFilters.filter(f => f.field.key !== this.selectedField!.key);
+    } else {
+      // Add or update the filter
+      this.addFilter({
+        field: this.selectedField,
+        values,
+        displayText: `${this.selectedField.label}: ${labels.join(', ')}`
+      });
+    }
   }
 
   addFilter(filter: AppliedFilter) {
-    // Replace existing filter for the same key
     this.appliedFilters = this.appliedFilters.filter(f => f.field.key !== filter.field.key);
     this.appliedFilters.push(filter);
     this.filtersChange.emit(this.appliedFilters);
@@ -100,11 +110,17 @@ export class MultiFilterComponent {
   removeFilter(filter: AppliedFilter, event: Event) {
     event.stopPropagation();
     this.appliedFilters = this.appliedFilters.filter(f => f !== filter);
+    if (this.selectedField && this.selectedField.key === filter.field.key) {
+      this.selectedValues = [];
+    }
     this.filtersChange.emit(this.appliedFilters);
   }
 
   clearAllFilters() {
     this.appliedFilters = [];
+    if (this.selectedField) {
+      this.selectedValues = [];
+    }
     this.filtersChange.emit(this.appliedFilters);
   }
 
@@ -127,11 +143,30 @@ export class MultiFilterComponent {
     });
   }
 
+  getLabelForValue(value: any): string {
+    if (!this.selectedField || !this.selectedField.options) return String(value);
+    
+    const option = this.selectedField.options.find(o => o.value === value);
+    return option ? option.label : String(value);
+  }
+
+  removeSelectedValue(valueToRemove: any, event: Event) {
+    event.stopPropagation();
+    if (!this.selectedField) return;
+    this.selectedValues = this.selectedValues.filter(v => v !== valueToRemove);
+    this.onSelectChange();
+  }
+
   removeFieldValue(fieldKey: string, valueToRemove: any, event: Event) {
     event.stopPropagation();
     const filter = this.appliedFilters.find(f => f.field.key === fieldKey);
     if (!filter) return;
     const newValues = filter.values.filter(v => v !== valueToRemove);
+    
+    if (this.selectedField && this.selectedField.key === fieldKey) {
+      this.selectedValues = [...newValues];
+    }
+
     if (newValues.length === 0) {
       this.appliedFilters = this.appliedFilters.filter(f => f.field.key !== fieldKey);
     } else {
@@ -142,7 +177,7 @@ export class MultiFilterComponent {
       filter.values = newValues;
       filter.displayText = `${field?.label}: ${labels.join(', ')}`;
     }
-
+    
     this.filtersChange.emit(this.appliedFilters);
   }
 }

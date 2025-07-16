@@ -1,21 +1,20 @@
-<div class="relative mt-1">
+<div class="select-container">
   <input
     class="z-input"
     [placeholder]="placeholder"
     [formControl]="inputControl"
-    [disabled]="disabled"
     (focus)="toggleDropdown()"
     (input)="onInputChange($event)"
   />
 
-  <div *ngIf="dropdownOpen" class="absolute w-full bg-white border border-gray-300 rounded mt-1">
+  <div *ngIf="dropdownOpen" class="dropdown-container">
     <div *ngFor="let option of filteredOptions"
-      class="px-4 py-2 hover:bg-gray-100 cursor-pointer transition-colors duration-300"
+      class="option-item"
       (click)="selectOption(option)">
       {{ option[labelKey] }}
     </div>
-    <div *ngIf="filteredOptions.length === 0" class="px-4 py-2 text-gray-500 text-sm">
-      Không có kết quả
+    <div *ngIf="filteredOptions.length === 0" class="option-no-value">
+      <z-i18n [key]="'No Results'"></z-i18n>
     </div>
   </div>
 </div>

@@ -22,39 +22,31 @@
         </div>
         
         <div class="flex items-center">
-          <!-- Clear All Button -->
-          <button
-            *ngIf="appliedFilters.length > 0"
+          <button *ngIf="appliedFilters.length > 0"
             (click)="clearAllFilters()"
-            class="clear-all-btn"
-          >
-            <span class="material-symbols-rounded text-[16px] p-1 font-semibold">close</span>
+            class="clear-all-btn">
+            <span class="material-symbols-rounded z-icon p-1">close</span>
           </button>
-          <span class="material-symbols-rounded transition-colors duration-200"
-            [ngClass]="[isMainDropdownOpen ? 'text-[var(--text-black)]' : 'text-[var(--text-grey)]']">
+          <span class="material-symbols-rounded transition-all duration-200"
+            [ngClass]="{'-rotate-180': !isMainDropdownOpen}">
             arrow_drop_down
           </span>
         </div>
       </div>
     </button>
 
-    <!-- Main Dropdown - Filter Fields -->
     <div *ngIf="isMainDropdownOpen" class="dropdown-container" (click)="$event.stopPropagation()">
       <div *ngFor="let field of filterFields">
-        <!-- Nhấn vào label để mở chọn -->
-        <div class="filter-field-item font-medium text-sm cursor-pointer" (click)="selectField(field)">
+        <div class="filter-field-item" (click)="selectField(field)">
           {{ field.label }}
         </div>
-
-        <!-- Các giá trị đã chọn, có thể nhấn để xóa -->
-        <div class="flex flex-wrap gap-1 p-2"
+        <div class="selected-container"
           *ngIf="getSelectedLabelsWithValues(field.key).length > 0">
-          <div class="flex items-center text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full hover:bg-blue-200 transition-colors cursor-pointer"
+          <div class="selected-item"
             *ngFor="let option of getSelectedLabelsWithValues(field.key)"
-            (click)="removeFieldValue(field.key, option.value, $event)"
-          >
+            (click)="removeFieldValue(field.key, option.value, $event)">
             {{ option.label }}
-            <span class="material-symbols-rounded text-[14px] ml-1 leading-none">
+            <span class="material-symbols-rounded text-[14px] ml-1">
               close
             </span>
           </div>
@@ -64,34 +56,42 @@
   </div>
   <!-- Value Selection Dropdown -->
   <div *ngIf="selectedField && isValueDropdownOpen" 
-  class="filter-options-container" 
-  (click)="$event.stopPropagation()">
-    <div class="py-4 space-y-3">
-      <div class="relative px-4 pb-2 mb-4 border-b border-[var(--border-color)]">
-          <span class="material-symbols-rounded absolute bottom-[2px] mb-1 p-1 text-[16px] text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
-                (click)="toggleMainDropdown()">
+    class="filter-options-container">
+    <div class="filter-options-wrapper">
+      <div class="filter-options-header">
+          <span class="material-symbols-rounded back-icon" (click)="toggleMainDropdown()">
             arrow_back_ios
           </span>
-          <div class="flex-1 text-center text-sm font-semibold text-[var(--text-black)]">
-            {{ selectedField.label }}
+          <div class="filter-options-title">
+            <z-i18n [key]="selectedField.label"></z-i18n>
           </div>
       </div>
-      <div class="px-4">
-        <z-select
-          *ngIf="selectedField"
-          [options]="selectedField.options || []"
-          [(value)]="selectedValues"
-          [labelKey]="'label'"
-          [valueKey]="'value'"
-          [placeholder]="'Chọn trạng thái'"
-          (valueChange)="onSelectChange()"
-        ></z-select>
-        <div class="mt-2 text-gray-400">
-          <z-i18n [key]="'Search and select to filter by.'"></z-i18n>
-          <span *ngIf="selectedValues.length > 0" class="mt-2 font-semibold text-[var(--text-black)]"><z-i18n [key]="'SELECTED'"></z-i18n></span>
+      <div>
+        <div class="px-4">
+          <z-select
+            *ngIf="selectedField"
+            [options]="selectedField.options || []"
+            [(value)]="selectedValues"
+            [labelKey]="'label'"
+            [valueKey]="'value'"
+            [placeholder]="'Chọn trạng thái'"
+            (valueChange)="onSelectChange()"
+          ></z-select>
+          <div class="mt-3">
+            <span *ngIf="selectedValues.length > 0" class="font-semibold">
+              <z-i18n [key]="'SELECTED'"></z-i18n>
+            </span>
+          </div>
         </div>
-        <div *ngFor="let option of getSelectedLabelsWithValues(selectedField.key)">
-          {{ option.label }}
+        <div class="mt-1">
+          <div class="selected-option" 
+              *ngFor="let option of selectedValues"
+              (click)="removeSelectedValue(option, $event)">
+            <span class="material-symbols-rounded text-[16px] text-[var(--primary-blue)]">
+              check_box
+            </span>
+            {{ getLabelForValue(option) }}
+          </div>
         </div>
       </div>
     </div>

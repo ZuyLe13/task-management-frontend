@@ -11,11 +11,11 @@
   }
 
   .multi-filter-wrapper {
-    @apply flex items-center justify-between;
+    @apply flex items-center justify-between pr-2;
   }
 
   .filter-by {
-    @apply pl-2 text-sm font-semibold;
+    @apply pl-3 text-sm font-semibold;
   }
 
   .filter-content-container {
@@ -44,15 +44,47 @@
 
   .dropdown-container {
     @apply absolute z-50 w-full mt-1 bg-white border border-[var(--border-color)] 
-    rounded-[4px] shadow-md max-h-60 overflow-y-auto;
+    rounded-[4px] shadow-md overflow-y-auto;
   }
 
   .filter-field-item {
-    @apply px-3 py-2 hover:bg-[var(--primary-hover)] cursor-pointer transition-colors;
+    @apply px-4 py-2 hover:bg-[var(--primary-hover)] cursor-pointer transition-colors
+    font-medium text-sm;
   }
 
   .filter-options-container {
     @apply absolute z-50 w-full mt-1 bg-white border border-[var(--border-color)] 
-    rounded-[4px] shadow-lg max-h-60;
+    rounded-[4px] shadow-lg;
+
+    .filter-options-wrapper {
+      @apply py-3 space-y-3;
+    }
+
+    .filter-options-header {
+      @apply relative px-4 pb-3 mb-4 border-b border-[var(--border-color)];
+    }
+
+    .filter-options-title {
+      @apply flex-1 text-center text-sm font-semibold text-[var(--text-black)];
+    }
+
+    .selected-option {
+      @apply flex items-center gap-2 py-[6px] pl-6 hover:bg-[var(--primary-hover)] 
+      cursor-pointer transition-colors duration-200;
+    }
+
+    .back-icon {
+      @apply absolute bottom-[5px] mb-1 p-1 text-[16px] text-gray-400 
+      hover:text-gray-600 transition-colors cursor-pointer;
+    }
+  }
+
+  .selected-container {
+    @apply flex flex-wrap gap-1 p-2;
+
+    .selected-item {
+      @apply flex items-center text-xs bg-blue-100 text-blue-800 px-2 py-0.5 
+      rounded-md hover:bg-blue-200 transition-colors cursor-pointer;
+    }
   }
 }

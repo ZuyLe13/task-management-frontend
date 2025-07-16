@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -9,6 +9,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { ZI18nComponent } from "../z-i18n/z-i18n.component";
 
 @Component({
   selector: 'z-select',
@@ -21,8 +22,9 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
     MatAutocompleteModule,
     MatInputModule,
     MatChipsModule,
-    MatIconModule
-  ],
+    MatIconModule,
+    ZI18nComponent
+],
   templateUrl: './select.component.html',
   styleUrl: './select.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -45,6 +47,23 @@ export class SelectComponent implements OnInit {
   ngOnInit() {
     this.selectedValues = [...this.value];
     this.filterOptions('');
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['value'] && changes['value'].currentValue !== changes['value'].previousValue) {
+      this.selectedValues = [...(changes['value'].currentValue || [])];
+      this.filterOptions(this.inputControl.value || '');
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleOutsideClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const clickedInside = target.closest('.select-container'); // Thêm class cho container của z-select
+
+    if (!clickedInside) {
+      this.dropdownOpen = false;
+    }
   }
 
   filterOptions(search: string) {

@@ -13,10 +13,6 @@ body {
   font-family: "DM Sans", sans-serif;
 }
 
-span {
-  @apply block;
-}
-
 :root {
   --primary-blue: #5051f9;
   --primary-yellow: #FBBE37;
@@ -103,4 +99,9 @@ span {
   @include mat.tooltip-overrides((
     container-color: #232360,
   ));
+}
+
+// =========== icon ==========
+.z-icon {
+  @apply text-[16px] font-semibold;
 }
