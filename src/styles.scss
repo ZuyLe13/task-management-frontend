@@ -67,10 +67,10 @@ body {
 .z-input {
   @apply w-full h-[45px] px-4 border border-[var(--border-color)] rounded-md focus:ring-1
   focus:ring-[var(--primary-blue)] focus:border-[var(--primary-blue)] outline-none 
-  transition-colors duration-300 ease-out bg-[var(--primary-bg)];
+  transition-colors duration-300 ease-out;
 
   &::placeholder {
-    @apply text-[var(--text-black)];
+    @apply text-[var(--text-grey)];
   }
 }
 
@@ -104,4 +104,13 @@ body {
 // =========== icon ==========
 .z-icon {
   @apply text-[16px] font-semibold;
+}
+
+// =========== Modal ===========
+.cdk-overlay-backdrop-showing {
+  @apply bg-[#00000052];
+}
+
+.mat-mdc-dialog-surface {
+  border-radius: 10px !important;
 }

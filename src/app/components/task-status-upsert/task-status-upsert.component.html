@@ -1,0 +1,65 @@
+<div class="task-status-upsert-popup">
+  <!-- Header -->
+  <div class="popup-header">
+    <h2 class="section-title popup-title">
+      <z-i18n [key]="title"></z-i18n>
+    </h2>
+    <button class="btn-close" (click)="onCancel()">
+      <span class="material-symbols-rounded">close</span>
+    </button>
+  </div>
+
+  <!-- Form Content -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="popup-form">
+    <div class="form-body">
+      
+      <!-- Task Status Name -->
+      <div class="form-group">
+        <label class="required"><z-i18n [key]="'Name'"></z-i18n></label>
+        <z-input formControlName="name" placeholder="Name of Task Status" />
+        <z-error controlName="name"></z-error>
+      </div>
+
+      <!-- Color and Order Row -->
+      <div class="form-group">
+        <label class="required"><z-i18n [key]="'Name'"></z-i18n></label>
+        <z-input type="color" formControlName="color" placeholder="Name of Task Status" />
+        <z-error controlName="color"></z-error>
+        <div class="color-input-wrapper">
+          <span class="color-preview" [style.background-color]="form.get('color')?.value"></span>
+        </div>
+      </div>
+
+      <!-- Checkboxes -->
+      <div class="form-group">
+        <div class="form-check">
+          <input 
+            id="isActive"
+            type="checkbox" 
+            formControlName="isActive"
+            class="form-check-input">
+          <label for="isActive" class="form-check-label">
+            <z-i18n [key]="'Active'"></z-i18n>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="popup-footer">
+      <button 
+        type="button" 
+        class="btn btn-cancel"
+        (click)="onCancel()">
+        <z-i18n [key]="'Cancel'"></z-i18n>
+      </button>
+      
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="form.invalid">
+        <z-i18n [key]="isEditMode ? 'Update' : 'Create'"></z-i18n>
+      </button>
+    </div>
+  </form>
+</div>

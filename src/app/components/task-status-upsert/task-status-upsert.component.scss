@@ -1,0 +1,39 @@
+.task-status-upsert-popup {
+  @apply bg-white;
+  .popup-header {
+    @apply flex items-center justify-between px-6 py-4 border-b border-[var(--border-modal)];
+
+    .popup-title {
+      @apply font-semibold;
+    }
+
+    .btn-close {
+      @apply flex items-center text-[18px] font-semibold cursor-pointer transition-colors 
+      duration-300 hover:text-red-500;
+    }
+  }
+
+  .popup-form {
+    .form-body {
+      @apply p-6;
+
+      .form-group {
+        @apply mb-5;
+
+        .color-input-wrapper {
+          @apply flex items-center gap-[10px];
+
+          .color-preview {
+            @apply block size-[30px] border-2 border-[var(--border-modal)]
+            rounded;
+          }
+        }
+      }
+    }
+
+    .popup-footer {
+      @apply flex justify-end gap-3 py-4 px-6 border-t border-[var(--border-modal)] 
+      bg-white;
+    }
+  }
+}

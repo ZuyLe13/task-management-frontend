@@ -1,9 +1,12 @@
 <div>
-  <div class="flex">
+  <div class="flex gap-6">
     <app-multi-filter
       [filterFields]="filterFields"
       (filtersChange)="onFiltersChange($event)"
     ></app-multi-filter>
+    <button class="btn btn-primary" (click)="onCreateNew()">
+      <z-i18n [key]="'Create New'"></z-i18n>
+    </button>
   </div>
   
   <div class="mt-2">

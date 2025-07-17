@@ -3,6 +3,9 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { TableComponent } from '../../../../shared/_components/table/table.component';
 import { Column } from '../../../../shared/interfaces/table.model';
 import { AppliedFilter, FilterField, MultiFilterComponent } from '../../../../shared/_components/multi-filter/multi-filter.component';
+import { ZI18nComponent } from "../../../../shared/_components/z-i18n/z-i18n.component";
+import { ModalService } from '../../../../shared/_services/modal.service';
+import { TaskStatusUpsertComponent } from '../../../../components/task-status-upsert/task-status-upsert.component';
 
 interface TaskStatus {
   id: number;
@@ -19,8 +22,9 @@ interface TaskStatus {
   imports: [
     CommonModule,
     TableComponent,
-    MultiFilterComponent
-  ],
+    MultiFilterComponent,
+    ZI18nComponent
+],
   templateUrl: './task-status.component.html',
   styleUrl: './task-status.component.scss'
 })
@@ -121,6 +125,8 @@ export class TaskStatusComponent implements OnInit {
     }
   ];
 
+  constructor(private modalService: ModalService) {}
+
   ngOnInit(): void {
     this.initTable();
     // Sample data for demonstration
@@ -204,5 +210,23 @@ export class TaskStatusComponent implements OnInit {
 
   clickRow(row: any) {
     console.log('Row clicked:', row);
+  }
+
+  onCreateNew(): void {
+    this.modalService.open(
+      TaskStatusUpsertComponent,
+      { taskStatus: null }, // data truyền vào component
+      {
+        width: '600px',
+        height: 'auto',
+        disableClose: true,
+        panelClass: 'task-status-modal'
+      }
+    ).subscribe(result => {
+      if (result) {
+        console.log('New task status created:', result);
+        this.rows = [...this.rows, result];
+      }
+    });
   }
 }

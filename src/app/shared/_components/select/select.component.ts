@@ -59,7 +59,7 @@ export class SelectComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   handleOutsideClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
-    const clickedInside = target.closest('.select-container'); // Thêm class cho container của z-select
+    const clickedInside = target.closest('.select-container');
 
     if (!clickedInside) {
       this.dropdownOpen = false;
