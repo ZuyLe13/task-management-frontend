@@ -8,7 +8,7 @@
   "Documents": "Tài Liệu",
   "This field is required.": "Trường này bắt buộc.",
   "Invalid email address.": "Địa chỉ email không hợp lệ.",
-  "Cancel": "Huỷ",
+  "Cancel": "Hủy",
   "Save": "Lưu",
   "Full Name": "Họ và Tên",
   "Email": "Email",
@@ -24,5 +24,9 @@
   "SELECTED": "ĐÃ LỰA CHỌN",
   "Filter By": "Lọc Theo",
   "Create Task Status": "Tạo Trạng Thái Công Việc",
-  "Edit Task Status": "Chỉnh Sửa Trạng Thái Công Việc"
+  "Edit Task Status": "Chỉnh Sửa Trạng Thái Công Việc",
+  "Create": "Tạo",
+  "Create New": "Tạo Mới",
+  "Name": "Tên",
+  "Color": "Màu Sắc"
 }

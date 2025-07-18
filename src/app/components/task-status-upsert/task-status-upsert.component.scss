@@ -1,4 +1,4 @@
-.task-status-upsert-popup {
+.task-status-upsert {
   @apply bg-white;
   .popup-header {
     @apply flex items-center justify-between px-6 py-4 border-b border-[var(--border-modal)];
@@ -26,6 +26,25 @@
           .color-preview {
             @apply block size-[30px] border-2 border-[var(--border-modal)]
             rounded;
+          }
+        }
+
+        .color-picker-grid {
+          @apply flex gap-2 mt-1;
+
+          .color-option {
+            @apply relative size-8 rounded cursor-pointer border border-transparent
+            transition-all duration-200;
+
+            &.selected::after {
+              @apply content-['\2713'] absolute top-1/2 left-1/2 text-white
+              text-[20px] font-bold;
+              transform: translate(-50%, -50%);
+            }
+
+            &:hover:not(.selected) {
+              @apply opacity-80;
+            }
           }
         }
       }

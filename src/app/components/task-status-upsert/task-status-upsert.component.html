@@ -1,4 +1,4 @@
-<div class="task-status-upsert-popup">
+<div class="task-status-upsert">
   <!-- Header -->
   <div class="popup-header">
     <h2 class="section-title popup-title">
@@ -12,34 +12,46 @@
   <!-- Form Content -->
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="popup-form">
     <div class="form-body">
-      
-      <!-- Task Status Name -->
       <div class="form-group">
         <label class="required"><z-i18n [key]="'Name'"></z-i18n></label>
         <z-input formControlName="name" placeholder="Name of Task Status" />
         <z-error controlName="name"></z-error>
       </div>
-
-      <!-- Color and Order Row -->
       <div class="form-group">
-        <label class="required"><z-i18n [key]="'Name'"></z-i18n></label>
-        <z-input type="color" formControlName="color" placeholder="Name of Task Status" />
-        <z-error controlName="color"></z-error>
-        <div class="color-input-wrapper">
-          <span class="color-preview" [style.background-color]="form.get('color')?.value"></span>
+        <label class="required"><z-i18n [key]="'Color'"></z-i18n></label>
+        <div class="color-picker-grid">
+          <div 
+            *ngFor="let color of colors" 
+            class="color-option"
+            [style.background-color]="color"
+            [class.selected]="form.get('color')?.value === color"
+            (click)="selectColor(color)"
+          ></div>
         </div>
+        <z-error controlName="color"></z-error>
       </div>
 
       <!-- Checkboxes -->
-      <div class="form-group">
-        <div class="form-check">
+      <div class="flex items-center">
+        <div class="flex flex-1 items-center">
           <input 
             id="isActive"
             type="checkbox" 
             formControlName="isActive"
             class="form-check-input">
-          <label for="isActive" class="form-check-label">
+          <label for="isActive" class="font-medium cursor-pointer">
             <z-i18n [key]="'Active'"></z-i18n>
+          </label>
+        </div>
+
+        <div class="flex flex-1 items-center">
+          <input 
+            id="isDefault"
+            type="checkbox" 
+            formControlName="isDefault"
+            class="form-check-input">
+          <label for="isDefault" class="font-medium cursor-pointer">
+            <z-i18n [key]="'Default'"></z-i18n>
           </label>
         </div>
       </div>
@@ -47,17 +59,11 @@
 
     <!-- Footer Actions -->
     <div class="popup-footer">
-      <button 
-        type="button" 
-        class="btn btn-cancel"
-        (click)="onCancel()">
+      <button class="btn btn-cancel" (click)="onCancel()">
         <z-i18n [key]="'Cancel'"></z-i18n>
       </button>
       
-      <button 
-        type="submit" 
-        class="btn btn-primary"
-        [disabled]="form.invalid">
+      <button class="btn btn-primary">
         <z-i18n [key]="isEditMode ? 'Update' : 'Create'"></z-i18n>
       </button>
     </div>

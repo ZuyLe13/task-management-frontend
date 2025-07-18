@@ -24,10 +24,13 @@ export interface TaskStatusData {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskStatusUpsertComponent implements OnInit {
-  
   form: FormGroup;
   isEditMode: boolean = false;
   title: string = '';
+  colors: string[] = [
+    '#007bff', '#28a745', '#dc3545', '#ffc107', '#17a2b8',
+    '#6610f2', '#6f42c1', '#e83e8c', '#fd7e14', '#20c997'
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -38,54 +41,19 @@ export class TaskStatusUpsertComponent implements OnInit {
     this.title = this.isEditMode ? 'Edit Task Status' : 'Create Task Status';
     
     this.form = this.fb.group({
-      id: [data?.taskStatus?.id || null],
       name: [data?.taskStatus?.name || '', [Validators.required, Validators.maxLength(100)]],
-      description: [data?.taskStatus?.description || '', [Validators.maxLength(255)]],
-      color: [data?.taskStatus?.color || '#007bff', [Validators.required]],
-      order: [data?.taskStatus?.order || 0, [Validators.required, Validators.min(0)]],
+      color: [data?.taskStatus?.color || this.colors[0], [Validators.required]],
       isActive: [data?.taskStatus?.isActive ?? true],
       isDefault: [data?.taskStatus?.isDefault ?? false]
     });
   }
 
-  ngOnInit(): void {
-    // Có thể thêm logic khởi tạo khác ở đây
-  }
+  ngOnInit(): void {}
 
-  /**
-   * Kiểm tra form control có lỗi không
-   */
-  hasError(fieldName: string, errorType: string): boolean {
-    const control = this.form.get(fieldName);
-    return control?.hasError(errorType) && (control?.dirty || control?.touched) || false;
-  }
-
-  /**
-   * Lấy message lỗi cho field
-   */
-  getErrorMessage(fieldName: string): string {
-    const control = this.form.get(fieldName);
-    if (control?.hasError('required')) {
-      return `${fieldName} is required`;
-    }
-    if (control?.hasError('maxlength')) {
-      const maxLength = control.getError('maxlength').requiredLength;
-      return `${fieldName} must not exceed ${maxLength} characters`;
-    }
-    if (control?.hasError('min')) {
-      return `${fieldName} must be greater than or equal to 0`;
-    }
-    return '';
-  }
-
-  /**
-   * Xử lý khi submit form
-   */
   onSubmit(): void {
     if (this.form.valid) {
       const formValue = this.form.value;
       
-      // Thêm timestamp
       const taskStatus = {
         ...formValue,
         updatedAt: new Date().toISOString(),
@@ -94,27 +62,18 @@ export class TaskStatusUpsertComponent implements OnInit {
 
       this.dialogRef.close(taskStatus);
     } else {
-      // Mark all fields as touched để hiển thị lỗi
       Object.keys(this.form.controls).forEach(key => {
         this.form.get(key)?.markAsTouched();
       });
     }
   }
 
-  /**
-   * Đóng popup
-   */
   onCancel(): void {
     this.dialogRef.close();
   }
 
-  /**
-   * Reset form về trạng thái ban đầu
-   */
-  onReset(): void {
-    this.form.reset();
-    if (this.data?.taskStatus) {
-      this.form.patchValue(this.data.taskStatus);
-    }
+  selectColor(color: string): void {
+    this.form.get('color')?.setValue(color);
+    this.form.get('color')?.markAsTouched();
   }
 }

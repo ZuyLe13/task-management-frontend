@@ -24,5 +24,9 @@
   "SELECTED": "SELECTED",
   "Filter By": "Filter By",
   "Create Task Status": "Create Task Status",
-  "Edit Task Status": "Edit Task Status"
+  "Edit Task Status": "Edit Task Status",
+  "Create": "Create",
+  "Create New": "Create New",
+  "Name": "Name",
+  "Color": "Color"
 }

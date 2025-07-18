@@ -51,7 +51,7 @@ body {
 }
 
 .btn-primary {
-  @apply px-5 bg-[var(--primary-blue)] text-white hover:bg-[var(--btn-primary-hover)];
+  @apply px-4 bg-[var(--primary-blue)] text-white hover:bg-[var(--btn-primary-hover)];
 }
 
 .btn-outlined {
@@ -80,6 +80,21 @@ body {
 
 .input-label {
   @apply block text-base font-normal text-[var(--text-black)] mb-2;
+}
+
+.form-check-input {
+  @apply relative size-5 mr-2 cursor-pointer appearance-none border-2
+  border-[#ccc] rounded transition-all duration-200;
+
+  &:checked {
+    @apply bg-[var(--primary-blue)] border-[var(--primary-blue)];
+  }
+
+  &:checked::after {
+    @apply content-['\2713'] absolute top-1/2 left-1/2 text-white
+    text-sm font-bold;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .required {
