@@ -21,8 +21,8 @@
     >
     </z-table>
   </div>
-  
-  <ng-template #customCell let-row>
-    <span [style.color]="'red'">{{ row.name }}</span>
+
+  <ng-template #colorCellTemplate let-row>
+    <span [style.backgroundColor]="row.color" class="color-badge">{{ row.color }}</span>
   </ng-template>
 </div>
