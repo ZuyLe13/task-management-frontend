@@ -5,6 +5,7 @@ import { ZI18nComponent } from '../../shared/_components/z-i18n/z-i18n.component
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { InputComponent } from "../../shared/_components/input/input.component";
 import { ErrorComponent } from '../../shared/_components/error/error.component';
+import { TaskStatus, TaskStatusService } from '../../shared/_services/task-status.service';
 
 export interface TaskStatusData {
   taskStatus?: any;
@@ -34,15 +35,16 @@ export class TaskStatusUpsertComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private taskStatusService: TaskStatusService,
     private dialogRef: MatDialogRef<TaskStatusUpsertComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: TaskStatusData
+    @Inject(MAT_DIALOG_DATA) public data: TaskStatusData,
   ) {
     this.isEditMode = !!data?.taskStatus;
     this.title = this.isEditMode ? 'Edit Task Status' : 'Create Task Status';
     
     this.form = this.fb.group({
       name: [data?.taskStatus?.name || '', [Validators.required, Validators.maxLength(100)]],
-      color: [data?.taskStatus?.color || this.colors[0], [Validators.required]],
+      color: [data?.taskStatus?.color || this.colors[0], [Validators.required, Validators.pattern(/^#[0-9A-F]{6}$/i)]],
       isActive: [data?.taskStatus?.isActive ?? true],
       isDefault: [data?.taskStatus?.isDefault ?? false]
     });
@@ -52,15 +54,13 @@ export class TaskStatusUpsertComponent implements OnInit {
 
   onSubmit(): void {
     if (this.form.valid) {
-      const formValue = this.form.value;
-      
-      const taskStatus = {
-        ...formValue,
-        updatedAt: new Date().toISOString(),
-        ...(this.isEditMode ? {} : { createdAt: new Date().toISOString() })
-      };
-
-      this.dialogRef.close(taskStatus);
+      const formValue: TaskStatus = this.form.value;
+      this.taskStatusService.createTaskStatus(formValue).subscribe({
+        next: () => this.dialogRef.close(formValue),
+        error: (error) => {
+          console.error('Error creating task status:', error);
+        }
+      });
     } else {
       Object.keys(this.form.controls).forEach(key => {
         this.form.get(key)?.markAsTouched();

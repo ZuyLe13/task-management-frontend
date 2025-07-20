@@ -22,7 +22,19 @@
     </z-table>
   </div>
 
-  <ng-template #colorCellTemplate let-row>
-    <span [style.backgroundColor]="row.color" class="color-badge">{{ row.color }}</span>
+  <ng-template #colorTemplate let-row>
+    <div class="size-6 rounded" [style.backgroundColor]="row.color"></div>
+  </ng-template>
+
+  <ng-template #actionTemplate let-row>
+    <div class="flex items-center gap-2">
+      <!-- Edit Button -->
+      <button 
+        class="btn btn-primary"
+        (click)="onEdit(row)"
+        title="Edit">
+        Edit
+      </button>
+    </div>
   </ng-template>
 </div>

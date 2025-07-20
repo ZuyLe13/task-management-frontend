@@ -1,22 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { TableComponent } from '../../../../shared/_components/table/table.component';
 import { Column } from '../../../../shared/interfaces/table.model';
 import { AppliedFilter, FilterField, MultiFilterComponent } from '../../../../shared/_components/multi-filter/multi-filter.component';
 import { ZI18nComponent } from "../../../../shared/_components/z-i18n/z-i18n.component";
 import { ModalService } from '../../../../shared/_services/modal.service';
 import { TaskStatusUpsertComponent } from '../../../../components/task-status-upsert/task-status-upsert.component';
-import { TaskStatusService } from '../../../../shared/_services/task-status.service';
-
-interface TaskStatus {
-  id: number;
-  name: string;
-  status: string;
-  priority: string;
-  assignee: string;
-  createdDate: string;
-  color: string;
-}
+import { TaskStatus, TaskStatusService } from '../../../../shared/_services/task-status.service';
 
 @Component({
   selector: 'app-task-status',
@@ -30,7 +20,8 @@ interface TaskStatus {
   styleUrl: './task-status.component.scss'
 })
 export class TaskStatusComponent implements OnInit {
-  @ViewChild('colorCellTemplate', { static: true }) colorCell!: TemplateRef<any>;
+  @ViewChild('colorTemplate', { static: true }) colorTemplate!: TemplateRef<any>;
+  @ViewChild('actionTemplate', { static: true }) actionTemplate!: TemplateRef<any>;
 
   columns: Column[] = [];
   rows: any[] = [];
@@ -99,35 +90,25 @@ export class TaskStatusComponent implements OnInit {
       {
         field: 'name',
         header: 'Name',
-        headerClass: 'header-style',
-        cellClass: 'cell-style',
-        sortable: true
-      },
-      {
-        field: 'code',
-        header: 'Code',
-        sortable: true
       },
       {
         field: 'color',
         header: 'Color',
-        cellTemplate: this.colorCell,
-        headerClass: 'header-style',
-        cellClass: 'cell-style'
+        cellTemplate: this.colorTemplate,
       },
       {
-        field: 'active',
+        field: 'isActive',
         header: 'Active',
-        headerClass: 'header-style',
-        cellClass: 'cell-style',
-        sortable: true
       },
       {
-        field: 'default',
+        field: 'isDefault',
         header: 'Default',
-        headerClass: 'header-style',
-        cellClass: 'cell-style',
-        sortable: true
+      },
+      {
+        field: 'action',
+        header: 'Action',
+        cellTemplate: this.actionTemplate,
+        width: '100px'
       }
     ];
   }
@@ -160,7 +141,26 @@ export class TaskStatusComponent implements OnInit {
   onCreateNew(): void {
     this.modalService.open(
       TaskStatusUpsertComponent,
-      { taskStatus: null }, // data truyền vào component
+      { taskStatus: null },
+      {
+        width: '600px',
+        height: 'auto',
+        disableClose: true,
+        panelClass: 'task-status-modal'
+      }
+    ).subscribe(result => {
+      if (result) {
+        console.log('New task status created:', result);
+        this.rows = [...this.rows, result];
+      }
+    });
+  }
+
+  onEdit(row: TaskStatus) {
+    console.log('✏️ Edit task status:', row);
+    this.modalService.open(
+      TaskStatusUpsertComponent,
+      { taskStatus: row },
       {
         width: '600px',
         height: 'auto',

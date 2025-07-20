@@ -39,7 +39,6 @@ export class TableComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['rows'] && this.dataSource) {
-      console.log('🔄 Rows changed:', changes['rows'].currentValue);
       this.dataSource.data = changes['rows'].currentValue || [];
     }
     
