@@ -55,10 +55,17 @@ export class TaskStatusUpsertComponent implements OnInit {
   onSubmit(): void {
     if (this.form.valid) {
       const formValue: TaskStatus = this.form.value;
-      this.taskStatusService.createTaskStatus(formValue).subscribe({
-        next: () => this.dialogRef.close(formValue),
+      const observable = this.isEditMode
+        ? this.taskStatusService.updateTaskStatus(this.data.taskStatus!._id!, formValue)
+        : this.taskStatusService.createTaskStatus(formValue);
+
+      observable.subscribe({
+        next: (result: TaskStatus) => {
+          this.form.reset({ name: '', color: '#007bff', isActive: true, isDefault: false });
+          this.dialogRef.close(result);
+        },
         error: (error) => {
-          console.error('Error creating task status:', error);
+          console.error(`${this.isEditMode ? 'Error updating task status' : 'Error creating task status'}:`, error);
         }
       });
     } else {

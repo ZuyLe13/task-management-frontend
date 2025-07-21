@@ -75,14 +75,7 @@ export class TaskStatusComponent implements OnInit {
 
   ngOnInit(): void {
     this.initTable();
-    this.taskStatusService.getTaskStatus().subscribe({
-      next: (statuses) => {
-        this.rows = statuses;
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
+    this.loadTaskStatusData();
   }
 
   initTable() {
@@ -115,6 +108,13 @@ export class TaskStatusComponent implements OnInit {
 
   initFilters() {}
 
+  loadTaskStatusData(): void {
+    this.taskStatusService.getTaskStatus().subscribe({
+      next: (statuses) => this.rows = [...statuses],
+      error: (error) => console.log(error)
+  });
+}
+
   onFiltersChange(filters: AppliedFilter[]) {
     this.appliedFilters = filters;
     this.applyFilters();
@@ -139,9 +139,7 @@ export class TaskStatusComponent implements OnInit {
   }
 
   onCreateNew(): void {
-    this.modalService.open(
-      TaskStatusUpsertComponent,
-      { taskStatus: null },
+    this.modalService.open( TaskStatusUpsertComponent, { taskStatus: null },
       {
         width: '600px',
         height: 'auto',
@@ -149,28 +147,24 @@ export class TaskStatusComponent implements OnInit {
         panelClass: 'task-status-modal'
       }
     ).subscribe(result => {
-      if (result) {
-        console.log('New task status created:', result);
-        this.rows = [...this.rows, result];
-      }
+      if (result) this.loadTaskStatusData();
     });
   }
 
-  onEdit(row: TaskStatus) {
-    console.log('✏️ Edit task status:', row);
-    this.modalService.open(
-      TaskStatusUpsertComponent,
-      { taskStatus: row },
+  onEdit(row: TaskStatus): void {
+    this.modalService.open( TaskStatusUpsertComponent, { taskStatus: row },
       {
         width: '600px',
         height: 'auto',
         disableClose: true,
         panelClass: 'task-status-modal'
       }
-    ).subscribe(result => {
-      if (result) {
-        console.log('New task status created:', result);
-        this.rows = [...this.rows, result];
+    ).subscribe({
+      next: (result) => {
+        if (result) this.loadTaskStatusData();
+      },
+      error: (error) => {
+        console.error('Error updating task status:', error);
       }
     });
   }
