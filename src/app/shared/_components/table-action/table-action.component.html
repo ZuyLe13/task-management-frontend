@@ -1,0 +1,17 @@
+<div class="action-menu-container">
+  <button class="action-menu-btn" title="More Actions" (click)="toggleMenu()">
+    <span class="material-symbols-rounded">
+      more_vert
+    </span>
+  </button>
+  <div class="action-menu" *ngIf="isMenuOpen">
+    <button
+      *ngFor="let action of actions"
+      class="action-menu-item"
+      (click)="action.action(row); isMenuOpen = false"
+    >
+      <span class="material-symbols-rounded text-[22px]">{{ action.icon }}</span>
+      <span>{{ action.label }}</span>
+    </button>
+  </div>
+</div>

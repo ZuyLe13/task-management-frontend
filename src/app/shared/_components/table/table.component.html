@@ -29,6 +29,9 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons (page)="onPageChange($event)">
+  <mat-paginator
+    *ngIf="rows.length > pageSizeOptions[0]"
+    [pageSizeOptions]="pageSizeOptions" 
+    showFirstLastButtons (page)="onPageChange($event)">
   </mat-paginator>
 </div>

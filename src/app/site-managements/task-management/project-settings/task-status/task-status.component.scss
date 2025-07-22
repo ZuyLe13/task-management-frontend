@@ -1,15 +1,45 @@
-.table-header {
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.cell-style {
-  font-size: 14px;
-}
-
 ::ng-deep .mat-column-name {
-  max-width: 150px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  @apply max-w-[150px] truncate;
+}
+
+::ng-deep {
+  .mat-mdc-slide-toggle {
+    .mdc-switch {
+      @apply w-[36px];
+
+      .mdc-switch__shadow,
+      .mdc-switch__ripple,
+      .mdc-switch__icons {
+        @apply hidden;
+      }
+      
+      .mdc-switch__track {
+        @apply h-5;
+        
+        &::before {
+          @apply bg-transparent;
+        }
+
+        &::after {
+          @apply bg-[var(--primary-blue)];
+        }
+      }
+
+      .mdc-switch__handle:has(.mdc-switch__icons) {
+        @apply size-[14px] #{!important};
+      }  
+    }
+
+    .mdc-switch--selected {
+      .mdc-switch__handle:has(.mdc-switch__icons) {
+        margin: 0 19px !important;
+      }
+    }
+
+    .mdc-switch--unselected {
+      .mdc-switch__handle:has(.mdc-switch__icons) {
+        margin: 0 4px !important;
+      }
+    }
+  }
 }

@@ -1,6 +1,5 @@
 @use '@angular/material' as mat;
 
-// Customize the entire app. Change :root to your selector if you want to scope the styles.
 :host {
   @include mat.tabs-overrides((
     active-ripple-color: transparent,
@@ -37,5 +36,5 @@
 }
 
 .project-settings {
-  @apply px-6 mt-2 h-full;
+  @apply px-6 mt-6 h-full;
 }

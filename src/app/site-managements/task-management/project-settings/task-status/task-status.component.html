@@ -16,8 +16,7 @@
       [tableClassName]="'custom-table-class'"
       (sortChange)="sortChange($event)"
       (pageChange)="pageChange($event)"
-      (paginatorChange)="paginatorChange($event)"
-      (clickRow)="clickRow($event)">
+      (paginatorChange)="paginatorChange($event)">
     >
     </z-table>
   </div>
@@ -26,15 +25,21 @@
     <div class="size-6 rounded" [style.backgroundColor]="row.color"></div>
   </ng-template>
 
+  <ng-template #activeTemplate let-row>
+    <mat-slide-toggle
+      [checked]="row.isActive"
+      (change)="onToggleActive(row, $event.checked)"
+    ></mat-slide-toggle>
+  </ng-template>
+
+  <ng-template #defaultTemplate let-row>
+    <mat-slide-toggle
+      [checked]="row.isDefault"
+      (change)="onToggleDefault(row, $event.checked)"
+    ></mat-slide-toggle>
+  </ng-template>
+
   <ng-template #actionTemplate let-row>
-    <div class="flex items-center gap-2">
-      <!-- Edit Button -->
-      <button 
-        class="btn btn-primary"
-        (click)="onEdit(row)"
-        title="Edit">
-        Edit
-      </button>
-    </div>
+    <z-table-action [row]="row" [actions]="taskStatusActions"></z-table-action>
   </ng-template>
 </div>

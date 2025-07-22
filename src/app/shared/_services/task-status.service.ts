@@ -4,7 +4,7 @@ import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 export interface TaskStatus {
-  _id?: string;
+  _id: string;
   name: string;
   code?: string;
   color: string;
@@ -31,23 +31,20 @@ export class TaskStatusService {
       );
   }
 
-  createTaskStatus(data: TaskStatus): Observable<TaskStatus> {
-    const payload = {
-      name: data.name,
-      color: data.color,
-      isActive: data.isActive,
-      isDefault: data.isDefault
-    };
-    return this.http.post<TaskStatus>(`${environment.apiUrl}/task-status`, payload);
+  createTaskStatus(taskStatus: TaskStatus): Observable<TaskStatus> {
+    return this.http.post<TaskStatus>(`${environment.apiUrl}/task-status`, taskStatus);
   }
 
-  updateTaskStatus(id: string, data: TaskStatus): Observable<TaskStatus> {
-    const payload = {
-      name: data.name,
-      color: data.color,
-      isActive: data.isActive,
-      isDefault: data.isDefault
-    };
-    return this.http.put<TaskStatus>(`${environment.apiUrl}/api/v1/task-status/${id}`, payload);
+  updateTaskStatus(id: string, taskStatus: TaskStatus): Observable<TaskStatus> {
+    return this.http.put<TaskStatus>(`${environment.apiUrl}/task-status/${id}`, {
+      name: taskStatus.name,
+      color: taskStatus.color,
+      isActive: taskStatus.isActive,
+      isDefault: taskStatus.isDefault,
+    });
+  }
+
+  deleteTaskStatus(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/task-status/${id}`);
   }
 }

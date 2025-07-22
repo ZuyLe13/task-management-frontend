@@ -7,9 +7,6 @@ import { InputComponent } from "../../shared/_components/input/input.component";
 import { ErrorComponent } from '../../shared/_components/error/error.component';
 import { TaskStatus, TaskStatusService } from '../../shared/_services/task-status.service';
 
-export interface TaskStatusData {
-  taskStatus?: any;
-}
 
 @Component({
   selector: 'app-task-status-upsert',
@@ -37,7 +34,7 @@ export class TaskStatusUpsertComponent implements OnInit {
     private fb: FormBuilder,
     private taskStatusService: TaskStatusService,
     private dialogRef: MatDialogRef<TaskStatusUpsertComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: TaskStatusData,
+    @Inject(MAT_DIALOG_DATA) public data: { taskStatus: TaskStatus | null},
   ) {
     this.isEditMode = !!data?.taskStatus;
     this.title = this.isEditMode ? 'Edit Task Status' : 'Create Task Status';
@@ -50,14 +47,17 @@ export class TaskStatusUpsertComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.isEditMode && this.data?.taskStatus) {
+      this.form.patchValue(this.data?.taskStatus);
+    }
+  }
 
   onSubmit(): void {
     if (this.form.valid) {
-      const formValue: TaskStatus = this.form.value;
       const observable = this.isEditMode
-        ? this.taskStatusService.updateTaskStatus(this.data.taskStatus!._id!, formValue)
-        : this.taskStatusService.createTaskStatus(formValue);
+        ? this.taskStatusService.updateTaskStatus(this.data.taskStatus!._id!, this.form.value)
+        : this.taskStatusService.createTaskStatus(this.form.value);
 
       observable.subscribe({
         next: (result: TaskStatus) => {

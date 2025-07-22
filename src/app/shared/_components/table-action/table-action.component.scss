@@ -1,0 +1,16 @@
+.action-menu-container {
+  @apply relative inline-block;
+
+  .action-menu-btn {
+    @apply bg-none p-2 cursor-pointer rounded transition-all duration-200
+    hover:bg-[#f0f0f1];
+  }
+  .action-menu {
+    @apply absolute top-full right-0 min-w-[120px] bg-white border 
+    border-[#ccc] rounded z-10 overflow-hidden;
+  }
+  .action-menu-item {
+    @apply flex items-center gap-2 w-full p-2 cursor-pointer font-medium
+    text-[var(--text-black)] hover:bg-[#f0f0f1] transition-colors duration-200;
+  }
+}
