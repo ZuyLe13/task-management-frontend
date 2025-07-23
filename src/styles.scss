@@ -117,7 +117,7 @@ body {
 }
 
 .mat-mdc-paginator {
-  margin-top: 20px;
+  @apply mt-6;
 }
 
 // =========== icon ==========

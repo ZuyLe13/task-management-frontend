@@ -30,7 +30,6 @@
   </table>
 
   <mat-paginator
-    *ngIf="rows.length > pageSizeOptions[0]"
     [pageSizeOptions]="pageSizeOptions" 
     showFirstLastButtons (page)="onPageChange($event)">
   </mat-paginator>

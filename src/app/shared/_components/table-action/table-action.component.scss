@@ -2,7 +2,7 @@
   @apply relative inline-block;
 
   .action-menu-btn {
-    @apply bg-none p-2 cursor-pointer rounded transition-all duration-200
+    @apply flex items-center justify-center bg-none p-[2px] cursor-pointer rounded transition-all duration-200
     hover:bg-[#f0f0f1];
   }
   .action-menu {

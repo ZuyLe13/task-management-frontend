@@ -26,8 +26,8 @@ export class TaskStatusUpsertComponent implements OnInit {
   isEditMode: boolean = false;
   title: string = '';
   colors: string[] = [
-    '#007bff', '#28a745', '#dc3545', '#ffc107', '#17a2b8',
-    '#6610f2', '#6f42c1', '#e83e8c', '#fd7e14', '#20c997'
+    '#cccccc', '#007bff', '#28a745', '#dc3545', '#ffc107', 
+    '#17a2b8', '#6610f2', '#6f42c1', '#e83e8c', '#fd7e14'
   ];
 
   constructor(
@@ -61,7 +61,7 @@ export class TaskStatusUpsertComponent implements OnInit {
 
       observable.subscribe({
         next: (result: TaskStatus) => {
-          this.form.reset({ name: '', color: '#007bff', isActive: true, isDefault: false });
+          this.form.reset({ name: '', color: '#ccc', isActive: true, isDefault: false });
           this.dialogRef.close(result);
         },
         error: (error) => {

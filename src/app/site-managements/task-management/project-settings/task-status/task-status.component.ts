@@ -122,7 +122,8 @@ export class TaskStatusComponent implements OnInit {
         field: 'action',
         header: 'Action',
         cellTemplate: this.actionTemplate,
-        width: '100px'
+        width: '100px',
+        sortable: false
       }
     ];
   }

@@ -19,6 +19,10 @@
     .mat-mdc-header-cell, .mat-mdc-cell {
       @apply border-[var(--border-modal)] overflow-visible;
     }
+
+    .mdc-data-table__row:last-child>.mat-mdc-cell {
+      border-bottom: 1px solid var(--border-modal);
+    }
   }
 
   .mat-mdc-paginator {

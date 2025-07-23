@@ -20,7 +20,7 @@ export class TableComponent implements OnInit {
   @Input() columns: Column[] = [];
   @Input() rows: any[] = [];
   @Input() tableClassName: string = '';
-  @Input() pageSizeOptions: number[] = [10, 20];
+  @Input() pageSizeOptions: number[] = [5, 10, 15];
 
   @Output() clickRow = new EventEmitter<any>();
   @Output() sortChange = new EventEmitter<any>();

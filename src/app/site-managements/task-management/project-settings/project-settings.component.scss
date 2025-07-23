@@ -18,7 +18,7 @@
   }
   .mat-mdc-tab-body-wrapper {
     .mat-mdc-tab-body {
-      @apply h-full p-4 mt-5 bg-white;
+      @apply h-full px-4 pt-4 pb-2 mt-5 bg-white rounded;
     }
   }
   .mat-mdc-tab-labels {
