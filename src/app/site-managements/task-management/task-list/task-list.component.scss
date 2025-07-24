@@ -1,35 +1,61 @@
-.example-container {
-  width: 400px;
-  max-width: 100%;
-  margin: 0 25px 25px 0;
-  display: inline-block;
-  vertical-align: top;
-}
+.task-list-container {
+  @apply h-full;
 
-.example-list {
-  border: solid 1px #ccc;
-  min-height: 60px;
-  background: white;
-  border-radius: 4px;
-  overflow: hidden;
-  display: block;
-}
+  .task-column-container {
+    @apply flex px-6 mt-8 h-[calc(100vh-180px)] overflow-x-scroll;
 
-.example-box {
-  padding: 20px 10px;
-  border-bottom: solid 1px #ccc;
-  color: rgba(0, 0, 0, 0.87);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  cursor: move;
-  background: white;
-  font-size: 14px;
+    .task-column {
+      @apply min-w-[350px] px-2 pb-4 border-l border-r border-dashed 
+      border-[var(--border-color)];
+
+      // &:first-child {
+      //   @apply border-l-0;
+      // }
+
+      // &:last-child {
+      //   @apply border-r-0;
+      // }
+
+      &-header {
+        @apply flex items-center justify-between px-4 py-[14px] bg-white rounded-md;
+      }
+
+      &-header-action {
+        @apply flex items-center gap-2;
+      }
+
+      &-header-title {
+        @apply text-[18px] font-semibold;
+      }
+
+      .task-list {
+        @apply flex flex-col gap-2 h-[calc(100vh-270px)] mt-4 overflow-y-scroll;
+        -ms-overflow-style: none;
+        &::-webkit-scrollbar {
+          @apply hidden;
+        }
+      }
+
+      .task-item {
+        @apply bg-white rounded-md;
+        padding: 20px 10px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        cursor: move;
+        font-size: 14px;
+      }
+    }
+  }
 }
 
 .cdk-drag-preview {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  background-color: white;
   box-sizing: border-box;
   border-radius: 4px;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),

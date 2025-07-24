@@ -17,13 +17,14 @@ body {
   --primary-blue: #5051f9;
   --primary-yellow: #FBBE37;
   --primary-bg: #F3F7FA;
-  --primary-hover: #5050f91e;
+  --primary-hover: #E8EAFF;
   --btn-primary-hover: #4545d4;
   --btn-cancel-hover: #dddddd80;
   --text-black: #232360;
   --text-grey: #6A7181;
   --border-color: #D9DADE;
   --border-modal: #e5e5ed;
+  --btn-hover: #f0f0f1;
 }
 
 // ========== Common styles ==========
@@ -61,6 +62,18 @@ body {
 
 .btn-cancel {
   @apply border border-[var(--border-color)] hover:bg-[var(--btn-cancel-hover)];
+}
+
+.btn-icon {
+  @apply flex items-center p-1 rounded-md transition-colors duration-200;
+}
+
+.btn-more {
+  @apply hover:bg-[var(--btn-hover)];
+}
+
+.btn-add {
+  @apply bg-[var(--primary-hover)] hover:bg-[#d7daf8];
 }
 
 // =========== Input ===========
@@ -123,6 +136,10 @@ body {
 // =========== icon ==========
 .z-icon {
   @apply text-[16px] font-semibold;
+
+  &--lg {
+    @apply text-[20px];
+  }
 }
 
 // =========== Modal ===========

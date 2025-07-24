@@ -1,29 +1,35 @@
-<div cdkDropListGroup>
-  <div class="example-container">
-    <h2>To do</h2>
-
-    <div
-      cdkDropList
-      [cdkDropListData]="todo"
-      class="example-list"
-      (cdkDropListDropped)="drop($event)">
-      @for (item of todo; track item) {
-        <div class="example-box" cdkDrag>{{item}}</div>
-      }
+<div class="task-list-container">
+  <div class="px-6 mt-10">
+    <div class="flex items-center gap-1">
+      <img src="./assets/img/fire.png" class="size-10">
+      <span class="section-heading">Task</span>
     </div>
   </div>
 
-  <div class="example-container">
-    <h2>Done</h2>
-
-    <div
-      cdkDropList
-      [cdkDropListData]="done"
-      class="example-list"
-      (cdkDropListDropped)="drop($event)">
-      @for (item of done; track item) {
-        <div class="example-box" cdkDrag>{{item}}</div>
-      }
-    </div>
+  <div cdkDropListGroup class="task-column-container">
+    @for (status of statuses; track status) {
+      <div class="task-column">
+        <div class="task-column-header">
+          <span class="task-column-header-title">{{ status | titlecase }} ({{ taskGroups[status].length || 0 }})</span>
+          <div class="task-column-header-action">
+            <button class="btn-icon btn-more">
+              <span class="material-symbols-rounded z-icon--lg">more_horiz</span>
+            </button>
+            <button class="btn-icon btn-add">
+              <span class="material-symbols-rounded z-icon--lg text-[var(--primary-blue)]">add</span>
+            </button>
+          </div>
+        </div>
+        <div
+          cdkDropList
+          [cdkDropListData]="taskGroups[status]"
+          class="task-list"
+          (cdkDropListDropped)="drop($event, status)">
+          @for (item of taskGroups[status]; track item.name) {
+            <div class="task-item" cdkDrag>{{ item.name }}</div>
+          }
+        </div>
+      </div>
+    }
   </div>
 </div>
