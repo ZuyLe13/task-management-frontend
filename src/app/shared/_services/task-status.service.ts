@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { find, map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 export interface TaskStatus {
   _id: string;
   name: string;
-  code?: string;
+  code: string;
   color: string;
   isActive: boolean;
   isDefault: boolean;
