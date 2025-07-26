@@ -8,14 +8,6 @@
       @apply min-w-[350px] px-2 pb-4 border-l border-r border-dashed 
       border-[var(--border-color)];
 
-      // &:first-child {
-      //   @apply border-l-0;
-      // }
-
-      // &:last-child {
-      //   @apply border-r-0;
-      // }
-
       &-header {
         @apply flex items-center justify-between px-4 py-[14px] bg-white rounded-md;
       }
@@ -29,38 +21,58 @@
       }
 
       .task-list {
-        @apply flex flex-col gap-2 h-[calc(100vh-270px)] mt-4 overflow-y-scroll;
+        @apply flex flex-col gap-3 h-[calc(100vh-270px)] mt-4 overflow-y-scroll;
         -ms-overflow-style: none;
+        
         &::-webkit-scrollbar {
           @apply hidden;
         }
       }
 
       .task-item {
-        @apply bg-white rounded-md;
-        padding: 20px 10px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        box-sizing: border-box;
-        cursor: move;
-        font-size: 14px;
+        @apply px-3 py-2 bg-white rounded-md shadow-sm p-4 cursor-move 
+        border border-[var(--border-modal)];
+       
+        .task-item-top {
+          @apply flex items-center justify-between mb-1;
+        }
+
+        .task-key {
+          @apply font-medium;
+        }
+
+        .task-description {
+          @apply mt-2;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
     }
   }
 }
 
 .cdk-drag-preview {
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-  background-color: white;
-  box-sizing: border-box;
-  border-radius: 4px;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-              0 8px 10px 1px rgba(0, 0, 0, 0.14),
-              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  @apply px-3 py-2 bg-white border border-[var(--border-modal)] rounded shadow-xl;
+
+  .task-item-top {
+    @apply flex items-center justify-between;
+  }
+
+  .task-content {
+    @apply mt-1;
+  }
+
+  .task-description {
+    @apply mt-2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .cdk-drag-placeholder {

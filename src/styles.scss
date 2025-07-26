@@ -37,7 +37,7 @@ body {
 }
 
 .section-text {
-  @apply text-[16px] text-[var(--text-grey)] font-normal;
+  @apply text-[16px] text-[var(--text-black)] font-semibold;
 }
 
 .section-text-sm {
@@ -65,7 +65,7 @@ body {
 }
 
 .btn-icon {
-  @apply flex items-center p-1 rounded-md transition-colors duration-200;
+  @apply flex items-center justify-center size-[30px] rounded-md transition-colors duration-200;
 }
 
 .btn-more {
