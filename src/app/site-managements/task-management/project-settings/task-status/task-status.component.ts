@@ -161,13 +161,9 @@ export class TaskStatusComponent implements OnInit {
   }
 
   onCreateNew(): void {
-    this.modalService.open( TaskStatusUpsertComponent, { taskStatus: null },
-      {
-        width: '600px',
-        height: 'auto',
-        disableClose: true,
-        panelClass: 'task-status-modal'
-      }
+    this.modalService.open( TaskStatusUpsertComponent, 
+      { taskStatus: null },
+      { width: '600px' }
     ).subscribe(result => {
       if (result) this.loadTaskStatusData();
     });

@@ -4,6 +4,9 @@
       <img src="./assets/img/fire.png" class="size-10">
       <span class="section-heading">Task</span>
     </div>
+    <button class="btn btn-primary mt-4" (click)="onCreate()">
+      <z-i18n [key]="'Create Task'"></z-i18n>
+    </button>
   </div>
 
   <div cdkDropListGroup class="task-column-container">
@@ -22,10 +25,9 @@
             </button>
           </div>
         </div>
-        <div cdkDropList
+        <div class="task-list" 
+          cdkDropList
           [cdkDropListData]="taskGroups[status]"
-          [cdkDropListConnectedTo]="statuses"
-          class="task-list"
           (cdkDropListDropped)="drop($event, status)"
         >
           @for (item of taskGroups[status]; track item.taskKey) {

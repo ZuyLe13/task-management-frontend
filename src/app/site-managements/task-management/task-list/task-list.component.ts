@@ -9,6 +9,9 @@ import {
 } from '@angular/cdk/drag-drop';
 import { TaskStatus, TaskStatusService } from '../../../shared/_services/task-status.service';
 import { CommonModule } from '@angular/common';
+import { ModalService } from '../../../shared/_services/modal.service';
+import { ZI18nComponent } from "../../../shared/_components/z-i18n/z-i18n.component";
+import { TaskUpsertComponent } from '../../../components/task-upsert/task-upsert.component';
 
 export interface Task {
   taskKey: string;
@@ -31,8 +34,9 @@ export interface Task {
     CdkDropListGroup,
     CdkDropList,
     CdkDrag,
-    CommonModule
-  ],
+    CommonModule,
+    ZI18nComponent
+],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
 })
@@ -104,9 +108,12 @@ export class TaskListComponent implements OnInit {
   ];
 
   taskGroups: { [key: string]: Task[] } = {};
-  statuses!: string[];
+  statuses: string[] = [];
 
-  constructor(private taskStatusService: TaskStatusService) {}
+  constructor(
+    private taskStatusService: TaskStatusService,
+    private modalService: ModalService
+  ) {}
 
   ngOnInit(): void {
     this.taskStatusService.getTaskStatus().subscribe({
@@ -155,5 +162,9 @@ export class TaskListComponent implements OnInit {
       );
       item.status = newStatus;
     }
+  }
+
+  onCreate(): void {
+    this.modalService.open(TaskUpsertComponent, { data: null }, { width: '800px' }).subscribe();
   }
 }
