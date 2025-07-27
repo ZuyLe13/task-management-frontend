@@ -4,9 +4,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ZI18nComponent } from '../../shared/_components/z-i18n/z-i18n.component';
 import { ErrorComponent } from '../../shared/_components/error/error.component';
 import { Task } from '../../site-managements/task-management/task-list/task-list.component';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InputComponent } from '../../shared/_components/input/input.component';
-import { SelectComponent } from '../../shared/_components/select/select.component';
+import { TaskStatus, TaskStatusService } from '../../shared/_services/task-status.service';
+
 
 @Component({
   selector: 'app-task-upsert',
@@ -16,25 +17,29 @@ import { SelectComponent } from '../../shared/_components/select/select.componen
     ZI18nComponent,
     ErrorComponent,
     InputComponent,
-    SelectComponent
   ],
   templateUrl: './task-upsert.component.html',
   styleUrl: './task-upsert.component.scss'
 })
 export class TaskUpsertComponent {
   form: FormGroup;
-  selectedValues: any[] = [];
-  assigneeOptions = [{ value: 'user1', label: 'User 1' }, /* ... */];
-  statusOptions = [{ value: 'open', label: 'Open' }, /* ... */];
+  assigneeOptions: any[] = [
+    { value: '1', label: 'John Doe' },
+    { value: '2', label: 'Jane Smith' },
+    { value: '3', label: 'Alice Johnson' }
+  ];
+  taskStatuses: TaskStatus[] = [];
 
   constructor(
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: { task: Task}
+    private dialogRef: MatDialogRef<TaskUpsertComponent>,
+    private taskStatusService: TaskStatusService,
+    @Inject(MAT_DIALOG_DATA) public data: { task: Task }
   ) {
     this.form = this.fb.group({
       title: [data?.task?.title || '', [Validators.required, Validators.maxLength(100)]],
-      assignee: [this.isValidAssignee(data?.task?.assignee) ? data?.task?.assignee : '', Validators.required],
-      status: [this.isValidStatus(data?.task?.status) ? data?.task?.status : '', Validators.required],
+      assignee: [data?.task?.assignee || '', Validators.required],
+      status: [data?.task?.status || '', Validators.required],
       reporter: [data?.task?.reporter || ''],
       description: [data?.task?.description || ''],
       label: [data?.task?.label || ''],
@@ -44,24 +49,29 @@ export class TaskUpsertComponent {
       endDate: [data?.task?.endDate || ''],
       comments: [data?.task?.comments?.join(', ') || '']
     });
+
+    this.initData();
   }
 
-  private isValidAssignee(assignee: string) {
-    return assignee && this.assigneeOptions.some(option => option.value === assignee);
-  }
-
-  private isValidStatus(status: string) {
-    return status && this.statusOptions.some(option => option.value === status);
+  initData(): void {
+    this.taskStatusService.getTaskStatus().subscribe({
+      next: (result) => {
+        this.taskStatuses = result; 
+      }
+    });
   }
 
   onCancel(): void {
-    // Handle cancel logic, e.g., close dialog
+    this.dialogRef.close();
   }
 
   onSubmit(): void {
     if (this.form.valid) {
-      // Handle form submission, e.g., emit form value
       console.log(this.form.value);
+    } else {
+      Object.keys(this.form.controls).forEach(key => {
+        this.form.get(key)?.markAsTouched();
+      });
     }
   }
 }

@@ -1,10 +1,27 @@
-<input
-  [type]="type"
-  class="z-input"
-  [ngClass]="[class, disabled ? 'z-input-disabled' : '']"
-  [placeholder]="placeholder"
-  [value]="value"
-  [disabled]="disabled"
-  (input)="onInput($event)"
-  (blur)="onBlur()"
-/>
+<ng-container *ngIf="type === 'select'; else inputTemplate">
+  <select
+    class="z-input"
+    [ngClass]="[class, disabled ? 'z-input-disabled' : '']"
+    [disabled]="disabled"
+    [value]="value"
+    (change)="onInput($event)"
+    (blur)="onBlur()"
+  >
+    <option *ngFor="let option of options" [value]="option[valueField]">
+      {{ option[labelField] }}
+    </option>
+  </select>
+</ng-container>
+
+<ng-template #inputTemplate>
+  <input
+    [type]="type"
+    class="z-input"
+    [ngClass]="[class, disabled ? 'z-input-disabled' : '']"
+    [placeholder]="placeholder"
+    [value]="value"
+    [disabled]="disabled"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+  />
+</ng-template>

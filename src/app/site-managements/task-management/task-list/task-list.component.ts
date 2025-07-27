@@ -108,6 +108,7 @@ export class TaskListComponent implements OnInit {
   ];
 
   taskGroups: { [key: string]: Task[] } = {};
+  statusColors: { [key: string]: string } = {};
   statuses: string[] = [];
 
   constructor(
@@ -119,6 +120,10 @@ export class TaskListComponent implements OnInit {
     this.taskStatusService.getTaskStatus().subscribe({
       next: (taskStatuses: TaskStatus[]) => {
         this.statuses = taskStatuses.map(status => status.name);
+        this.statusColors = taskStatuses.reduce((acc, status) => ({
+          ...acc,
+          [status.name]: status.color || '#000000' // Fallback to black if color is missing
+        }), {} as { [key: string]: string })
 
         // Khởi tạo taskGroups với array rỗng cho mỗi status
         this.taskGroups = {};
