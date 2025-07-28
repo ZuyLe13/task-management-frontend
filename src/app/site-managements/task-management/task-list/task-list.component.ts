@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { ModalService } from '../../../shared/_services/modal.service';
 import { ZI18nComponent } from "../../../shared/_components/z-i18n/z-i18n.component";
 import { TaskUpsertComponent } from '../../../components/task-upsert/task-upsert.component';
+import { TaskService } from '../../../shared/_services/task.service';
 
 export interface Task {
   taskKey: string;
@@ -19,7 +20,7 @@ export interface Task {
   assignee: string;
   title: string;
   description: string;
-  label: string;
+  label: string[];
   taskType: string;
   priority: string;
   status: string;
@@ -44,63 +45,63 @@ export class TaskListComponent implements OnInit {
   initialTasks: Task[] = [
     { 
       taskKey: 'ZT-1', title: 'Commute to Workplace Commute to Workplace Commute to Workplace', 
-      description: 'Travel to the office for the workday. Travel to the office for the workday. Travel to the office for the workday.', label: 'Work', taskType: 'Commute', 
+      description: 'Travel to the office for the workday. Travel to the office for the workday. Travel to the office for the workday.', label: ['Work'], taskType: 'Commute', 
       priority: 'Medium', status: 'To Do', startDate: '2025-07-26', endDate: '2025-07-26',
       reporter: 'john.doe@example.com', assignee: 'dile@example.com', 
       comments: ['Ensure to leave early to avoid traffic.', 'Check for road closures.']
     },
     { 
       taskKey: 'ZT-2', title: 'Grocery Shopping', 
-      description: 'Buy weekly groceries from the supermarket.', label: 'Personal', taskType: 'Errand', 
+      description: 'Buy weekly groceries from the supermarket.', label: ['Personal'], taskType: 'Errand', 
       priority: 'High', status: 'To Do', startDate: '2025-07-26', endDate: '2025-07-26',
       reporter: 'jane.smith@example.com', assignee: 'nhungo@example.com', 
       comments: ['Include milk and eggs.', 'Check for discounts.']
     },
     { 
       taskKey: 'ZT-3', title: 'Return Home', 
-      description: 'Travel back home after work.', label: 'Personal', taskType: 'Commute', 
+      description: 'Travel back home after work.', label: ['Personal'], taskType: 'Commute', 
       priority: 'Medium', status: 'Reopened', startDate: '2025-07-26', endDate: '2025-07-26',
       reporter: 'john.doe@example.com', assignee: 'abc@example.com', 
       comments: ['Check bus schedule.', 'Avoid rush hour.']
     },
     { 
       taskKey: 'ZT-4', title: 'Sleep', 
-      description: 'Get a good night’s rest.', label: 'Personal', taskType: 'Routine', 
+      description: 'Get a good night’s rest.', label: ['Personal'], taskType: 'Routine', 
       priority: 'Low', status: 'To Do', startDate: '2025-07-26', endDate: '2025-07-26',
       reporter: 'jane.smith@example.com', assignee: 'hgc@example.com', 
       comments: ['Avoid screens before bed.', 'Set a relaxing bedtime routine.']
     },
     { 
       taskKey: 'ZT-5', title: 'Wake Up', 
-      description: 'Wake up in the morning.', label: 'Personal', taskType: 'Routine', 
+      description: 'Wake up in the morning.', label: ['Personal'], taskType: 'Routine', 
       priority: 'High', status: 'Done', startDate: '2025-07-25', endDate: '2025-07-25',
       reporter: 'john.doe@example.com', assignee: 'pho@example.com', 
       comments: ['Set alarm for 6 AM.', 'Morning stretch recommended.']
     },
     { 
       taskKey: 'ZT-6', title: 'Oral Hygiene', 
-      description: 'Brush teeth to maintain oral health.', label: 'Personal', taskType: 'Routine', 
+      description: 'Brush teeth to maintain oral health.', label: ['Personal'], taskType: 'Routine', 
       priority: 'Medium', status: 'Reopened', startDate: '2025-07-25', endDate: '2025-07-25',
       reporter: 'jane.smith@example.com', assignee: 'mnh@example.com', 
       comments: ['Use new toothbrush.', 'Floss afterward.']
     },
     { 
       taskKey: 'ZT-7', title: 'Shower', 
-      description: 'Take a shower to stay clean.', label: 'Personal', taskType: 'Routine', 
+      description: 'Take a shower to stay clean.', label: ['Personal'], taskType: 'Routine', 
       priority: 'Medium', status: 'Done', startDate: '2025-07-25', endDate: '2025-07-25',
       reporter: 'john.doe@example.com', assignee: 'qua@example.com', 
       comments: ['Use body wash.', 'Check water temperature.']
     },
     { 
       taskKey: 'ZT-8', title: 'Email Review', 
-      description: 'Review and respond to work emails.', label: 'Work', taskType: 'Administrative', 
+      description: 'Review and respond to work emails.', label: ['Work'], taskType: 'Administrative', 
       priority: 'High', status: 'In Process', startDate: '2025-07-25', endDate: '2025-07-25',
       reporter: 'jane.smith@example.com', assignee: 'lkx@example.com', 
       comments: ['Prioritize urgent emails.', 'Archive completed threads.']
     },
     { 
       taskKey: 'ZT-9', title: 'Dog Walk', 
-      description: 'Take the dog for a walk.', label: 'Personal', taskType: 'Pet Care', 
+      description: 'Take the dog for a walk.', label: ['Personal'], taskType: 'Pet Care', 
       priority: 'High', status: 'Done', startDate: '2025-07-25', endDate: '2025-07-25',
       reporter: 'john.dzb@example.com', assignee: 'to@example.com', 
       comments: ['Take the long route.', 'Bring water for the dog.']
@@ -108,17 +109,23 @@ export class TaskListComponent implements OnInit {
   ];
 
   taskGroups: { [key: string]: Task[] } = {};
+  statusColors: { [key: string]: string } = {};
   statuses: string[] = [];
 
   constructor(
     private taskStatusService: TaskStatusService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private taskService: TaskService
   ) {}
 
   ngOnInit(): void {
     this.taskStatusService.getTaskStatus().subscribe({
       next: (taskStatuses: TaskStatus[]) => {
         this.statuses = taskStatuses.map(status => status.name);
+        this.statusColors = taskStatuses.reduce((acc, status) => ({
+          ...acc,
+          [status.name]: status.color || '#000000' // Fallback to black if color is missing
+        }), {} as { [key: string]: string })
 
         // Khởi tạo taskGroups với array rỗng cho mỗi status
         this.taskGroups = {};
@@ -147,6 +154,15 @@ export class TaskListComponent implements OnInit {
         console.error('Error fetching task statuses:', err);
       }
     });
+
+    this.taskService.getAllTask().subscribe({
+      next: (result) => {
+        console.log(result)
+      },
+      error: (error) => {
+        console.log('Error fetching task statuses:', error);
+      }
+    })
   }
 
   drop(event: CdkDragDrop<Task[]>, newStatus: string) {

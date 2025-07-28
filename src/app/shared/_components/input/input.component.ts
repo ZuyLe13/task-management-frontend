@@ -21,6 +21,11 @@ export class InputComponent implements ControlValueAccessor {
   @Input() placeholder = '';
   @Input() class = '';
   @Input() disabled = false;
+  @Input() suffix: string = '';
+  @Input() options: any[] = [];
+  @Input() defaultValue: string | number = '';
+  @Input() valueField: string = 'value';
+  @Input() labelField: string = 'label';
   
   value: string | number = '';
 
@@ -30,7 +35,7 @@ export class InputComponent implements ControlValueAccessor {
   constructor(private cdr: ChangeDetectorRef) {}
 
   writeValue(value: any): void {
-    this.value = value || '';
+    this.value = value !== null && value !== undefined ? value : this.type === 'select' ? this.defaultValue : '';
     this.cdr.detectChanges();
   }
 
@@ -44,11 +49,12 @@ export class InputComponent implements ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+    this.cdr.detectChanges();
   }
 
   onInput(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.value = input.value;
+    const target = event.target as HTMLInputElement | HTMLSelectElement;
+    this.value = target.value;
     this.onChange(this.value);
   }
 

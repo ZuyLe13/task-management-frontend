@@ -6,11 +6,6 @@
     .popup-title {
       @apply font-semibold;
     }
-
-    .btn-close {
-      @apply flex items-center text-[18px] font-semibold cursor-pointer transition-colors 
-      duration-300 hover:text-red-500;
-    }
   }
 
   .popup-form {
