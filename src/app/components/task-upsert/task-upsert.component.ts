@@ -7,6 +7,7 @@ import { Task } from '../../site-managements/task-management/task-list/task-list
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InputComponent } from '../../shared/_components/input/input.component';
 import { TaskStatus, TaskStatusService } from '../../shared/_services/task-status.service';
+import { TaskService } from '../../shared/_services/task.service';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class TaskUpsertComponent {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<TaskUpsertComponent>,
     private taskStatusService: TaskStatusService,
+    private taskService: TaskService,
     @Inject(MAT_DIALOG_DATA) public data: { task: Task }
   ) {
     this.form = this.fb.group({
@@ -67,7 +69,15 @@ export class TaskUpsertComponent {
 
   onSubmit(): void {
     if (this.form.valid) {
-      console.log(this.form.value);
+      this.taskService.createTask(this.form.value).subscribe({
+        next: (result) => {
+          console.log(result);
+          this.dialogRef.close(result);
+        },
+        error: (error) => {
+          console.error('Error creating task status', error);
+        }
+      });
     } else {
       Object.keys(this.form.controls).forEach(key => {
         this.form.get(key)?.markAsTouched();
