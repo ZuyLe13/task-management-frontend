@@ -3,6 +3,7 @@
     class="z-input"
     [placeholder]="placeholder"
     [formControl]="inputControl"
+    [readonly]="!isMultiSelect"
     (focus)="toggleDropdown()"
     (input)="onInputChange($event)"
   />
@@ -10,6 +11,7 @@
   <div *ngIf="dropdownOpen" class="dropdown-container">
     <div *ngFor="let option of filteredOptions"
       class="option-item"
+      [class.selected]="isSelected(option)"
       (click)="selectOption(option)">
       {{ option[labelKey] }}
     </div>

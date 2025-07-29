@@ -8,6 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InputComponent } from '../../shared/_components/input/input.component';
 import { TaskStatus, TaskStatusService } from '../../shared/_services/task-status.service';
 import { TaskService } from '../../shared/_services/task.service';
+import { SelectComponent } from '../../shared/_components/select/select.component';
 
 
 @Component({
@@ -18,6 +19,7 @@ import { TaskService } from '../../shared/_services/task.service';
     ZI18nComponent,
     ErrorComponent,
     InputComponent,
+    SelectComponent
   ],
   templateUrl: './task-upsert.component.html',
   styleUrl: './task-upsert.component.scss'
@@ -30,6 +32,8 @@ export class TaskUpsertComponent {
     { value: '3', label: 'Alice Johnson' }
   ];
   taskStatuses: TaskStatus[] = [];
+  selectedTaskStatus!: TaskStatus;
+  selectedAssignee!: any;
 
   constructor(
     private fb: FormBuilder,
@@ -59,8 +63,22 @@ export class TaskUpsertComponent {
     this.taskStatusService.getTaskStatus().subscribe({
       next: (result) => {
         this.taskStatuses = result; 
-      }
+      },
+      error: (error) => {
+        console.error('Error fetching task statuses', error);
+        this.taskStatuses = [];
+      },
     });
+  }
+
+  onAssigneeChange(values: any[]) {
+    this.selectedAssignee = values.length > 0 ? values[0] : null;
+    this.form.get('assignee')?.setValue(this.selectedAssignee);
+  }
+
+  onTaskStatusChange(values: any[]) {
+    this.selectedTaskStatus = values.length > 0 ? values[0] : null;
+    this.form.get('status')?.setValue(this.selectedTaskStatus);
   }
 
   onCancel(): void {

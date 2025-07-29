@@ -2,7 +2,8 @@
   @apply relative mt-1;
 
   .dropdown-container {
-    @apply absolute w-full bg-white border border-gray-300 rounded mt-1;
+    @apply absolute w-full bg-white border border-gray-300 rounded mt-1
+    overflow-hidden;
   }
 
   .option-item {

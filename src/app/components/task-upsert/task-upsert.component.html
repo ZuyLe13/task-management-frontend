@@ -18,23 +18,25 @@
 
       <div class="form-group">
         <label class="required"><z-i18n [key]="'Assignee'"></z-i18n></label>
-        <z-input
+        <z-select
           formControlName="assignee"
-          type="select"
           [options]="assigneeOptions"
-        />
+          [isMultiSelect]="false"
+          (valueChange)="onAssigneeChange($event)"
+        ></z-select>
         <z-error controlName="assignee"></z-error>
       </div>
 
       <div class="form-group">
         <label class="required"><z-i18n [key]="'Status'"></z-i18n></label>
-        <z-input
+        <z-select
           formControlName="status"
-          type="select"
           [options]="taskStatuses"
-          valueField="code"
-          labelField="name"
-        />
+          [isMultiSelect]="false"
+          [labelKey]="'name'"
+          [valueKey]="'code'"
+          (valueChange)="onTaskStatusChange($event)"
+        ></z-select>
         <z-error controlName="status"></z-error>
       </div>
 
