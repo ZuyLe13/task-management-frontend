@@ -4,12 +4,12 @@ import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 export interface TaskStatus {
-  _id: string;
+  _id?: string;
   name: string;
   code: string;
-  color: string;
-  isActive: boolean;
-  isDefault: boolean;
+  color?: string;
+  isActive?: boolean;
+  isDefault?: boolean;
 }
 
 @Injectable({
@@ -17,7 +17,7 @@ export interface TaskStatus {
 })
 export class TaskStatusService {
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
   ) { }
 
   getTaskStatus(): Observable<TaskStatus[]> {

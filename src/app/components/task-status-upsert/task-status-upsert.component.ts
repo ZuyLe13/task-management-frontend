@@ -26,7 +26,7 @@ export class TaskStatusUpsertComponent implements OnInit {
   isEditMode: boolean = false;
   title: string = '';
   colors: string[] = [
-    '#cccccc', '#007bff', '#28a745', '#dc3545', '#ffc107', 
+    '#cccccc', '#007bff', '#28a745', '#dc3545', '#ffc107',
     '#17a2b8', '#6610f2', '#6f42c1', '#e83e8c', '#fd7e14'
   ];
 
@@ -38,7 +38,7 @@ export class TaskStatusUpsertComponent implements OnInit {
   ) {
     this.isEditMode = !!data?.taskStatus;
     this.title = this.isEditMode ? 'Edit Task Status' : 'Create Task Status';
-    
+
     this.form = this.fb.group({
       name: [data?.taskStatus?.name || '', [Validators.required, Validators.maxLength(100)]],
       color: [data?.taskStatus?.color || this.colors[0], [Validators.required, Validators.pattern(/^#[0-9A-F]{6}$/i)]],

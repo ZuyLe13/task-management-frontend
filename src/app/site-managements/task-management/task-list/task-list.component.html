@@ -10,11 +10,11 @@
   </div>
 
   <div cdkDropListGroup class="task-column-container">
-    @for (status of statuses; track status) {
+    @for (status of statuses; track status.code) {
       <div class="task-column">
         <div class="task-column-header">
           <span class="task-column-header-title">
-            {{ status | titlecase }} ({{ taskGroups[status].length || 0 }})
+            {{ status.name | titlecase }} ({{ taskGroups[status.code].length || 0 }})
           </span>
           <div class="task-column-header-action">
             <button class="btn-icon btn-more">
@@ -25,12 +25,12 @@
             </button>
           </div>
         </div>
-        <div class="task-list" 
+        <div class="task-list"
           cdkDropList
-          [cdkDropListData]="taskGroups[status]"
-          (cdkDropListDropped)="drop($event, status)"
+          [cdkDropListData]="taskGroups[status.code]"
+          (cdkDropListDropped)="drop($event, status.code)"
         >
-          @for (item of taskGroups[status]; track item.taskKey) {
+          @for (item of taskGroups[status.code]; track item.taskKey) {
             <div class="task-item" cdkDrag>
               <div class="task-item-top">
                 <a
