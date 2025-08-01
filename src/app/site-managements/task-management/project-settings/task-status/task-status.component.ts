@@ -161,7 +161,7 @@ export class TaskStatusComponent implements OnInit {
   }
 
   onCreateNew(): void {
-    this.modalService.open( TaskStatusUpsertComponent, 
+    this.modalService.open(TaskStatusUpsertComponent,
       { taskStatus: null },
       { width: '600px' }
     ).subscribe(result => {
@@ -189,7 +189,7 @@ export class TaskStatusComponent implements OnInit {
 
   onDelete(row: TaskStatus) {
     if (confirm(`Are you sure you want to delete ${row.name}?`)) {
-      this.taskStatusService.deleteTaskStatus(row._id).subscribe({
+      this.taskStatusService.deleteTaskStatus(row._id!).subscribe({
         next: () => {
           this.loadTaskStatusData();
         },
@@ -201,7 +201,7 @@ export class TaskStatusComponent implements OnInit {
   }
 
   onToggleActive(row: TaskStatus, isActive: boolean): void {
-    this.taskStatusService.updateTaskStatus(row._id, { ...row, isActive }).subscribe({
+    this.taskStatusService.updateTaskStatus(row._id!, { ...row, isActive }).subscribe({
       next: () => {
         this.loadTaskStatusData();
       },
@@ -212,7 +212,7 @@ export class TaskStatusComponent implements OnInit {
   }
 
   onToggleDefault(row: TaskStatus, isDefault: boolean): void {
-    this.taskStatusService.updateTaskStatus(row._id, { ...row, isDefault }).subscribe({
+    this.taskStatusService.updateTaskStatus(row._id!, { ...row, isDefault }).subscribe({
       next: () => {
         this.loadTaskStatusData();
       },

@@ -89,7 +89,6 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
     if (!clickedInside) {
       this.dropdownOpen = false;
-      this.onTouched();
       if (!this.isMultiSelect) {
         this.updateInputDisplay();
       }
@@ -109,7 +108,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
   filterOptions(search: string) {
     const lowerSearch = search.toLowerCase();
-    
+
     if (this.isMultiSelect) {
       this.filteredOptions = this.options.filter(
         opt =>
@@ -122,7 +121,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
       );
     }
   }
-  
+
   toggleDropdown() {
     if (this.disabled) return;
     this.dropdownOpen = !this.dropdownOpen;
