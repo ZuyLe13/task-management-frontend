@@ -62,7 +62,8 @@ export class TaskUpsertComponent {
   initData(): void {
     this.taskStatusService.getTaskStatus().subscribe({
       next: (result) => {
-        this.taskStatuses = result; 
+        const taskStatusesActive = result.filter(item => item.isActive === true);
+        this.taskStatuses = taskStatusesActive;
       },
       error: (error) => {
         console.error('Error fetching task statuses', error);

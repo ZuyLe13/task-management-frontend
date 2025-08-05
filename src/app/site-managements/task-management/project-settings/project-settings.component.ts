@@ -6,6 +6,7 @@ import { ProjectSettingComponent } from "./project-setting/project-setting.compo
 import { ActivatedRoute, Router } from '@angular/router';
 import { projectSettingsTabs } from '../../../shared/constants/tabs.constants';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TaskTypeComponent } from './task-type/task-type.component';
 
 export interface ExampleTab {
   label: string;
@@ -15,11 +16,12 @@ export interface ExampleTab {
 @Component({
   selector: 'app-project-settings',
   imports: [
-    MatTabsModule, 
-    CommonModule, 
-    TaskStatusComponent, 
+    MatTabsModule,
+    CommonModule,
+    TaskStatusComponent,
     ProjectSettingComponent,
-    TranslateModule
+    TranslateModule,
+    TaskTypeComponent
   ],
   templateUrl: './project-settings.component.html',
   styleUrl: './project-settings.component.scss'
@@ -32,7 +34,7 @@ export class ProjectSettingsComponent implements OnInit {
   }));
 
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private router: Router
   ) {}
 

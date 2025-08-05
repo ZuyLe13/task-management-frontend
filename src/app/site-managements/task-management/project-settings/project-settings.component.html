@@ -1,6 +1,6 @@
 <div class="project-settings">
-  <mat-tab-group 
-    mat-stretch-tabs="false" 
+  <mat-tab-group
+    mat-stretch-tabs="false"
     animationDuration="0ms"
     [selectedIndex]="selectedTabIndex"
     (selectedIndexChange)="onTabChange($event)"
@@ -10,6 +10,9 @@
     </mat-tab>
     <mat-tab [label]="tabRoutes[1].label | translate">
       <app-task-status></app-task-status>
+    </mat-tab>
+    <mat-tab [label]="tabRoutes[2].label | translate">
+      <app-task-type></app-task-type>
     </mat-tab>
   </mat-tab-group>
 </div>
