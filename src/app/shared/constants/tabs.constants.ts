@@ -6,6 +6,10 @@ export const projectSettingsTabs = [
   {
     key: 'task-status',
     label: 'Task Status'
+  },
+  {
+    key: 'task-type',
+    label: 'Task Type'
   }
 ];
 

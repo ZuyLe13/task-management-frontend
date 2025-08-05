@@ -156,10 +156,6 @@ export class TaskStatusComponent implements OnInit {
     console.log('Paginator changed:', event);
   }
 
-  clickRow(row: any) {
-    console.log('Row clicked:', row);
-  }
-
   onCreateNew(): void {
     this.modalService.open(TaskStatusUpsertComponent,
       { taskStatus: null },
