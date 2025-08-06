@@ -57,7 +57,13 @@
 
       <div class="form-group">
         <label><z-i18n [key]="'Task Type'"></z-i18n></label>
-        <z-input formControlName="taskType" placeholder="Task Type" />
+        <z-select
+          formControlName="taskType"
+          [options]="taskTypes"
+          [isMultiSelect]="false"
+          [labelKey]="'name'"
+          [valueKey]="'code'"
+        ></z-select>
         <z-error controlName="taskType"></z-error>
       </div>
 
