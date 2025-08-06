@@ -8,7 +8,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ModalService } from '../../../../shared/_services/modal.service';
 import { TaskStatus } from '../../../../shared/_services/task-status.service';
 import { Column } from '../../../../shared/interfaces/table.model';
-import { TaskTypeService } from '../../../../shared/_services/task-type.service';
+import { TaskType, TaskTypeService } from '../../../../shared/_services/task-type.service';
+import { TaskTypeUpsertComponent } from '../../../../components/task-type-upsert/task-type-upsert.component';
 
 @Component({
   selector: 'app-task-type',
@@ -28,9 +29,10 @@ export class TaskTypeComponent {
   @ViewChild('actionTemplate', { static: true }) actionTemplate!: TemplateRef<any>;
 
   columns: Column[] = [];
-  rows: any[] = [];
-  filteredTasks: TaskStatus[] = [];
+  rows: TaskType[] = [];
+  filteredTasks: TaskType[] = [];
   appliedFilters: AppliedFilter[] = [];
+  loading = false;
 
   filterFields: FilterField[] = [
     {
@@ -76,12 +78,12 @@ export class TaskTypeComponent {
       {
         label: 'Edit',
         icon: 'edit',
-        action: (row: TaskStatus) => this.onEdit(row),
+        action: (row: TaskType) => this.onEdit(row),
       },
       {
         label: 'Delete',
         icon: 'delete',
-        action: (row: TaskStatus) => this.onDelete(row),
+        action: (row: TaskType) => this.onDelete(row),
       },
     ];
 
@@ -119,10 +121,17 @@ export class TaskTypeComponent {
   initFilters() {}
 
   loadTaskTypeData(): void {
-    this.taskTypeService.getTaskTypes().subscribe(
-      (data) => this.rows = data,
-      (error) => console.error('Error loading task types:', error)
-    );
+    this.loading = true;
+    this.taskTypeService.getTaskTypes().subscribe({
+      next: (data) => {
+        this.rows = data;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error loading task types:', error);
+        this.loading = false;
+      }
+    });
   }
 
   onFiltersChange(filters: AppliedFilter[]) {
@@ -144,11 +153,63 @@ export class TaskTypeComponent {
     console.log('Paginator changed:', event);
   }
 
-  onEdit(row: any) {}
+  onEdit(row: TaskType) {
+    this.modalService.open(TaskTypeUpsertComponent, { taskType: row }).subscribe((result: any) => {
+      if (result?.success) {
+        console.log('Task type updated successfully');
+        this.loadTaskTypeData(); // Reload the data
+      }
+    });
+  }
 
-  onDelete(row: any) {}
+  onDelete(row: TaskType) {
+    if (confirm(`Are you sure you want to delete "${row.name}"?`)) {
+      this.deleteTaskType(row._id!);
+    }
+  }
 
-  onToggleActive(row: TaskStatus, isActive: boolean): void {
+  private deleteTaskType(id: string): void {
+    this.loading = true;
+    this.taskTypeService.deleteTaskType(id).subscribe({
+      next: (response) => {
+        console.log('Task type deleted successfully');
+        this.loadTaskTypeData(); // Reload the data
+      },
+      error: (error) => {
+        console.error('Error deleting task type:', error);
+        this.loading = false;
+        alert('Error deleting task type. Please try again.');
+      }
+    });
+  }
 
+  onToggleActive(row: TaskType, isActive: boolean): void {
+    const updatedData: TaskType = { ...row, isActive };
+
+    this.taskTypeService.updateTaskType(row._id!, updatedData).subscribe({
+      next: (response) => {
+        const index = this.rows.findIndex(item => item._id === row._id);
+        if (index !== -1) {
+          this.rows[index].isActive = isActive;
+        }
+        console.log('Task type status updated successfully');
+      },
+      error: (error) => {
+        console.error('Error updating task type status:', error);
+        // Revert the toggle if update failed
+        row.isActive = !isActive;
+        alert('Error updating task type status. Please try again.');
+      }
+    });
+  }
+
+  // Method to create new task type
+  onCreate(): void {
+    this.modalService.open(TaskTypeUpsertComponent, { taskType: null }).subscribe((result: any) => {
+      if (result?.success) {
+        console.log('Task type created successfully');
+        this.loadTaskTypeData(); // Reload the data
+      }
+    });
   }
 }

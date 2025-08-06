@@ -9,6 +9,7 @@ import { InputComponent } from '../../shared/_components/input/input.component';
 import { TaskStatus, TaskStatusService } from '../../shared/_services/task-status.service';
 import { TaskService } from '../../shared/_services/task.service';
 import { SelectComponent } from '../../shared/_components/select/select.component';
+import { TaskType, TaskTypeService } from '../../shared/_services/task-type.service';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class TaskUpsertComponent {
     { value: '3', label: 'Alice Johnson' }
   ];
   taskStatuses: TaskStatus[] = [];
+  taskTypes: TaskType[] = [];
   selectedTaskStatus!: TaskStatus;
   selectedAssignee!: any;
 
@@ -40,6 +42,7 @@ export class TaskUpsertComponent {
     private dialogRef: MatDialogRef<TaskUpsertComponent>,
     private taskStatusService: TaskStatusService,
     private taskService: TaskService,
+    private taskTypeService: TaskTypeService,
     @Inject(MAT_DIALOG_DATA) public data: { task: Task }
   ) {
     this.form = this.fb.group({
@@ -69,6 +72,15 @@ export class TaskUpsertComponent {
         console.error('Error fetching task statuses', error);
         this.taskStatuses = [];
       },
+    });
+
+    this.taskTypeService.getTaskTypes().subscribe({
+      next: (types) => {
+        const taskTypesActive = types.filter(item => item.isActive === true);
+        this.taskTypes = taskTypesActive;
+        console.log('Task types loaded:', taskTypesActive);
+      },
+      error: (err) => console.error('Error loading task types:', err)
     });
   }
 

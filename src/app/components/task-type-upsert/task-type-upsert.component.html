@@ -1,0 +1,53 @@
+<div class="task-type-upsert-modal">
+  <div class="modal-header">
+    <h2 class="section-title modal-title">
+      <z-i18n [key]="title"></z-i18n>
+    </h2>
+    <button class="btn-close" (click)="onCancel()">
+      <span class="material-symbols-rounded">close</span>
+    </button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-body">
+    <div class="form-group">
+      <label class="required">
+        <z-i18n [key]="'Name'"></z-i18n>
+      </label>
+      <z-input formControlName="name" placeholder="Enter task type name"></z-input>
+      <z-error controlName="name"></z-error>
+    </div>
+
+    <div class="form-group mt-4">
+      <label class="form-label">
+        <z-i18n [key]="'Icon'"></z-i18n>
+      </label>
+      <z-input formControlName="icon" placeholder="Enter icon name or URL"></z-input>
+      <z-error controlName="icon"></z-error>
+    </div>
+
+    <div class="checkbox-group">
+      <div class="checkbox-item">
+        <input id="isActive" type="checkbox" formControlName="isActive" class="form-check-input"/>
+        <label class="font-medium cursor-pointer" for="isActive">
+          <z-i18n [key]="'Active'"></z-i18n>
+        </label>
+      </div>
+
+      <div class="checkbox-item">
+        <input id="isSubTask" type="checkbox" formControlName="isSubTask" class="form-check-input"/>
+        <label class="font-medium cursor-pointer" for="isSubTask">
+          <z-i18n [key]="'Is Sub Task'"></z-i18n>
+        </label>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn btn-cancel" (click)="onCancel()" >
+        <z-i18n [key]="'Cancel'"></z-i18n>
+      </button>
+      <button class="btn btn-primary">
+        <z-i18n [key]="isEditMode ? 'Update' : 'Create'"></z-i18n>
+      </button>
+    </div>
+  </form>
+</div>

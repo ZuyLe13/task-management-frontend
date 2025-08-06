@@ -4,7 +4,7 @@
       [filterFields]="filterFields"
       (filtersChange)="onFiltersChange($event)"
     ></app-multi-filter>
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" (click)="onCreate()">
       <z-i18n [key]="'Create New'"></z-i18n>
     </button>
   </div>

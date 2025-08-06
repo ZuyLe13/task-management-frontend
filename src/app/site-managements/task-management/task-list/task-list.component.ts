@@ -13,6 +13,7 @@ import { ModalService } from '../../../shared/_services/modal.service';
 import { ZI18nComponent } from "../../../shared/_components/z-i18n/z-i18n.component";
 import { TaskUpsertComponent } from '../../../components/task-upsert/task-upsert.component';
 import { TaskService } from '../../../shared/_services/task.service';
+import { TaskType } from '../../../shared/_services/task-type.service';
 
 export interface Task {
   taskKey: string;
@@ -44,7 +45,8 @@ export interface Task {
 export class TaskListComponent implements OnInit {
   taskList: Task[] = [];
   taskGroups: { [key: string]: Task[] } = {};
-  statuses: TaskStatus[] = [];
+  taskStatuses: TaskStatus[] = [];
+  taskTypes: TaskType[] = [];
 
   constructor(
     private taskStatusService: TaskStatusService,
@@ -62,11 +64,11 @@ export class TaskListComponent implements OnInit {
         this.taskList = tasks;
         this.taskStatusService.getTaskStatus().subscribe({
           next: (taskStatuses) => {
-            this.statuses = taskStatuses.map(status => ({
+            this.taskStatuses = taskStatuses.map(status => ({
               code: status.code,
               name: status.name
             }));
-            this.taskGroups = Object.fromEntries(this.statuses.map(status => [status.code, []]));
+            this.taskGroups = Object.fromEntries(this.taskStatuses.map(status => [status.code, []]));
             const statusMap = Object.fromEntries(
               taskStatuses.map(status => [
                 status.code.toLowerCase().replace(/[_-\s]+/g, ' ').trim(),
@@ -78,8 +80,8 @@ export class TaskListComponent implements OnInit {
                 const matchedStatus = statusMap[task.status.toLowerCase().replace(/[_-\s]+/g, ' ').trim()] || 'Unknown';
                 if (!this.taskGroups[matchedStatus]) {
                   this.taskGroups[matchedStatus] = [];
-                  if (!this.statuses.some(s => s.code === matchedStatus)) {
-                    this.statuses.push({ code: matchedStatus, name: matchedStatus });
+                  if (!this.taskStatuses.some(s => s.code === matchedStatus)) {
+                    this.taskStatuses.push({ code: matchedStatus, name: matchedStatus });
                   }
                 }
                 this.taskGroups[matchedStatus].push(task);
