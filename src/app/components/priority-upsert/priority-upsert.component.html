@@ -1,0 +1,74 @@
+<div class="priority-upsert">
+  <!-- Header -->
+  <div class="modal-header">
+    <h2 class="section-title modal-title">
+      <z-i18n [key]="title"></z-i18n>
+    </h2>
+    <button class="btn-close" (click)="onCancel()">
+      <span class="material-symbols-rounded">close</span>
+    </button>
+  </div>
+
+  <!-- Form Content -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-body">
+    <div class="form-group">
+      <label class="required"><z-i18n [key]="'Name'"></z-i18n></label>
+      <z-input formControlName="name" placeholder="Name of priority" />
+      <z-error controlName="name"></z-error>
+    </div>
+    <div class="form-group">
+      <label class="required"><z-i18n [key]="'Level'"></z-i18n></label>
+      <z-input formControlName="level" placeholder="Level of priority" />
+      <z-error controlName="level"></z-error>
+    </div>
+    <div class="form-group">
+      <label class="required"><z-i18n [key]="'Color'"></z-i18n></label>
+      <div class="color-picker-grid">
+        <div
+          *ngFor="let color of colors"
+          class="color-option"
+          [style.background-color]="color"
+          [class.selected]="form.get('color')?.value === color"
+          (click)="selectColor(color)"
+        ></div>
+      </div>
+      <z-error controlName="color"></z-error>
+    </div>
+
+    <!-- Checkboxes -->
+    <div class="flex items-center">
+      <div class="flex flex-1 items-center">
+        <input
+          id="isActive"
+          type="checkbox"
+          formControlName="isActive"
+          class="form-check-input">
+        <label for="isActive" class="font-medium cursor-pointer">
+          <z-i18n [key]="'Active'"></z-i18n>
+        </label>
+      </div>
+
+      <div class="flex flex-1 items-center">
+        <input
+          id="isDefault"
+          type="checkbox"
+          formControlName="isDefault"
+          class="form-check-input">
+        <label for="isDefault" class="font-medium cursor-pointer">
+          <z-i18n [key]="'Default'"></z-i18n>
+        </label>
+      </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="modal-actions">
+      <button type="button" class="btn btn-cancel" (click)="onCancel()">
+        <z-i18n [key]="'Cancel'"></z-i18n>
+      </button>
+
+      <button class="btn btn-primary">
+        <z-i18n [key]="isEditMode ? 'Update' : 'Create'"></z-i18n>
+      </button>
+    </div>
+  </form>
+</div>

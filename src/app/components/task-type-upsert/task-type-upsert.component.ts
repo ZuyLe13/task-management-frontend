@@ -57,10 +57,8 @@ export class TaskTypeUpsertComponent implements OnInit {
   }
 
   createTaskType(formData: TaskType): void {
-    console.log('Creating task type with data:', formData);
     this.taskTypeService.createTaskType(formData).subscribe({
       next: (response) => {
-        console.log('Create response:', response);
         if (response.success) {
           this.dialogRef.close(response);
         } else {
@@ -78,7 +76,6 @@ export class TaskTypeUpsertComponent implements OnInit {
     const taskTypeId = this.data.taskType!._id!;
     this.taskTypeService.updateTaskType(taskTypeId, formData).subscribe({
       next: (response) => {
-        console.log('Update response:', response);
         if (response.success) {
           this.dialogRef.close(response);
         } else {

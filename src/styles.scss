@@ -4,8 +4,8 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body { 
-  height: 100%; 
+html, body {
+  height: 100%;
 }
 
 body {
@@ -47,7 +47,7 @@ body {
 // =========== Button ===========
 
 .btn {
-  @apply flex items-center justify-center h-[40px] px-4  rounded-md transition-all 
+  @apply flex items-center justify-center h-[40px] px-4  rounded-md transition-all
   duration-150 ease-in cursor-pointer font-medium tracking-wide;
 }
 
@@ -65,7 +65,7 @@ body {
 }
 
 .btn-icon {
-  @apply flex items-center justify-center size-[30px] rounded-md transition-colors 
+  @apply flex items-center justify-center size-[30px] rounded-md transition-colors
   duration-200;
 }
 
@@ -78,14 +78,14 @@ body {
 }
 
 .btn-close {
-  @apply flex items-center text-[18px] font-semibold cursor-pointer 
+  @apply flex items-center text-[18px] font-semibold cursor-pointer
   transition-colors duration-300 hover:text-red-500;
 }
 
 // =========== Input ===========
 .z-input {
-  @apply w-full h-[45px] px-4 border border-[var(--border-color)] rounded-md 
-  focus:ring-1 focus:ring-[var(--primary-blue)] focus:border-[var(--primary-blue)] 
+  @apply w-full h-[45px] px-4 border border-[var(--border-color)] rounded-md
+  focus:ring-1 focus:ring-[var(--primary-blue)] focus:border-[var(--primary-blue)]
   outline-none transition-colors duration-300 ease-out;
 
   &::placeholder {
@@ -121,6 +121,25 @@ body {
     @apply content-['*'] text-red-600;
   }
 }
+
+.color-picker-grid {
+    @apply flex gap-2 mt-1;
+
+    .color-option {
+      @apply relative size-8 rounded cursor-pointer border border-transparent
+      transition-all duration-200;
+
+      &.selected::after {
+        @apply content-['\2713'] absolute top-1/2 left-1/2 text-white
+        text-[20px] font-bold;
+        transform: translate(-50%, -50%);
+      }
+
+      &:hover:not(.selected) {
+        @apply opacity-80;
+      }
+    }
+  }
 
 // =========== Form Group ===========
 .form-group {
