@@ -67,12 +67,11 @@ export class PriorityUpsertComponent {
 
   createPriority(formData: Priority): void {
     this.priorityService.createPriority(formData).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.dialogRef.close(response);
+      next: (result) => {
+        if (result.success) {
+          this.dialogRef.close(result);
         } else {
-          console.error('Server returned error:', response.message);
-          alert(`Error: ${response.message}`);
+          console.error('Server returned error:', result.message);
         }
       },
       error: (error) => {
@@ -84,11 +83,11 @@ export class PriorityUpsertComponent {
   updatePriority(formData: Partial<Priority>): void {
     const priorityId = this.data.priority!._id!;
     this.priorityService.updatePriority(priorityId, formData).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.dialogRef.close(response);
+      next: (result) => {
+        if (result.success) {
+          this.dialogRef.close(result);
         } else {
-          console.error('Server returned error:', response.message);
+          console.error('Server returned error:', result.message);
         }
       },
       error: (error) => {

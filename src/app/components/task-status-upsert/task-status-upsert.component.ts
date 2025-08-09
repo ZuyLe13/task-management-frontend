@@ -6,6 +6,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { InputComponent } from "../../shared/_components/input/input.component";
 import { ErrorComponent } from '../../shared/_components/error/error.component';
 import { TaskStatus, TaskStatusService } from '../../shared/_services/task-status.service';
+import { createTask } from '../../../../../server/src/controllers/task.controller';
 
 
 @Component({
@@ -54,25 +55,65 @@ export class TaskStatusUpsertComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.form.valid) {
-      const observable = this.isEditMode
-        ? this.taskStatusService.updateTaskStatus(this.data.taskStatus!._id!, this.form.value)
-        : this.taskStatusService.createTaskStatus(this.form.value);
+    // if (this.form.valid) {
+    //   const observable = this.isEditMode
+    //     ? this.taskStatusService.updateTaskStatus(this.data.taskStatus!._id!, this.form.value)
+    //     : this.taskStatusService.createTaskStatus(this.form.value);
 
-      observable.subscribe({
-        next: (result: TaskStatus) => {
-          this.form.reset({ name: '', color: '#ccc', isActive: true, isDefault: false });
-          this.dialogRef.close(result);
-        },
-        error: (error) => {
-          console.error(`${this.isEditMode ? 'Error updating task status' : 'Error creating task status'}:`, error);
-        }
-      });
+    //   observable.subscribe({
+    //     next: (result: TaskStatus) => {
+    //       this.form.reset({ name: '', color: '#ccc', isActive: true, isDefault: false });
+    //       this.dialogRef.close(result);
+    //     },
+    //     error: (error) => {
+    //       console.error(`${this.isEditMode ? 'Error updating task status' : 'Error creating task status'}:`, error);
+    //     }
+    //   });
+    // } else {
+    //   Object.keys(this.form.controls).forEach(key => {
+    //     this.form.get(key)?.markAsTouched();
+    //   });
+    // }
+    if (this.form.valid) {
+      if (this.isEditMode) {
+        this.updateTaskStatus(this.form.value);
+      } else {
+        this.createTaskStatus(this.form.value);
+      }
     } else {
-      Object.keys(this.form.controls).forEach(key => {
-        this.form.get(key)?.markAsTouched();
-      });
+      this.form.markAllAsTouched();
     }
+  }
+
+  createTaskStatus(formData: TaskStatus): void {
+    this.taskStatusService.createTaskStatus(formData).subscribe({
+      next: (result) => {
+        if (result.success) {
+          this.dialogRef.close(result);
+        } else {
+          console.error('Server returned error:', result.message);
+        }
+      },
+      error: (error) => {
+        console.error('Error creating task status:', error);
+      }
+    });
+  }
+
+  updateTaskStatus(formData: Partial<TaskStatus>): void {
+    const taskStatusId = this.data.taskStatus!._id!;
+    this.taskStatusService.updateTaskStatus(taskStatusId, formData).subscribe({
+      next: (result) => {
+        if (result.success) {
+          this.dialogRef.close(result);
+        } else {
+          console.error('Server returned error:', result.message);
+        }
+      },
+      error: (error) => {
+        console.error('Error updating task status:', error);
+      }
+    });
   }
 
   onCancel(): void {

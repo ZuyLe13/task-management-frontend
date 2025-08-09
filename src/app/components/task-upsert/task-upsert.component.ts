@@ -63,7 +63,7 @@ export class TaskUpsertComponent {
   }
 
   initData(): void {
-    this.taskStatusService.getTaskStatus().subscribe({
+    this.taskStatusService.getTaskStatuses().subscribe({
       next: (result) => {
         const taskStatusesActive = result.filter(item => item.isActive === true);
         this.taskStatuses = taskStatusesActive;

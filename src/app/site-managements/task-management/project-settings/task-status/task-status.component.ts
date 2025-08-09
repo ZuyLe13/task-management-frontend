@@ -131,7 +131,7 @@ export class TaskStatusComponent implements OnInit {
   initFilters() {}
 
   loadTaskStatusData(): void {
-    this.taskStatusService.getTaskStatus().subscribe({
+    this.taskStatusService.getTaskStatuses().subscribe({
       next: (statuses) => this.rows = [...statuses],
       error: (error) => console.log(error)
     });
