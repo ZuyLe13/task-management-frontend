@@ -62,7 +62,7 @@ export class TaskListComponent implements OnInit {
     this.taskService.getAllTask().subscribe({
       next: (tasks) => {
         this.taskList = tasks;
-        this.taskStatusService.getTaskStatus().subscribe({
+        this.taskStatusService.getTaskStatuses().subscribe({
           next: (taskStatuses) => {
             this.taskStatuses = taskStatuses.map(status => ({
               code: status.code,

@@ -63,7 +63,7 @@ export class TaskUpsertComponent {
   }
 
   initData(): void {
-    this.taskStatusService.getTaskStatus().subscribe({
+    this.taskStatusService.getTaskStatuses().subscribe({
       next: (result) => {
         const taskStatusesActive = result.filter(item => item.isActive === true);
         this.taskStatuses = taskStatusesActive;
@@ -78,7 +78,6 @@ export class TaskUpsertComponent {
       next: (types) => {
         const taskTypesActive = types.filter(item => item.isActive === true);
         this.taskTypes = taskTypesActive;
-        console.log('Task types loaded:', taskTypesActive);
       },
       error: (err) => console.error('Error loading task types:', err)
     });

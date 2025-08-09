@@ -5,13 +5,13 @@ import { Column } from '../../../../shared/interfaces/table.model';
 import { AppliedFilter, FilterField, MultiFilterComponent } from '../../../../shared/_components/multi-filter/multi-filter.component';
 import { ZI18nComponent } from "../../../../shared/_components/z-i18n/z-i18n.component";
 import { ModalService } from '../../../../shared/_services/modal.service';
-import { TaskStatusUpsertComponent } from '../../../../components/task-status-upsert/task-status-upsert.component';
-import { TaskStatus, TaskStatusService } from '../../../../shared/_services/task-status.service';
 import { TableAction, TableActionComponent } from '../../../../shared/_components/table-action/table-action.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { Priority, PriorityService } from '../../../../shared/_services/priority.service';
+import { PriorityUpsertComponent } from '../../../../components/priority-upsert/priority-upsert.component';
 
 @Component({
-  selector: 'app-task-status',
+  selector: 'app-priority',
   imports: [
     CommonModule,
     TableComponent,
@@ -19,11 +19,11 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     ZI18nComponent,
     TableActionComponent,
     MatSlideToggleModule
-],
-  templateUrl: './task-status.component.html',
-  styleUrl: './task-status.component.scss'
+  ],
+  templateUrl: './priority.component.html',
+  styleUrl: './priority.component.scss'
 })
-export class TaskStatusComponent implements OnInit {
+export class PriorityComponent {
   @ViewChild('colorTemplate', { static: true }) colorTemplate!: TemplateRef<any>;
   @ViewChild('activeTemplate', { static: true }) activeTemplate!: TemplateRef<any>;
   @ViewChild('defaultTemplate', { static: true }) defaultTemplate!: TemplateRef<any>;
@@ -31,7 +31,7 @@ export class TaskStatusComponent implements OnInit {
 
   columns: Column[] = [];
   rows: any[] = [];
-  filteredTasks: TaskStatus[] = [];
+  filteredTasks: Priority[] = [];
   appliedFilters: AppliedFilter[] = [];
 
   filterFields: FilterField[] = [
@@ -74,27 +74,27 @@ export class TaskStatusComponent implements OnInit {
     }
   ];
 
-  taskStatusActions: TableAction[] = [
+  priorityActions: TableAction[] = [
     {
       label: 'Edit',
       icon: 'edit',
-      action: (row: TaskStatus) => this.onEdit(row),
+      action: (row: Priority) => this.onEdit(row),
     },
     {
       label: 'Delete',
       icon: 'delete',
-      action: (row: TaskStatus) => this.onDelete(row),
+      action: (row: Priority) => this.onDelete(row),
     },
   ];
 
   constructor(
     private modalService: ModalService,
-    private taskStatusService: TaskStatusService
+    private priorityService: PriorityService
   ) {}
 
   ngOnInit(): void {
     this.initTable();
-    this.loadTaskStatusData();
+    this.loadPriorityData();
   }
 
   initTable() {
@@ -107,6 +107,10 @@ export class TaskStatusComponent implements OnInit {
         field: 'color',
         header: 'Color',
         cellTemplate: this.colorTemplate,
+      },
+      {
+        field: 'level',
+        header: 'Level'
       },
       {
         field: 'isActive',
@@ -130,9 +134,9 @@ export class TaskStatusComponent implements OnInit {
 
   initFilters() {}
 
-  loadTaskStatusData(): void {
-    this.taskStatusService.getTaskStatuses().subscribe({
-      next: (statuses) => this.rows = [...statuses],
+  loadPriorityData(): void {
+    this.priorityService.getPriorities().subscribe({
+      next: (priorities) => this.rows = [...priorities],
       error: (error) => console.log(error)
     });
   }
@@ -157,16 +161,16 @@ export class TaskStatusComponent implements OnInit {
   }
 
   onCreateNew(): void {
-    this.modalService.open(TaskStatusUpsertComponent,
-      { taskStatus: null },
+    this.modalService.open(PriorityUpsertComponent,
+      { priority: null },
       { width: '600px' }
     ).subscribe(result => {
-      if (result) this.loadTaskStatusData();
+      if (result) this.loadPriorityData();
     });
   }
 
-  onEdit(row: TaskStatus): void {
-    this.modalService.open( TaskStatusUpsertComponent, { taskStatus: row },
+  onEdit(row: Priority): void {
+    this.modalService.open(PriorityUpsertComponent, { priority: row },
       {
         width: '600px',
         height: 'auto',
@@ -175,45 +179,45 @@ export class TaskStatusComponent implements OnInit {
       }
     ).subscribe({
       next: (result) => {
-        if (result) this.loadTaskStatusData();
+        if (result) this.loadPriorityData();
       },
       error: (error) => {
-        console.error('Error updating task status:', error);
+        console.error('Error updating priority:', error);
       }
     });
   }
 
-  onDelete(row: TaskStatus) {
+  onDelete(row: Priority) {
     if (confirm(`Are you sure you want to delete ${row.name}?`)) {
-      this.taskStatusService.deleteTaskStatus(row._id!).subscribe({
+      this.priorityService.deletePriority(row._id!).subscribe({
         next: () => {
-          this.loadTaskStatusData();
+          this.loadPriorityData();
         },
         error: (error) => {
-          console.error('Error deleting task status:', error);
+          console.error('Error deleting priority:', error);
         },
       });
     }
   }
 
-  onToggleActive(row: TaskStatus, isActive: boolean): void {
-    this.taskStatusService.updateTaskStatus(row._id!, { ...row, isActive }).subscribe({
+  onToggleActive(row: Priority, isActive: boolean): void {
+    this.priorityService.updatePriority(row._id!, { ...row, isActive }).subscribe({
       next: () => {
-        this.loadTaskStatusData();
+        this.loadPriorityData();
       },
       error: (error) => {
-        console.error('Error updating isActive status:', error);
+        console.error('Error updating isActive priority:', error);
       },
     });
   }
 
-  onToggleDefault(row: TaskStatus, isDefault: boolean): void {
-    this.taskStatusService.updateTaskStatus(row._id!, { ...row, isDefault }).subscribe({
+  onToggleDefault(row: Priority, isDefault: boolean): void {
+    this.priorityService.updatePriority(row._id!, { ...row, isDefault }).subscribe({
       next: () => {
-        this.loadTaskStatusData();
+        this.loadPriorityData();
       },
       error: (error) => {
-        console.error('Error updating isDefault status:', error);
+        console.error('Error updating isDefault priority:', error);
       },
     });
   }

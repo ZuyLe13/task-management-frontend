@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { projectSettingsTabs } from '../../../shared/constants/tabs.constants';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TaskTypeComponent } from './task-type/task-type.component';
+import { PriorityComponent } from './priority/priority.component';
 
 export interface ExampleTab {
   label: string;
@@ -21,7 +22,8 @@ export interface ExampleTab {
     TaskStatusComponent,
     ProjectSettingComponent,
     TranslateModule,
-    TaskTypeComponent
+    TaskTypeComponent,
+    PriorityComponent
   ],
   templateUrl: './project-settings.component.html',
   styleUrl: './project-settings.component.scss'

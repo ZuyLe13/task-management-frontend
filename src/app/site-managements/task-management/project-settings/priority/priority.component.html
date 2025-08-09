@@ -1,0 +1,45 @@
+<div>
+  <div class="flex gap-6">
+    <app-multi-filter
+      [filterFields]="filterFields"
+      (filtersChange)="onFiltersChange($event)"
+    ></app-multi-filter>
+    <button class="btn btn-primary" (click)="onCreateNew()">
+      <z-i18n [key]="'Create New'"></z-i18n>
+    </button>
+  </div>
+
+  <div class="mt-2">
+    <z-table
+      [columns]="columns"
+      [rows]="rows"
+      [tableClassName]="'custom-table-class'"
+      (sortChange)="sortChange($event)"
+      (pageChange)="pageChange($event)"
+      (paginatorChange)="paginatorChange($event)">
+    >
+    </z-table>
+  </div>
+
+  <ng-template #colorTemplate let-row>
+    <div class="size-6 rounded" [style.backgroundColor]="row.color"></div>
+  </ng-template>
+
+  <ng-template #activeTemplate let-row>
+    <mat-slide-toggle
+      [checked]="row.isActive"
+      (change)="onToggleActive(row, $event.checked)"
+    ></mat-slide-toggle>
+  </ng-template>
+
+  <ng-template #defaultTemplate let-row>
+    <mat-slide-toggle
+      [checked]="row.isDefault"
+      (change)="onToggleDefault(row, $event.checked)"
+    ></mat-slide-toggle>
+  </ng-template>
+
+  <ng-template #actionTemplate let-row>
+    <z-table-action [row]="row" [actions]="priorityActions"></z-table-action>
+  </ng-template>
+</div>

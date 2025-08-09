@@ -10,6 +10,10 @@ export const projectSettingsTabs = [
   {
     key: 'task-type',
     label: 'Task Type'
+  },
+  {
+    key: 'priority',
+    label: 'Priority'
   }
 ];
 
