@@ -63,13 +63,21 @@
           [isMultiSelect]="false"
           [labelKey]="'name'"
           [valueKey]="'code'"
+          (valueChange)="onTaskTypeChange($event)"
         ></z-select>
         <z-error controlName="taskType"></z-error>
       </div>
 
       <div class="form-group">
         <label><z-i18n [key]="'Priority'"></z-i18n></label>
-        <z-input formControlName="priority" placeholder="Task Priority" />
+        <z-select
+          formControlName="priority"
+          [options]="priorities"
+          [isMultiSelect]="false"
+          [labelKey]="'name'"
+          [valueKey]="'code'"
+          (valueChange)="onPriorityChange($event)"
+        ></z-select>
         <z-error controlName="priority"></z-error>
       </div>
 
@@ -97,7 +105,7 @@
         <z-i18n [key]="'Cancel'"></z-i18n>
       </button>
       <button type="submit" class="btn btn-primary">
-        <z-i18n [key]="'Submit'"></z-i18n>
+        <z-i18n [key]="'Create'"></z-i18n>
       </button>
     </div>
   </form>

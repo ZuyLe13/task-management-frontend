@@ -5,7 +5,7 @@ import { ZI18nComponent } from '../../shared/_components/z-i18n/z-i18n.component
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { InputComponent } from "../../shared/_components/input/input.component";
 import { ErrorComponent } from '../../shared/_components/error/error.component';
-import { TaskType, TaskTypeService } from '../../shared/_services/task-type.service';
+import { TaskType, TaskTypeService } from '../../shared/_services/task-mngts/task-type.service';
 
 @Component({
   selector: 'app-task-type-upsert',

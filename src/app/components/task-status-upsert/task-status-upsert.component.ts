@@ -5,7 +5,7 @@ import { ZI18nComponent } from '../../shared/_components/z-i18n/z-i18n.component
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { InputComponent } from "../../shared/_components/input/input.component";
 import { ErrorComponent } from '../../shared/_components/error/error.component';
-import { TaskStatus, TaskStatusService } from '../../shared/_services/task-status.service';
+import { TaskStatus, TaskStatusService } from '../../shared/_services/task-mngts/task-status.service';
 import { createTask } from '../../../../../server/src/controllers/task.controller';
 
 

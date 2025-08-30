@@ -6,10 +6,11 @@ import { ErrorComponent } from '../../shared/_components/error/error.component';
 import { Task } from '../../site-managements/task-management/task-list/task-list.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InputComponent } from '../../shared/_components/input/input.component';
-import { TaskStatus, TaskStatusService } from '../../shared/_services/task-status.service';
-import { TaskService } from '../../shared/_services/task.service';
+import { TaskStatus, TaskStatusService } from '../../shared/_services/task-mngts/task-status.service';
 import { SelectComponent } from '../../shared/_components/select/select.component';
-import { TaskType, TaskTypeService } from '../../shared/_services/task-type.service';
+import { TaskType, TaskTypeService } from '../../shared/_services/task-mngts/task-type.service';
+import { TaskService } from '../../shared/_services/task-mngts/task.service';
+import { Priority, PriorityService } from '../../shared/_services/task-mngts/priority.service';
 
 
 @Component({
@@ -34,7 +35,10 @@ export class TaskUpsertComponent {
   ];
   taskStatuses: TaskStatus[] = [];
   taskTypes: TaskType[] = [];
+  priorities: Priority[] = [];
   selectedTaskStatus!: TaskStatus;
+  selectedTaskType!: TaskType;
+  selectedPriority!: Priority;
   selectedAssignee!: any;
 
   constructor(
@@ -43,6 +47,7 @@ export class TaskUpsertComponent {
     private taskStatusService: TaskStatusService,
     private taskService: TaskService,
     private taskTypeService: TaskTypeService,
+    private priorityService: PriorityService,
     @Inject(MAT_DIALOG_DATA) public data: { task: Task }
   ) {
     this.form = this.fb.group({
@@ -67,6 +72,15 @@ export class TaskUpsertComponent {
       next: (result) => {
         const taskStatusesActive = result.filter(item => item.isActive === true);
         this.taskStatuses = taskStatusesActive;
+
+        if (!this.data?.task?.status) {
+          const defaultTaskStatus = this.taskStatuses.find(status => status.isDefault === true);
+          if (defaultTaskStatus) {
+            this.form.patchValue({
+              status: defaultTaskStatus.code
+            });
+          }
+        }
       },
       error: (error) => {
         console.error('Error fetching task statuses', error);
@@ -81,16 +95,44 @@ export class TaskUpsertComponent {
       },
       error: (err) => console.error('Error loading task types:', err)
     });
+
+    this.priorityService.getPriorities().subscribe({
+      next: (priorities) => {
+        const prioritiesActive = priorities.filter(item => item.isActive === true);
+        this.priorities = prioritiesActive;
+
+        if (!this.data?.task?.priority) {
+          const defaultPriority = this.priorities.find(p => p.isDefault === true);
+          if (defaultPriority) {
+            this.form.patchValue({
+              priority: defaultPriority.code
+            });
+          }
+        }
+      },
+      error: (err) => console.error('Error loading priorities:', err)
+    });
   }
 
-  onAssigneeChange(values: any[]) {
-    this.selectedAssignee = values.length > 0 ? values[0] : null;
-    this.form.get('assignee')?.setValue(this.selectedAssignee);
+  private onSelectChange<T>(formControlName: string, values: T[]): void {
+    const selectedValue = values.length > 0 ? values[0] : null;
+    this.form.patchValue({ [formControlName]: selectedValue });
   }
 
-  onTaskStatusChange(values: any[]) {
-    this.selectedTaskStatus = values.length > 0 ? values[0] : null;
-    this.form.get('status')?.setValue(this.selectedTaskStatus);
+  onAssigneeChange(values: any[]): void {
+    this.onSelectChange('assignee', values);
+  }
+
+  onTaskStatusChange(values: TaskStatus[]): void {
+    this.onSelectChange('status', values);
+  }
+
+  onTaskTypeChange(values: TaskType[]): void {
+    this.onSelectChange('taskType', values);
+  }
+
+  onPriorityChange(values: Priority[]): void {
+    this.onSelectChange('priority', values);
   }
 
   onCancel(): void {
@@ -98,6 +140,7 @@ export class TaskUpsertComponent {
   }
 
   onSubmit(): void {
+    console.log(this.form.value);
     if (this.form.valid) {
       this.taskService.createTask(this.form.value).subscribe({
         next: (result) => {

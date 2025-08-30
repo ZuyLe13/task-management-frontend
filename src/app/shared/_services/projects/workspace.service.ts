@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from './auth.service';
-import { environment } from '../../../environments/environment';
+import { AuthService } from '../auth.service';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +10,11 @@ import { environment } from '../../../environments/environment';
 export class WorkspaceService {
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private router: Router,
     private authService: AuthService
   ) { }
-  
+
   getHeaders(): HttpHeaders {
     const token = this.authService.getToken();
     return new HttpHeaders({

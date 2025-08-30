@@ -1,13 +1,13 @@
 .select-container {
-  @apply relative mt-1;
+  @apply relative;
 
   .dropdown-container {
     @apply absolute w-full bg-white border border-gray-300 rounded mt-1
-    overflow-hidden;
+    overflow-hidden shadow-md z-10;
   }
 
   .option-item {
-    @apply px-4 py-2 hover:bg-gray-100 cursor-pointer transition-colors 
+    @apply px-4 py-2 hover:bg-gray-100 cursor-pointer transition-colors
     duration-300;
   }
 

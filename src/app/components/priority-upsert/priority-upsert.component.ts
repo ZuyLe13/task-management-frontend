@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ZI18nComponent } from '../../shared/_components/z-i18n/z-i18n.component';
 import { ErrorComponent } from '../../shared/_components/error/error.component';
-import { Priority, PriorityService } from '../../shared/_services/priority.service';
+import { Priority, PriorityService } from '../../shared/_services/task-mngts/priority.service';
 import { InputComponent } from '../../shared/_components/input/input.component';
 
 @Component({
