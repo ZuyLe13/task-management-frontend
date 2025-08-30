@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, ChangeDetectionStrategy } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { CacheService } from './cache.service';
+import { environment } from '../../../../environments/environment';
+import { CacheService } from '../cache.service';
 import { ApiResponse } from './task-type.service';
 
 export interface TaskStatus {

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { WorkspaceService } from '../../shared/_services/workspace.service';
+import { WorkspaceService } from '../../shared/_services/projects/workspace.service';
 
 @Component({
   selector: 'app-create-workspace',

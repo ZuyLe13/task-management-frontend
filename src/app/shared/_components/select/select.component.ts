@@ -71,14 +71,13 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit() {
-    this.selectedValues = [...this.value];
     this.filterOptions('');
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['options'] || changes['value']) {
-      this.selectedValues = [...(this.value || [])];
+    if (changes['options']) {
       this.filterOptions(this.inputControl.value || '');
+      this.updateInputDisplay();
     }
   }
 

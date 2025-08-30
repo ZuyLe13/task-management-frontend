@@ -5,11 +5,11 @@ import { TableAction, TableActionComponent } from '../../../../shared/_component
 import { AppliedFilter, FilterField, MultiFilterComponent } from '../../../../shared/_components/multi-filter/multi-filter.component';
 import { ZI18nComponent } from '../../../../shared/_components/z-i18n/z-i18n.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { ModalService } from '../../../../shared/_services/modal.service';
-import { TaskStatus } from '../../../../shared/_services/task-status.service';
+import { ModalService } from '../../../../shared/_services/modals/modal.service';
+import { TaskStatus } from '../../../../shared/_services/task-mngts/task-status.service';
 import { Column } from '../../../../shared/interfaces/table.model';
-import { TaskType, TaskTypeService } from '../../../../shared/_services/task-type.service';
 import { TaskTypeUpsertComponent } from '../../../../components/task-type-upsert/task-type-upsert.component';
+import { TaskType, TaskTypeService } from '../../../../shared/_services/task-mngts/task-type.service';
 
 @Component({
   selector: 'app-task-type',

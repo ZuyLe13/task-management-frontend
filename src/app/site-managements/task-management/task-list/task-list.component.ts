@@ -7,13 +7,13 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { TaskStatus, TaskStatusService } from '../../../shared/_services/task-status.service';
+import { TaskStatus, TaskStatusService } from '../../../shared/_services/task-mngts/task-status.service';
 import { CommonModule } from '@angular/common';
-import { ModalService } from '../../../shared/_services/modal.service';
+import { ModalService } from '../../../shared/_services/modals/modal.service';
 import { ZI18nComponent } from "../../../shared/_components/z-i18n/z-i18n.component";
 import { TaskUpsertComponent } from '../../../components/task-upsert/task-upsert.component';
-import { TaskService } from '../../../shared/_services/task.service';
-import { TaskType } from '../../../shared/_services/task-type.service';
+import { TaskType } from '../../../shared/_services/task-mngts/task-type.service';
+import { TaskService } from '../../../shared/_services/task-mngts/task.service';
 
 export interface Task {
   taskKey: string;

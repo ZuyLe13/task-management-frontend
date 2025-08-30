@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Task } from '../../site-managements/task-management/task-list/task-list.component';
-import { environment } from '../../../environments/environment';
+import { Task } from '../../../site-managements/task-management/task-list/task-list.component';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
   ) { }
 
   getAllTask(): Observable<Task[]> {

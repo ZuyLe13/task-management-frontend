@@ -1,15 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { User } from '../interfaces/user.model';
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth.service';
+import { environment } from '../../../../environments/environment';
+import { User } from '../../interfaces/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private authService: AuthService
   ) { }
 

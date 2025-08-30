@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs/internal/Observable';
 import { ApiResponse } from './task-type.service';
-import { CacheService } from './cache.service';
+import { CacheService } from '../cache.service';
 import { tap } from 'rxjs';
 
 export interface Priority {
