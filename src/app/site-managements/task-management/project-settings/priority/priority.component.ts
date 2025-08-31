@@ -5,7 +5,7 @@ import { Column } from '../../../../shared/interfaces/table.model';
 import { AppliedFilter, FilterField, MultiFilterComponent } from '../../../../shared/_components/multi-filter/multi-filter.component';
 import { ZI18nComponent } from "../../../../shared/_components/z-i18n/z-i18n.component";
 import { ModalService } from '../../../../shared/_services/modals/modal.service';
-import { TableAction, TableActionComponent } from '../../../../shared/_components/table-action/table-action.component';
+import { Action, TableActionComponent } from '../../../../shared/_components/table-action/table-action.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { Priority, PriorityService } from '../../../../shared/_services/task-mngts/priority.service';
 import { PriorityUpsertComponent } from '../../../../components/priority-upsert/priority-upsert.component';
@@ -74,7 +74,7 @@ export class PriorityComponent {
     }
   ];
 
-  priorityActions: TableAction[] = [
+  priorityActions: Action[] = [
     {
       label: 'Edit',
       icon: 'edit',

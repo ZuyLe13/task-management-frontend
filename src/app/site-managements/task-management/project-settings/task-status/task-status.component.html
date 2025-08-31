@@ -8,7 +8,7 @@
       <z-i18n [key]="'Create New'"></z-i18n>
     </button>
   </div>
-  
+
   <div class="mt-2">
     <z-table
       [columns]="columns"
@@ -40,6 +40,6 @@
   </ng-template>
 
   <ng-template #actionTemplate let-row>
-    <z-table-action [row]="row" [actions]="taskStatusActions"></z-table-action>
+    <z-action [row]="row" [actions]="taskStatusActions"></z-action>
   </ng-template>
 </div>

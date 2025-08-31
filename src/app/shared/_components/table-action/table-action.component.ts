@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener, Input } from '@angular/core';
 
-export interface TableAction {
+export interface Action {
   label: string;
   icon: string;
   action: (row: any) => void;
 }
 
 @Component({
-  selector: 'z-table-action',
+  selector: 'z-action',
   imports: [
     CommonModule
   ],
@@ -16,7 +16,7 @@ export interface TableAction {
   styleUrl: './table-action.component.scss'
 })
 export class TableActionComponent {
-  @Input() actions: TableAction[] = [];
+  @Input() actions: Action[] = [];
   @Input() row: any;
   isMenuOpen = false;
 
