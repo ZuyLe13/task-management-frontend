@@ -14,6 +14,11 @@ import { ZI18nComponent } from "../../../shared/_components/z-i18n/z-i18n.compon
 import { TaskUpsertComponent } from '../../../components/task-upsert/task-upsert.component';
 import { TaskType } from '../../../shared/_services/task-mngts/task-type.service';
 import { TaskService } from '../../../shared/_services/task-mngts/task.service';
+import { Priority, PriorityService } from '../../../shared/_services/task-mngts/priority.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { SelectComponent } from "../../../shared/_components/select/select.component";
+import { FormsModule } from '@angular/forms';
+import { DropdownComponent } from "../../../shared/_components/dropdown/dropdown.component";
 
 export interface Task {
   taskKey: string;
@@ -37,7 +42,10 @@ export interface Task {
     CdkDropList,
     CdkDrag,
     CommonModule,
-    ZI18nComponent
+    ZI18nComponent,
+    MatMenuModule,
+    FormsModule,
+    DropdownComponent
 ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
@@ -47,15 +55,24 @@ export class TaskListComponent implements OnInit {
   taskGroups: { [key: string]: Task[] } = {};
   taskStatuses: TaskStatus[] = [];
   taskTypes: TaskType[] = [];
+  priorities: Priority[] = [];
+  selectedTask: any;
 
   constructor(
     private taskStatusService: TaskStatusService,
     private modalService: ModalService,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private priorityService: PriorityService
   ) {}
 
   ngOnInit(): void {
     this.loadTaskData();
+    this.priorityService.getPriorities().subscribe({
+      next: (priorities) => {
+        this.priorities = priorities;
+      },
+      error: (err) => console.error('Error fetching priorities:', err)
+    });
   }
 
   private loadTaskData(): void {
@@ -66,7 +83,8 @@ export class TaskListComponent implements OnInit {
           next: (taskStatuses) => {
             this.taskStatuses = taskStatuses.map(status => ({
               code: status.code,
-              name: status.name
+              name: status.name,
+              color: status.color
             }));
             this.taskGroups = Object.fromEntries(this.taskStatuses.map(status => [status.code, []]));
             const statusMap = Object.fromEntries(
@@ -117,5 +135,68 @@ export class TaskListComponent implements OnInit {
         if(result) this.loadTaskData();
       }
     );
+  }
+
+  onUpdateTask(item: Task) {
+    // TODO: Hiển thị modal cập nhật task
+    console.log('Update task', item);
+  }
+
+  onDeleteTask(item: Task) {
+    if (confirm('Bạn có chắc chắn muốn xóa task này?')) {
+      this.taskService.deleteTask(item.taskKey).subscribe({
+        next: () => {
+          this.loadTaskData();
+        },
+        error: (err) => {
+          alert('Xóa task thất bại!');
+          console.error('Delete task error:', err);
+        }
+      });
+    }
+  }
+
+  onChangeTaskStatus(item: Task, newStatus: string) {
+    if (item.status === newStatus) return;
+    this.taskService.updateTaskWithTaskStatus(item.taskKey, newStatus).subscribe({
+      next: () => {
+        item.status = newStatus;
+        this.loadTaskData();
+      },
+      error: (err) => {
+        alert('Cập nhật trạng thái thất bại!');
+        console.error('Update status error:', err);
+      }
+    });
+  }
+
+  getStatusColor(code: string, opacity: number = 1): string {
+    const hex = this.taskStatuses.find(s => s.code === code)?.color || '#e5e7eb';
+    return this.hexToRgba(hex, opacity);
+  }
+
+  getPriorityColor(code: string, opacity: number = 1): string {
+    const hex = this.priorities.find(p => p.code === code)?.color || '#f3f4f6';
+    return this.hexToRgba(hex, opacity);
+  }
+
+  hexToRgba(hex: string, opacity: number): string {
+    let c = hex.replace('#', '');
+    if (c.length === 3) {
+      c = c.split('').map(x => x + x).join('');
+    }
+    const num = parseInt(c, 16);
+    const r = (num >> 16) & 255;
+    const g = (num >> 8) & 255;
+    const b = num & 255;
+    return `rgba(${r},${g},${b},${opacity})`;
+  }
+
+  getStatusName(code: string): string {
+    return this.taskStatuses.find(s => s.code === code)?.name || code;
+  }
+
+  getPriorityName(code: string): string {
+    return this.priorities.find(p => p.code === code)?.name || code;
   }
 }

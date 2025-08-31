@@ -1,0 +1,19 @@
+<div class="dropdown" [class.disabled]="disabled">
+  <button type="button"
+    class="dropdown-trigger"
+    (click)="open = !open"
+    [disabled]="disabled"
+  >
+    {{ getSelectedItemName() }}
+    <span class="material-symbols-rounded text-xs align-middle ml-1">expand_more</span>
+  </button>
+  <ul class="dropdown-menu" *ngIf="open">
+    <li *ngFor="let item of items"
+        (click)="select(item)"
+        [class.selected]="getValue(item) === value"
+        [class]="'dropdown-option option-' + getValue(item)"
+    >
+      {{ getName(item) }}
+    </li>
+  </ul>
+</div>

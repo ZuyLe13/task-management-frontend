@@ -6,7 +6,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { InputComponent } from "../../shared/_components/input/input.component";
 import { ErrorComponent } from '../../shared/_components/error/error.component';
 import { TaskStatus, TaskStatusService } from '../../shared/_services/task-mngts/task-status.service';
-import { createTask } from '../../../../../server/src/controllers/task.controller';
 
 
 @Component({
@@ -27,7 +26,7 @@ export class TaskStatusUpsertComponent implements OnInit {
   isEditMode: boolean = false;
   title: string = '';
   colors: string[] = [
-    '#cccccc', '#007bff', '#28a745', '#dc3545', '#ffc107',
+    '#a0a0a0', '#007bff', '#28a745', '#dc3545', '#ffc107',
     '#17a2b8', '#6610f2', '#6f42c1', '#e83e8c', '#fd7e14'
   ];
 
@@ -55,25 +54,6 @@ export class TaskStatusUpsertComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // if (this.form.valid) {
-    //   const observable = this.isEditMode
-    //     ? this.taskStatusService.updateTaskStatus(this.data.taskStatus!._id!, this.form.value)
-    //     : this.taskStatusService.createTaskStatus(this.form.value);
-
-    //   observable.subscribe({
-    //     next: (result: TaskStatus) => {
-    //       this.form.reset({ name: '', color: '#ccc', isActive: true, isDefault: false });
-    //       this.dialogRef.close(result);
-    //     },
-    //     error: (error) => {
-    //       console.error(`${this.isEditMode ? 'Error updating task status' : 'Error creating task status'}:`, error);
-    //     }
-    //   });
-    // } else {
-    //   Object.keys(this.form.controls).forEach(key => {
-    //     this.form.get(key)?.markAsTouched();
-    //   });
-    // }
     if (this.form.valid) {
       if (this.isEditMode) {
         this.updateTaskStatus(this.form.value);

@@ -7,7 +7,7 @@ import { ZI18nComponent } from "../../../../shared/_components/z-i18n/z-i18n.com
 import { ModalService } from '../../../../shared/_services/modals/modal.service';
 import { TaskStatusUpsertComponent } from '../../../../components/task-status-upsert/task-status-upsert.component';
 import { TaskStatus, TaskStatusService } from '../../../../shared/_services/task-mngts/task-status.service';
-import { TableAction, TableActionComponent } from '../../../../shared/_components/table-action/table-action.component';
+import { Action, TableActionComponent } from '../../../../shared/_components/table-action/table-action.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @Component({
@@ -74,7 +74,7 @@ export class TaskStatusComponent implements OnInit {
     }
   ];
 
-  taskStatusActions: TableAction[] = [
+  taskStatusActions: Action[] = [
     {
       label: 'Edit',
       icon: 'edit',

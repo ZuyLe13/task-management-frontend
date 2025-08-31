@@ -19,4 +19,16 @@ export class TaskService {
   createTask(task: Task): Observable<Task> {
     return this.http.post<Task>(`${environment.apiUrl}/task`, task);
   }
+
+  updateTask(taskKey: string, task: Partial<Task>): Observable<any> {
+    return this.http.put(`${environment.apiUrl}/task/${taskKey}`, task);
+  }
+
+  updateTaskWithTaskStatus(taskKey: string, status: string): Observable<any> {
+    return this.http.patch(`${environment.apiUrl}/tasks/${taskKey}/status`, { status });
+  }
+
+  deleteTask(taskKey: string): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}/task/${taskKey}`);
+  }
 }

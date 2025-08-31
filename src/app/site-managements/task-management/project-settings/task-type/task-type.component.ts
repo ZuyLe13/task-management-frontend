@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { TableComponent } from '../../../../shared/_components/table/table.component';
-import { TableAction, TableActionComponent } from '../../../../shared/_components/table-action/table-action.component';
+import { Action, TableActionComponent } from '../../../../shared/_components/table-action/table-action.component';
 import { AppliedFilter, FilterField, MultiFilterComponent } from '../../../../shared/_components/multi-filter/multi-filter.component';
 import { ZI18nComponent } from '../../../../shared/_components/z-i18n/z-i18n.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -74,7 +74,7 @@ export class TaskTypeComponent {
     }
   ];
 
-  taskTypeActions: TableAction[] = [
+  taskTypeActions: Action[] = [
       {
         label: 'Edit',
         icon: 'edit',

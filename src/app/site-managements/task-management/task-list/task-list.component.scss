@@ -30,11 +30,11 @@
       }
 
       .task-item {
-        @apply px-3 py-2 bg-white rounded-md shadow-sm p-4 cursor-move
+        @apply px-3 pt-2 py-3 bg-white rounded-md shadow-sm p-4 cursor-move
         border border-[var(--border-modal)] transition-all duration-300;
 
         .task-item-top {
-          @apply flex items-center justify-between mb-1;
+          @apply flex items-center justify-between mb-2;
         }
 
         .task-key {
@@ -51,6 +51,18 @@
         }
       }
     }
+  }
+
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: none;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding-right: 1.5em;
   }
 }
 
@@ -89,4 +101,21 @@
 
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+::ng-deep {
+  .mat-mdc-menu-panel {
+    background: #fff !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+  }
+
+  .mat-mdc-menu-content {
+    padding: 0 !important;
+  }
+
+  .cdk-overlay-pane {
+    margin-top: 6px;
+  }
 }
