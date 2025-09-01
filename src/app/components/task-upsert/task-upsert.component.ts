@@ -48,7 +48,7 @@ export class TaskUpsertComponent {
     private taskService: TaskService,
     private taskTypeService: TaskTypeService,
     private priorityService: PriorityService,
-    @Inject(MAT_DIALOG_DATA) public data: { task: Task }
+    @Inject(MAT_DIALOG_DATA) public data: { task?: Task, initialStatus?: string }
   ) {
     this.form = this.fb.group({
       title: [data?.task?.title || '', [Validators.required, Validators.maxLength(100)]],
@@ -74,11 +74,17 @@ export class TaskUpsertComponent {
         this.taskStatuses = taskStatusesActive;
 
         if (!this.data?.task?.status) {
-          const defaultTaskStatus = this.taskStatuses.find(status => status.isDefault === true);
-          if (defaultTaskStatus) {
+          if (this.data?.initialStatus) {
             this.form.patchValue({
-              status: defaultTaskStatus.code
+              status: this.data.initialStatus
             });
+          } else {
+            const defaultTaskStatus = this.taskStatuses.find(status => status.isDefault === true);
+            if (defaultTaskStatus) {
+              this.form.patchValue({
+                status: defaultTaskStatus.code
+              });
+            }
           }
         }
       },
@@ -140,11 +146,9 @@ export class TaskUpsertComponent {
   }
 
   onSubmit(): void {
-    console.log(this.form.value);
     if (this.form.valid) {
       this.taskService.createTask(this.form.value).subscribe({
         next: (result) => {
-          console.log(result);
           this.dialogRef.close(result);
         },
         error: (error) => {

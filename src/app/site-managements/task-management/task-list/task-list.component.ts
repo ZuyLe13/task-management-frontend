@@ -16,9 +16,8 @@ import { TaskType } from '../../../shared/_services/task-mngts/task-type.service
 import { TaskService } from '../../../shared/_services/task-mngts/task.service';
 import { Priority, PriorityService } from '../../../shared/_services/task-mngts/priority.service';
 import { MatMenuModule } from '@angular/material/menu';
-import { SelectComponent } from "../../../shared/_components/select/select.component";
 import { FormsModule } from '@angular/forms';
-import { DropdownComponent } from "../../../shared/_components/dropdown/dropdown.component";
+import { MatDialog } from '@angular/material/dialog';
 
 export interface Task {
   taskKey: string;
@@ -44,8 +43,7 @@ export interface Task {
     CommonModule,
     ZI18nComponent,
     MatMenuModule,
-    FormsModule,
-    DropdownComponent
+    FormsModule
 ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss'
@@ -60,9 +58,9 @@ export class TaskListComponent implements OnInit {
 
   constructor(
     private taskStatusService: TaskStatusService,
-    private modalService: ModalService,
     private taskService: TaskService,
-    private priorityService: PriorityService
+    private priorityService: PriorityService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -117,29 +115,35 @@ export class TaskListComponent implements OnInit {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      const item = event.previousContainer.data[event.previousIndex];
+      const movedTask = event.previousContainer.data[event.previousIndex];
+      this.onChangeTaskStatus(movedTask, newStatus);
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex
       );
-      item.status = newStatus;
+      movedTask.status = newStatus;
     }
   }
 
-  onCreate(): void {
-    this.modalService.open(
-      TaskUpsertComponent, { data: null }, { width: '800px' })
-      .subscribe(result => {
-        if(result) this.loadTaskData();
-      }
-    );
-  }
+  onCreate(statusCode?: string): void {
+    const dialogData: any = {};
 
-  onUpdateTask(item: Task) {
-    // TODO: Hiển thị modal cập nhật task
-    console.log('Update task', item);
+    if (statusCode) {
+      dialogData.initialStatus = statusCode;
+    }
+
+    const dialogRef = this.dialog.open(TaskUpsertComponent, {
+      minWidth: '800px',
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadTaskData();
+      }
+    });
   }
 
   onDeleteTask(item: Task) {

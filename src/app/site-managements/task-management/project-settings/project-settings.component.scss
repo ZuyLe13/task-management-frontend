@@ -6,8 +6,8 @@
     disabled-ripple-color: transparent,
     inactive-ripple-color: transparent,
     active-indicator-color: #5051f9,
-    active-label-text-color: #232360,
-    inactive-hover-label-text-color: #232360,
+    active-label-text-color: #5051f9,
+    inactive-hover-label-text-color: #5051f9,
     inactive-label-text-color: #6A7181,
     divider-color: white
   ));
@@ -25,13 +25,15 @@
     .mdc-tab {
       @apply min-w-[120px] font-bold;
       font-family: "DM Sans", sans-serif !important;
-
-      &.mdc-tab-indicator--active {
-        .mdc-tab-indicator {
-          @apply bg-[var(--primary-hover)] rounded;
-        }
-      }
     }
+  }
+  .mat-mdc-tab:focus .mdc-tab__text-label,
+  .mat-mdc-tab.mdc-tab--active:hover .mdc-tab__text-label,
+  .mat-mdc-tab.mdc-tab--active:focus .mdc-tab__text-label {
+    @apply text-[var(--primary-blue)] #{!important};
+  }
+  .mat-mdc-tab .mdc-tab-indicator__content--underline {
+    @apply border-[2px] border-[var(--primary-blue)] rounded-t-md #{!important};
   }
 }
 
