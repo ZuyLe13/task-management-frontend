@@ -25,7 +25,7 @@ export class PriorityUpsertComponent {
   isEditMode: boolean = false;
   title: string = '';
   colors: string[] = [
-    '#cccccc', '#007bff', '#28a745', '#dc3545', '#ffc107',
+    '#a0a0a0', '#007bff', '#28a745', '#dc3545', '#ffc107',
     '#17a2b8', '#6610f2', '#6f42c1', '#e83e8c', '#fd7e14'
   ];
 

@@ -6,7 +6,6 @@ import { AppliedFilter, FilterField, MultiFilterComponent } from '../../../../sh
 import { ZI18nComponent } from '../../../../shared/_components/z-i18n/z-i18n.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ModalService } from '../../../../shared/_services/modals/modal.service';
-import { TaskStatus } from '../../../../shared/_services/task-mngts/task-status.service';
 import { Column } from '../../../../shared/interfaces/table.model';
 import { TaskTypeUpsertComponent } from '../../../../components/task-type-upsert/task-type-upsert.component';
 import { TaskType, TaskTypeService } from '../../../../shared/_services/task-mngts/task-type.service';
@@ -157,7 +156,7 @@ export class TaskTypeComponent {
     this.modalService.open(TaskTypeUpsertComponent, { taskType: row }).subscribe((result: any) => {
       if (result?.success) {
         console.log('Task type updated successfully');
-        this.loadTaskTypeData(); // Reload the data
+        this.loadTaskTypeData();
       }
     });
   }
@@ -171,9 +170,9 @@ export class TaskTypeComponent {
   private deleteTaskType(id: string): void {
     this.loading = true;
     this.taskTypeService.deleteTaskType(id).subscribe({
-      next: (response) => {
+      next: () => {
         console.log('Task type deleted successfully');
-        this.loadTaskTypeData(); // Reload the data
+        this.loadTaskTypeData();
       },
       error: (error) => {
         console.error('Error deleting task type:', error);
@@ -187,7 +186,7 @@ export class TaskTypeComponent {
     const updatedData: TaskType = { ...row, isActive };
 
     this.taskTypeService.updateTaskType(row._id!, updatedData).subscribe({
-      next: (response) => {
+      next: () => {
         const index = this.rows.findIndex(item => item._id === row._id);
         if (index !== -1) {
           this.rows[index].isActive = isActive;
@@ -196,19 +195,17 @@ export class TaskTypeComponent {
       },
       error: (error) => {
         console.error('Error updating task type status:', error);
-        // Revert the toggle if update failed
         row.isActive = !isActive;
         alert('Error updating task type status. Please try again.');
       }
     });
   }
 
-  // Method to create new task type
   onCreate(): void {
     this.modalService.open(TaskTypeUpsertComponent, { taskType: null }).subscribe((result: any) => {
       if (result?.success) {
         console.log('Task type created successfully');
-        this.loadTaskTypeData(); // Reload the data
+        this.loadTaskTypeData();
       }
     });
   }

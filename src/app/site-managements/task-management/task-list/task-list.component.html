@@ -20,7 +20,7 @@
             <button class="btn-icon btn-more">
               <span class="material-symbols-rounded z-icon--lg">more_horiz</span>
             </button>
-            <button class="btn-icon btn-add">
+            <button class="btn-icon btn-add" (click)="onCreate(status.code)">
               <span class="material-symbols-rounded z-icon--lg text-[var(--primary-blue)]">add</span>
             </button>
           </div>
@@ -43,7 +43,7 @@
                   <span class="material-symbols-rounded text-xl">more_horiz</span>
                 </button>
                 <mat-menu #taskMenu="matMenu">
-                  <button class="btn btn-normal gap-2" (click)="onUpdateTask(item)">
+                  <button class="btn btn-normal gap-2">
                     <span class="material-symbols-rounded">edit</span>
                     <span>Cập nhật</span>
                   </button>
@@ -76,15 +76,6 @@
                     >
                       {{ getPriorityName(item.priority) }}
                     </span>
-                    <span
-                      class="inline-block px-3 py-1 text-xs font-bold rounded-[4px]"
-                      [ngStyle]="{
-                        'background-color': getStatusColor(item.status, 0.1),
-                        'color': getStatusColor(item.status)
-                      }"
-                    >
-                      {{ getStatusName(item.status) }}
-                    </span>
                     <span class="inline-block px-3 py-1 text-xs font-medium rounded-[4px]"
                           [ngStyle]="{
                             'background-color': getStatusColor(item.status, 0.1),
@@ -93,14 +84,11 @@
                       <button mat-button [matMenuTriggerFor]="statusMenu" class="p-0 min-w-0 bg-transparent font-bold border-none outline-none"
                               (click)="selectedTask = item">
                         {{ getStatusName(item.status) }}
-                        <span class="material-symbols-rounded text-xs align-middle ml-1">expand_more</span>
                       </button>
                       <mat-menu #statusMenu="matMenu">
                         <button mat-menu-item *ngFor="let status of taskStatuses"
                                 (click)="onChangeTaskStatus(selectedTask, status.code)"
-                                [ngStyle]="{
-                                  'color': getStatusColor(status.code)
-                                }">
+                                [ngStyle]="{ 'color': getStatusColor(status.code) }">
                           {{ status.name }}
                         </button>
                       </mat-menu>
