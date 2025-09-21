@@ -17,7 +17,7 @@ interface MenuItem {
 @Component({
   selector: 'app-side-bar',
   imports: [
-    CommonModule, 
+    CommonModule,
     RouterModule,
     ZI18nComponent,
     MatTooltipModule
@@ -27,22 +27,22 @@ interface MenuItem {
 })
 export class SideBarComponent {
   menuItems: MenuItem[] = [
-    { 
-      id: 'overview', 
-      label: 'Dashboard', 
+    {
+      id: 'overview',
+      label: 'Dashboard',
       icon: 'grid_view',
       active: true,
       path: '/dashboard'
     },
-    { 
-      id: 'timeline', 
-      label: 'Timeline', 
+    {
+      id: 'timeline',
+      label: 'Timeline',
       icon: 'view_timeline',
       path: '/timeline'
     },
-    { 
-      id: 'taskManagement', 
-      label: 'Task Management', 
+    {
+      id: 'taskManagement',
+      label: 'Task Management',
       icon: 'docs',
       path: '/task-mngt',
       expanded: false,
@@ -61,21 +61,27 @@ export class SideBarComponent {
         }
       ]
     },
-    { 
-      id: 'messages', 
-      label: 'Messages', 
+    {
+      id: 'messages',
+      label: 'Messages',
       icon: 'send',
       path: '/messages'
     },
-    { 
-      id: 'documents', 
-      label: 'Documents', 
+    {
+      id: 'ai-assistant',
+      label: 'AI Assistant',
+      icon: 'robot_2',
+      path: '/ai-assistant'
+    },
+    {
+      id: 'documents',
+      label: 'Documents',
       icon: 'drive_folder_upload',
       path: '/documents'
     },
-    { 
-      id: 'myProfile', 
-      label: 'My Profile', 
+    {
+      id: 'myProfile',
+      label: 'My Profile',
       icon: 'account_circle',
       path: '/profile'
     },
