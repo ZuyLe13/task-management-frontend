@@ -38,6 +38,12 @@ export const routerObject = {
     breadcrumb: 'Messages'
   },
 
+  // AI Assistant
+  aiAssistant: {
+    path: 'ai-assistant',
+    breadcrumb: 'AI Assistant'
+  },
+
   // Documents
   documents: {
     path: 'documents',

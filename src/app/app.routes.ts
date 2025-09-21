@@ -15,6 +15,7 @@ import { routerObject } from './shared/constants/router.constants';
 import { TaskManagementComponent } from './site-managements/task-management/task-management.component';
 import { ProjectSettingsComponent } from './site-managements/task-management/project-settings/project-settings.component';
 import { CreateWorkspaceComponent } from './pages/create-workspace/create-workspace.component';
+import { AiAssistantComponent } from './site-managements/ai-assistant/ai-assistant.component';
 
 export const routes: Routes = [
   {
@@ -80,6 +81,10 @@ export const routes: Routes = [
       {
         path: routerObject.messages.path,
         component: MessagesComponent
+      },
+      {
+        path: routerObject.aiAssistant.path,
+        component: AiAssistantComponent
       },
       {
         path: routerObject.documents.path,
